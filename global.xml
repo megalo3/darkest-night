@@ -1,0 +1,144 @@
+<Panel id="MapDeckPanel" active="false" width="500" height="620" rectAlignment="MiddleCenter" returnToOriginalPositionWhenReleased="false" allowDragging="true" color="rgba(1,1,1,1)" padding="10 10 10 10">
+    <TableLayout autoCalculateHeight="true" cellBackgroundColor="clear">
+    <Row preferredHeight="40"><Cell>
+            <Text fontSize="18" fontStyle="Bold">Choose Map Deck</Text>
+        </Cell></Row>
+        <Row><Cell>
+            <Text id="FirstPlayerPanelText" fontSize="14" alignment="UpperLeft">Simplicity: This subdeck has the smallest variety of blights and search results; recommended for your first game.
+
+Hunted: Everything is out to get you in this subdeck filled with traps and detection.
+
+Overrun: Face the teeming hordes of undead in this subdeck with an emphasis on monster blights.
+
+Entropy: The world has fallen into shadow in this subdeck including every kind of global-effect blight.
+
+Spiritual Warfare: Enter a battle of wills in this subdeck containing NO monster blights.
+
+Classic: This subdeck uses the blights and search results from the original release of Darkest Night.
+
+Everything: You can also play with the entire Map Deck at once, for maximum variety.</Text>
+        </Cell></Row>
+        <Row preferredHeight="160"><Cell>
+        <ToggleGroup onValueChanged="mapDeckSelected">
+            <VerticalLayout>
+                <Toggle selected="true">Simplicity</Toggle>
+                <Toggle>Hunted</Toggle>
+                <Toggle>Overrun</Toggle>
+                <Toggle>Entropy</Toggle>
+                <Toggle>Spiritual Warfare</Toggle>
+                <Toggle>Classic</Toggle>
+                <Toggle>Everything</Toggle>
+            </VerticalLayout>
+        </ToggleGroup>
+            
+        </Cell></Row>
+        <Row preferredHeight="20"><Cell>
+        </Cell></Row>
+        <Row preferredHeight="40"><Cell>
+            <Button id="setMapDeck" onClick="setMapDeck" color="rgb(0.19,0.7,0.12)" textColor="white" fontSize="20"  height="40" width="120">Select Deck</Button>
+        </Cell></Row>
+    </TableLayout>
+</Panel>
+
+<Panel id="DifficultyOptions" active="true" width="500" height="680" rectAlignment="MiddleCenter" returnToOriginalPositionWhenReleased="false" allowDragging="true" color="rgba(1,1,1,1)" padding="10 10 10 10">
+    <TableLayout autoCalculateHeight="true" cellBackgroundColor="clear">
+        <Row preferredHeight="40"><Cell>
+            <Text fontSize="18" fontStyle="Bold">Difficulty Options (Modifier +0)</Text>
+        </Cell></Row>
+        <Row preferredHeight="60"><Cell>
+            <Text fontSize="14" alignment="UpperLeft">Some optional rules have a greater impact than others. To help you gauge the effect of an optional rule, each rule is rated with a difficulty modifier (dm) showing its approximate magnitude.</Text>
+        </Cell></Row>
+        <Row preferredHeight="5"><Cell></Cell></Row>
+        
+        <Row preferredHeight="20"><Cell>
+            <Text fontSize="16" fontStyle="Bold" alignment="UpperLeft">Darkness Cards</Text>
+        </Cell></Row>
+        <Row preferredHeight="30"><Cell>
+            <Dropdown onValueChanged="darknessCardsSelected">
+                <Option>-1 dm: 1 card (at 15)</Option>
+                <Option selected="true">+0 dm: 2 cards (at 10, 20)</Option>
+                <Option>+1 dm: 3 cards (at 7, 14, 21)</Option>
+                <Option>+2 dm: 4 cards (at 5, 10, 15, 20)</Option>
+                <Option>+3 dm: 5 cards (at 4, 8, 12, 16, 20)</Option>
+                <Option>+4 dm: 6 cards (at 2, 6, 10, 14, 18, 22)</Option>
+                <Option>+5 dm: 7 cards (at 0, 4, 8, 12, 16, 20, 24)</Option>
+                <Option>+6 dm: 8 cards (at 0, 3, 6, 9, 12, 15, 18, 21)</Option>
+            </Dropdown>
+        </Cell></Row>
+        
+        <Row preferredHeight="20"><Cell></Cell></Row>
+        <Row preferredHeight="20"><Cell>
+            <Text fontSize="16" fontStyle="Bold" alignment="UpperLeft">Starting Blights</Text>
+        </Cell></Row>
+        <Row preferredHeight="30"><Cell>
+            <Dropdown onValueChanged="startingBlightsSelected">
+                <Option>-3 dm: Start with no blights</Option>
+                <Option selected="true">+0 dm: 1 blight per location (except the Monastery)</Option>
+                <Option>+3 dm: 2 blights per location (except the Monastery)</Option>
+            </Dropdown>
+        </Cell></Row>
+        
+        <Row preferredHeight="20"><Cell></Cell></Row>
+        <Row preferredHeight="20"><Cell>
+            <Text fontSize="16" fontStyle="Bold" alignment="UpperLeft">Starting Darkness</Text>
+        </Cell></Row>
+        <Row preferredHeight="30"><Cell>
+            <Dropdown onValueChanged="startingDarknessSelected">
+                <Option>-1 dm: Darkness -5</Option>
+                <Option selected="true">+0 dm: Darkness 0</Option>
+                <Option>+1 dm: Darkness 5</Option>
+            </Dropdown>
+        </Cell></Row>
+        
+        <Row preferredHeight="20"><Cell></Cell></Row>
+        <Row preferredHeight="20"><Cell>
+            <Text fontSize="16" fontStyle="Bold" alignment="UpperLeft">Starting Power Cards</Text>
+        </Cell></Row>
+        <Row preferredHeight="30"><Cell>
+            <Dropdown onValueChanged="startingPowerCardsSelected">
+                <Option>-2 dm: Start every hero with 5 power cards</Option>
+                <Option>-1 dm: Start every hero with 4 power cards</Option>
+                <Option selected="true">+0 dm: Start every hero with 3 power cards</Option>
+            </Dropdown>
+        </Cell></Row>
+       
+        <Row preferredHeight="20"><Cell></Cell></Row>
+        <Row preferredHeight="20"><Cell>
+            <Text fontSize="16" fontStyle="Bold" alignment="UpperLeft">Starting Grace</Text>
+        </Cell></Row>
+        <Row preferredHeight="30"><Cell>
+            <Dropdown onValueChanged="startingGraceSelected">
+                <Option>-1 dm: Start every hero with 2 extra Grace</Option>
+                <Option selected="true">+0 dm: Start every hero with 0 extra Grace</Option>
+            </Dropdown>
+        </Cell></Row>
+        
+        <Row preferredHeight="20"><Cell></Cell></Row>
+        <Row preferredHeight="20"><Cell>
+            <Text fontSize="16" fontStyle="Bold" alignment="UpperLeft">Starting Sparks</Text>
+        </Cell></Row>
+        <Row preferredHeight="30"><Cell>
+            <Dropdown onValueChanged="startingSparksSelected">
+                <Option>-1 dm: Start every hero with 3 sparks</Option>
+                <Option selected="true">+0 dm: Start every hero with 0 sparks</Option>
+            </Dropdown>
+        </Cell></Row>
+        
+        <Row preferredHeight="20"><Cell></Cell></Row>
+        <Row preferredHeight="20"><Cell>
+            <Text fontSize="16" fontStyle="Bold" alignment="UpperLeft">Number of Heroes</Text>
+        </Cell></Row>
+        <Row preferredHeight="30"><Cell>
+            <Dropdown onValueChanged="numberOfHeroesSelected">
+                <Option>+4 dm: Play with 3 heroes</Option>
+                <Option selected="true">+0 dm: Play with 4 heroes</Option>
+                <Option>+0 dm: Play with 5 heroes. (See extra rules)</Option>
+            </Dropdown>
+        </Cell></Row>
+        
+        <Row preferredHeight="40"><Cell></Cell></Row>
+        <Row preferredHeight="40"><Cell>
+            <Button onClick="setDifficulty" color="rgb(0.19,0.7,0.12)" textColor="white" fontSize="20"  height="40" width="120">Set Difficulty</Button>
+        </Cell></Row>
+    </TableLayout>
+</Panel>

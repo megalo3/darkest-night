@@ -265,8 +265,9 @@ function setMapDeck()
         closeMapPanel(player)
     end
     
-    if SelectedMapDeck == 'Everything' then return end
-    createMapDeck(SelectedMapDeck)
+    if SelectedMapDeck ~= 'Everything' then 
+        createMapDeck(SelectedMapDeck)
+    end    
     
     -- Add starting blights
     local blightDm = Settings.difficultyOptions[2]
@@ -375,7 +376,7 @@ function createMapDeck(color)
         if has_value(card.tags, color) == false then
             MapDeck.takeObject({
                 guid = card.guid,
-                position = {-16.15, 1.15, 28.98}
+                position = {-30.37, 1.13, 32.43}
             })
         end
     end

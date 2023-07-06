@@ -1,7 +1,7 @@
 {
   "SaveName": "Darkest Night 2nd Edition",
-  "EpochTime": 1688686657,
-  "Date": "7/6/2023 6:37:37 PM",
+  "EpochTime": 1688687429,
+  "Date": "7/6/2023 6:50:29 PM",
   "VersionNumber": "v13.2.2",
   "GameMode": "Darkest Night 2nd Edition",
   "GameType": "Game",
@@ -668,7 +668,7 @@
       "Size": 1.0
     }
   ],
-  "LuaScript": "Settings = {\r\n    difficultyOptions = {0,0,0,0,0,0,0},\r\n    heroTurnPanelClosedBy = {\"Nobody\"},\r\n    actionsPanelClosedBy = {\"Nobody\"},\r\n    difficultyPanelClosedBy = {\"Nobody\"},\r\n    mapPanelClosedBy = {\"Nobody\"},\r\n}\r\n\r\nReturnBlight = nil\r\nItemBag = nil\r\nAddDarknessScript = nil\r\nAddBlightScript = nil\r\nMapDeckScript = nil\r\n\r\nfunction onLoad(saveData)\r\n     addHotkey(\"Return Token\", function(playerColor, object, pointerPosition, isKeyUp)\r\n        if isKeyUp == true then return end\r\n        returnItem(object)\r\n    end, true)\r\n    \r\n    printToAll('Go to Options -> Game Keys and add a hotkey for returning tokens.', stringColorToRGB('Yellow'))\r\n    \r\n    -- Load the save data, if present.\r\n    if saveData and saveData ~= \"\" then\r\n       Settings = JSON.decode(saveData)\r\n    end\r\n    -- print(JSON.encode(Settings))\r\n    showHidePanelForAllPlayers()\r\n    \r\n    math.randomseed(os.time())\r\n\r\n    ReturnBlight = getObjectFromGUID('ea4c54')\r\n    PlayerBoard = getObjectFromGUID('65a138')\r\n    ItemBag = getObjectsWithAllTags({'Item', 'Bag'})[1]\r\n    AddDarknessScript = getObjectFromGUID('a4642e')\r\n    AddBlightScript = getObjectFromGUID('31c6dc')\r\n    MapDeckScript = getObjectFromGUID('89075e')\r\n\r\n    -- Set items uninteractable\r\n    for key, uninteractableObject in ipairs(getObjectsWithTag('Uninteractable')) do\r\n        uninteractableObject.interactable = false\r\n    end\r\nend\r\n\r\nfunction onObjectNumberTyped(object,  player_color,  number)\r\n    if object.type == 'Deck' then\r\n        if number > 9 then\r\n            print(\"Sorry. You can only draw a maximum of 9 cards.\")\r\n            return true\r\n        end\r\n        object.deal(number, player_color)\r\n        return true\r\n    end\r\nend\r\n\r\nfunction returnItem(object)\r\n    -- Unstack stacks\r\n    if object.name == 'Custom_Token_Stack' then\r\n        local newObject = object.takeObject()\r\n        object = newObject\r\n    end\r\n    \r\n    if object.hasTag(\"Blight\") then\r\n        ReturnBlight.call(\"returnBlight\", object)\r\n        return true\r\n    end\r\n    if object.hasTag(\"Spark\") then\r\n        local bag = getObjectsWithAllTags({'Spark', 'Bag'})[1]\r\n        bag.putObject(object)\r\n        return true\r\n    end\r\n    if object.hasTag(\"Progress\") then\r\n        local bag = getObjectsWithAllTags({'Progress', 'Bag'})[1]\r\n        bag.putObject(object)\r\n        return true\r\n    end\r\n    if object.hasTag(\"Time\") then\r\n        local bag = getObjectsWithAllTags({'Time', 'Bag'})[1]\r\n        bag.putObject(object)\r\n        return true\r\n    end\r\n    if object.hasTag(\"Key\") then\r\n        local bag = getObjectsWithAllTags({'Key', 'Bag'})[1]\r\n        bag.putObject(object)\r\n        return true\r\n    end\r\n    if object.hasTag(\"Item\") then\r\n        ItemBag.putObject(object)\r\n        return true\r\n    end\r\nend\r\n\r\nfunction test()\r\n\r\nend\r\n\r\n-- Called when the game is saved.\r\nfunction onSave()\r\n    -- Save the game's Settings.\r\n    return JSON.encode(Settings)\r\nend\r\n\r\nfunction darknessCardsSelected(player, selected) \r\n    local options = {\r\n         '-1 dm: 1 card (at 15)',\r\n         '+0 dm: 2 cards (at 10, 20)',\r\n         '+1 dm: 3 cards (at 7, 14, 21)',\r\n         '+2 dm: 4 cards (at 5, 10, 15, 20)',\r\n         '+3 dm: 5 cards (at 4, 8, 12, 16, 20)',\r\n         '+4 dm: 6 cards (at 2, 6, 10, 14, 18, 22)',\r\n         '+5 dm: 7 cards (at 0, 4, 8, 12, 16, 20, 24)',\r\n         '+6 dm: 8 cards (at 0, 3, 6, 9, 12, 15, 18, 21)'\r\n    }\r\n    for index, option in ipairs(options) do\r\n        if option == selected then\r\n            Settings.difficultyOptions[1] = index - 2\r\n        end\r\n    end\r\n    updateTitle()\r\nend\r\nfunction startingBlightsSelected(player, selected)\r\n    local options = {\r\n        '-3 dm: Start with no blights',\r\n        '+0 dm: 1 blight per location (except the Monastery)',\r\n        '+3 dm: 2 blights per location (except the Monastery)'\r\n    }\r\n    for index, option in ipairs(options) do\r\n        if option == selected then\r\n            Settings.difficultyOptions[2] = (index - 2) * 3\r\n        end\r\n    end\r\n    updateTitle()\r\nend\r\n\r\nfunction startingDarknessSelected(player, selected)\r\n    local options = {\r\n        '-1 dm: Darkness -5',\r\n        '+0 dm: Darkness 0',\r\n        '+1 dm: Darkness 5'\r\n    }\r\n    for index, option in ipairs(options) do\r\n        if option == selected then\r\n            Settings.difficultyOptions[3] = index - 2\r\n        end\r\n    end\r\n    updateTitle()\r\nend\r\n\r\nfunction startingPowerCardsSelected(player, selected)\r\n    local options = {\r\n        '-2 dm: Start every hero with 5 power cards',\r\n        '-1 dm: Start every hero with 4 power cards',\r\n        '+0 dm: Start every hero with 3 power cards'\r\n    }\r\n    for index, option in ipairs(options) do\r\n        if option == selected then\r\n            Settings.difficultyOptions[4] = index - 3\r\n        end\r\n    end\r\n    updateTitle()\r\nend\r\n\r\nfunction startingGraceSelected(player, selected)\r\n    local options = {\r\n        '-1 dm: Start every hero with 2 extra Grace',\r\n        '+0 dm: Start every hero with 0 extra Grace'\r\n    }\r\n    for index, option in ipairs(options) do\r\n        if option == selected then\r\n            Settings.difficultyOptions[5] = index - 2\r\n        end\r\n    end\r\n    updateTitle()\r\nend\r\n\r\nfunction startingSparksSelected(player, selected)\r\n    local options = {\r\n        '-1 dm: Start every hero with 3 sparks',\r\n        '+0 dm: Start every hero with 0 sparks'\r\n    }\r\n    for index, option in ipairs(options) do\r\n        if option == selected then\r\n            Settings.difficultyOptions[6] = index - 2\r\n        end\r\n    end\r\n    updateTitle()\r\nend\r\n\r\nfunction numberOfHeroesSelected(player, selected)\r\n    local options = {\r\n        '+4 dm: Play with 3 heroes',\r\n        '+0 dm: Play with 4 heroes',\r\n        '+0 dm: Play with 5 heroes. (See extra rules)'\r\n    }\r\n    for index, option in ipairs(options) do\r\n        if option == selected then\r\n            if index == 1 then\r\n                Settings.difficultyOptions[7] = 4\r\n            else\r\n                Settings.difficultyOptions[7] = 0\r\n            end\r\n        end\r\n    end\r\n    updateTitle()\r\nend\r\n\r\nfunction updateTitle()\r\n    difficulty = 0\r\n    for _, option in ipairs(Settings.difficultyOptions) do\r\n        difficulty = difficulty + option\r\n    end\r\n    \r\n    if difficulty >= 0  then\r\n        difficulty = \"+\" .. difficulty\r\n    end\r\n    \r\n    UI.setAttributes('difficultyOptionsTitle', {\r\n        text = \"Difficulty Options (Modifier \" .. difficulty .. \")\"\r\n    })\r\nend\r\n\r\nfunction setDifficulty()\r\n    print('Game difficulty chosen')\r\n    \r\n    -- Move starting darkness and add cards\r\n    AddDarknessScript.call(\"moveStartingDarkness\")\r\n    \r\n    for _, player in ipairs(Player.getPlayers()) do\r\n        closeDifficultyPanel(player)\r\n        UI.setAttribute('MapPanel', 'active', true)\r\n        UI.setAttribute('MapPanelButton', 'active', true)\r\n        openMapPanel(player)\r\n    end\r\nend\r\n\r\nfunction duplicateSnapPoints()\r\n    local points = getObjectFromGUID('1baac0').getSnapPoints()\r\n    local characterDeck = getObjectsWithAllTags({'Quest', 'Deck'})[1];\r\n    for index, card in ipairs(characterDeck.getObjects(true)) do\r\n        local obj = characterDeck.takeObject({\r\n            position = {-16.28, (index / 10)+1, 29.68}\r\n        })\r\n        obj.setSnapPoints(points)\r\n    end\r\nend\r\n\r\nfunction shuffleDecks()\r\n    for _, deck in ipairs(getObjectsWithTag('deck')) do\r\n        deck.shuffle()\r\n    end\r\nend\r\n\r\nfunction mapDeckSelected(player, option, id)\r\n    SelectedMapDeck = MapDecks[option + 1]\r\nend\r\n\r\nfunction setMapDeck()\r\n    for _, player in ipairs(Player.getPlayers()) do\r\n        closeMapPanel(player)\r\n    end\r\n    \r\n    shuffleDecks()\r\n    print('Selected \"' .. DeckMapNames[SelectedMapDeck] .. '\" map deck.')\r\n    for _, player in ipairs(Player.getPlayers()) do\r\n        closeMapPanel(player)\r\n    end\r\n    \r\n    if SelectedMapDeck == 'Everything' then return end\r\n    createMapDeck(SelectedMapDeck)\r\n    \r\n    -- Add starting blights\r\n    local blightDm = Settings.difficultyOptions[2]\r\n    local startingBlights = 0\r\n    if blightDm == 0 then startingBlights = 1 end\r\n    if blightDm == 3 then startingBlights = 2 end\r\n    AddBlightScript.call(\"createStartingBlights\", startingBlights)\r\nend\r\n\r\nfunction setCharacters()\r\n    local pawns = {}\r\n    for _, color in ipairs(Colors) do\r\n        local pawn = getStarterPawn(color)\r\n        if pawn != nil then\r\n            table.insert(pawns, {Color = color, Pawn = getStarterPawn(color)})\r\n        end\r\n    end\r\n    \r\n    for _, p in ipairs(pawns) do\r\n        -- Move the pawn to the Monestary\r\n        getObjectsWithAllTags({'Pawn', p['Pawn']})[1].setPositionSmooth(MonestaryPositions[p['Color']])\r\n        dealPlayerCards(p['Color'], p['Pawn'])\r\n        dealCharacterSheet(p['Color'], p['Pawn'])\r\n    end\r\n     \r\n    -- Use DM Starting Power Cards\r\n    if Settings.difficultyOptions[4] == -2 then\r\n        print('You get to begin with all five starting cards.')\r\n    else\r\n        local startingCardAmount = 'three'\r\n        if Settings.difficultyOptions[4] == -1 then startingCardAmount = 'four' end\r\n        print('Choose ' .. startingCardAmount .. ' of your starting cards, put the other two back in your character deck, and then shuffle it.')\r\n    end\r\nend\r\n\r\nfunction getStarterPawn(color)\r\n    local sheetStarterZone = getObjectsWithAllTags({'Character Sheet', 'Zone', color})[1];\r\n    local pawns = {}\r\n    for _, object in ipairs(sheetStarterZone.getObjects(true)) do\r\n        if object.hasTag('Pawn') then\r\n            table.insert(pawns, object)\r\n        end\r\n    end\r\n    if #pawns > 1 then\r\n        print('Only one pawn may be selected per player color.')\r\n        return;\r\n    end\r\n    if pawns[1] == nil then return end\r\n    pawns[1].highlightOn(color)\r\n    return pawns[1].getName()\r\nend\r\n\r\nfunction dealCharacterSheet(color, character)\r\n    local characterSheetDeck = getObjectsWithAllTags({'Character Sheet', 'Deck'})[1];\r\n    local sheetStarterZone = getObjectsWithAllTags({'Character Sheet', 'Zone', color})[1];\r\n    for _, card in ipairs(characterSheetDeck.getObjects(true)) do\r\n        if has_value(card.tags, character) then\r\n            characterSheetDeck.takeObject({\r\n                guid = card.guid,\r\n                position = sheetStarterZone.getPosition(),\r\n                callback_function = function(spawnedObject)\r\n                    Wait.time(function() setCharacterSheetTokens(spawnedObject) end, 1.3)\r\n                end\r\n            })\r\n        end\r\n    end\r\n    \r\n    -- Use DM starting sparks\r\n    if Settings.difficultyOptions[6] == -1 then\r\n        Wait.time(function()  AddBlightScript.call(\"getItemFromBag\", {tag = 'Spark', color = color}) end, 1.3)\r\n        Wait.time(function()  AddBlightScript.call(\"getItemFromBag\", {tag = 'Spark', color = color}) end, 2)\r\n        Wait.time(function()  AddBlightScript.call(\"getItemFromBag\", {tag = 'Spark', color = color}) end, 2.7)\r\n    end\r\nend\r\n\r\nfunction setCharacterSheetTokens(object)\r\n    object.setLock(true)\r\n    local graceBag = getObjectsWithAllTags({'Grace', 'Bag'})[1];\r\n    local secrecyBag = getObjectsWithAllTags({'Secrecy', 'Bag'})[1];\r\n    for _, point in ipairs(object.getSnapPoints()) do\r\n        if has_value(point.tags, 'Default Secrecy') then\r\n            secrecyBag.takeObject({\r\n                position = object.positionToWorld(point.position),\r\n                rotation = {0,180,0}\r\n            })\r\n        end\r\n        \r\n        -- Use DM Starting Grace. A 2 modifier is the same as +1.31 x coords\r\n        local startingGraceModifer = 0\r\n        if Settings.difficultyOptions[5] == -1 then startingGraceModifer = 1.31 end\r\n        \r\n        if has_value(point.tags, 'Default Grace') then\r\n            local gracePos = object.positionToWorld(point.position)\r\n            gracePos[1] = gracePos[1] + startingGraceModifer\r\n            graceBag.takeObject({\r\n                position = gracePos,\r\n                rotation = {0,180,0}\r\n            })\r\n        end\r\n    end\r\nend\r\n\r\nfunction createMapDeck(color)\r\n    local MapDeck = getObjectsWithAllTags({'Map', 'Deck'})[1];\r\n    for _, card in ipairs(MapDeck.getObjects(true)) do\r\n        if has_value(card.tags, color) == false then\r\n            MapDeck.takeObject({\r\n                guid = card.guid,\r\n                position = {-16.15, 1.15, 28.98}\r\n            })\r\n        end\r\n    end\r\nend\r\n\r\n-- Check if a table contains a value \r\nfunction has_value(tableObject, matchValue)\r\n    for index, value in ipairs(tableObject) do\r\n        if value == matchValue then\r\n            return true\r\n        end\r\n    end\r\n    return false\r\nend\r\n\r\nfunction dealPlayerCards(color, character)\r\n    local characterDeck = getObjectsWithAllTags({'Characters', 'Deck'})[1];\r\n    local colorDeckZone = getObjectsWithAllTags({'Deck', 'Zone', color})[1];\r\n    for _, card in ipairs(characterDeck.getObjects(true)) do\r\n        if has_value(card.tags, character) then\r\n            characterDeck.takeObject({\r\n                guid = card.guid,\r\n                position = colorDeckZone.getPosition()\r\n            })\r\n        end\r\n    end\r\n    \r\n    Wait.time(function() dealStarterCards(colorDeckZone, color) end, 1.8)\r\nend\r\n\r\nfunction dealStarterCards(zone, color)\r\n    local deck = getDeckFromZone(zone)\r\n    if deck == nil then return end\r\n    \r\n    local dealt = 1;\r\n    for _, card in ipairs(deck.getObjects(true)) do\r\n        if has_value(card.tags, 'Starter') then\r\n            local index = dealt % 4;\r\n            if index == 0 then index = 4 end\r\n            local pos = { Players[color][index], Players['PlayedY'], Players['PlayedZ'][math.ceil(dealt/4)]}\r\n            deck.takeObject({\r\n                guid = card.guid,\r\n                position = pos,\r\n                flip = true\r\n            })\r\n            dealt = dealt + 1\r\n        end\r\n    end\r\nend\r\n\r\nfunction getDeckFromZone(zone)\r\n    if (zone == nil) then return end\r\n    for _, object in ipairs(zone.getObjects(true)) do\r\n        if (object.type == 'Deck') then\r\n            return object\r\n        end\r\n    end\r\n    return nil \r\nend\r\n\r\nfunction closeHeroTurnPanel(player) closePanel(player.color, 'heroTurnPanelClosedBy', 'HeroTurnPanel') end\r\nfunction closeActionsPanel(player) closePanel(player.color, 'actionsPanelClosedBy', 'ActionsPanel') end\r\nfunction closeDifficultyPanel(player) closePanel(player.color, 'difficultyPanelClosedBy', 'DifficultyPanel') end\r\nfunction closeMapPanel(player) closePanel(player.color, 'mapPanelClosedBy', 'MapPanel') end\r\n\r\nfunction openHeroTurnPanel(player) openPanel(player.color, 'heroTurnPanelClosedBy', 'HeroTurnPanel') end\r\nfunction openActionsPanel(player) openPanel(player.color, 'actionsPanelClosedBy', 'ActionsPanel') end\r\nfunction openDifficultyPanel(player) openPanel(player.color, 'difficultyPanelClosedBy', 'DifficultyPanel') end\r\nfunction openMapPanel(player) openPanel(player.color, 'mapPanelClosedBy', 'MapPanel') end\r\n\r\nfunction closePanel(color, tableName, elementId)\r\n    table.insert(Settings[tableName], color)\r\n    showHidePanelsForPlayers(tableName, elementId)\r\nend\r\nfunction openPanel(color, tableName, elementId)\r\n    table.removeByValue(Settings[tableName], color)\r\n    showHidePanelsForPlayers(tableName, elementId)\r\nend\r\n\r\nfunction showHidePanelForAllPlayers()\r\n    showHidePanelsForPlayers('heroTurnPanelClosedBy', 'HeroTurnPanel')\r\n    showHidePanelsForPlayers('actionsPanelClosedBy', 'ActionsPanel')\r\n    showHidePanelsForPlayers('mapPanelClosedBy', 'MapPanel')\r\n    showHidePanelsForPlayers('difficultyPanelClosedBy', 'DifficultyPanel')\r\nend\r\n\r\nfunction showHidePanelsForPlayers(tableName, elementId)\r\n    local visibility = getVisibilityString(invertUIVisibilityTable(Settings[tableName]), true)\r\n    UI.setAttribute(elementId, \"visibility\", visibility)\r\n    local buttonVisibility = getVisibilityString(Settings[tableName], true)\r\n    UI.setAttribute(elementId .. \"Button\", \"visibility\", buttonVisibility)\r\nend\r\n\r\n-- Turns a visibility table (a table of players) into a string suitable for the visibility attribute.\r\nfunction getVisibilityString(visibilityTable, hideForAllIfEmpty)\r\n    local tableSize = #visibilityTable\r\n\r\n    -- If the table is empty, hide the UI for everybody if enabled. This is done by setting the visibility to \"Nobody\". If disabled, everybody will see the UI.\r\n    if hideForAllIfEmpty and tableSize == 0 then\r\n        table.insert(visibilityTable, \"Nobody\")\r\n    -- Otherwise, make sure \"Nobody\" is removed if it's not the only value in the table.\r\n    elseif tableSize > 1 then\r\n        table.removeByValue(visibilityTable, \"Nobody\")\r\n    end\r\n\r\n    -- Implode the string, separating by a pipe.\r\n    return table.concat(visibilityTable, \"|\")\r\nend\r\n\r\n-- Inverts a UI visibility table, so all players currently present in it are removed, while all players not present are added.\r\nfunction invertUIVisibilityTable(visibilityTable)\r\n    local newVisibilityTable = {}\r\n\r\n    -- Loop through the available seats.\r\n    for _, value in ipairs(Player.getColors()) do\r\n        -- If they're not currently in the table, add them.\r\n        if not table.inTable(visibilityTable, value) then\r\n            table.insert(newVisibilityTable, value)\r\n        end\r\n    end\r\n\r\n    return newVisibilityTable\r\nend\r\n\r\n-- Check if a value is in a table.\r\nfunction table:inTable(value)\r\n    for tableKey, tableValue in ipairs(self) do\r\n        if value == tableValue then\r\n            return true\r\n        end\r\n    end\r\n\r\n    return false\r\nend\r\n\r\n-- Gets the index of a value in a given table.\r\nfunction table:indexOf(value)\r\n    for tableKey, tableValue in ipairs(self) do \r\n        if tableValue == value then \r\n            return tableKey\r\n        end\r\n    end\r\nend\r\n\r\n-- Removes an element from a table by value.\r\nfunction table:removeByValue(value)\r\n    local index = table.indexOf(self, value)\r\n    if index then\r\n        table.remove(self, index)\r\n    end\r\n\r\n    return self\r\nend\r\n\r\nPlayerBoard = nil\r\nSelectedMapDeck = 'Green';\r\nDeckMapNames = {\r\n    Green = 'Simplicity',\r\n    Yellow = 'Hunted',\r\n    Orange = 'Overrun',\r\n    Red = 'Entropy',\r\n    Purple = 'Spiritual Warfare',\r\n    Blue = 'Classic',\r\n    Everything = 'Everything'\r\n}\r\nMapDecks = {'Green', 'Yellow', 'Orange', 'Red', 'Purple', 'Blue', 'Everything'}\r\nColors = {'Red', 'Orange', 'Green', 'Blue', 'Purple'}\r\nMonestaryPositions = {\r\n    Red = {-12.3, 1.25, 13.50},\r\n    Orange = {-10, 1.25, 13.50},\r\n    Green = {-12.3, 1.25, 11.25},\r\n    Blue = {-10, 1.25, 11.25},\r\n    Purple = {-7.7, 1.25, 12.38}\r\n}\r\nPlayers = {\r\n    PlayedY = 1.1,\r\n    PlayedZ = {-12.20, -15.55},\r\n    Red = {-29.25, -26.78, -24.34, -21.86},\r\n    Orange = {-15.92, -13.45, -11.01, -8.53},\r\n    Green = {-2.57, -0.10, 2.34, 4.87},\r\n    Blue = {10.44, 12.91, 15.35, 17.83},\r\n    Purple = {23.22, 25.69, 28.13, 30.63},\r\n}",
+  "LuaScript": "Settings = {\r\n    difficultyOptions = {0,0,0,0,0,0,0},\r\n    heroTurnPanelClosedBy = {\"Nobody\"},\r\n    actionsPanelClosedBy = {\"Nobody\"},\r\n    difficultyPanelClosedBy = {\"Nobody\"},\r\n    mapPanelClosedBy = {\"Nobody\"},\r\n}\r\n\r\nReturnBlight = nil\r\nItemBag = nil\r\nAddDarknessScript = nil\r\nAddBlightScript = nil\r\nMapDeckScript = nil\r\n\r\nfunction onLoad(saveData)\r\n     addHotkey(\"Return Token\", function(playerColor, object, pointerPosition, isKeyUp)\r\n        if isKeyUp == true then return end\r\n        returnItem(object)\r\n    end, true)\r\n    \r\n    printToAll('Go to Options -> Game Keys and add a hotkey for returning tokens.', stringColorToRGB('Yellow'))\r\n    \r\n    -- Load the save data, if present.\r\n    if saveData and saveData ~= \"\" then\r\n       Settings = JSON.decode(saveData)\r\n    end\r\n    -- print(JSON.encode(Settings))\r\n    showHidePanelForAllPlayers()\r\n    \r\n    math.randomseed(os.time())\r\n\r\n    ReturnBlight = getObjectFromGUID('ea4c54')\r\n    PlayerBoard = getObjectFromGUID('65a138')\r\n    ItemBag = getObjectsWithAllTags({'Item', 'Bag'})[1]\r\n    AddDarknessScript = getObjectFromGUID('a4642e')\r\n    AddBlightScript = getObjectFromGUID('31c6dc')\r\n    MapDeckScript = getObjectFromGUID('89075e')\r\n\r\n    -- Set items uninteractable\r\n    for key, uninteractableObject in ipairs(getObjectsWithTag('Uninteractable')) do\r\n        uninteractableObject.interactable = false\r\n    end\r\nend\r\n\r\nfunction onObjectNumberTyped(object,  player_color,  number)\r\n    if object.type == 'Deck' then\r\n        if number > 9 then\r\n            print(\"Sorry. You can only draw a maximum of 9 cards.\")\r\n            return true\r\n        end\r\n        object.deal(number, player_color)\r\n        return true\r\n    end\r\nend\r\n\r\nfunction returnItem(object)\r\n    -- Unstack stacks\r\n    if object.name == 'Custom_Token_Stack' then\r\n        local newObject = object.takeObject()\r\n        object = newObject\r\n    end\r\n    \r\n    if object.hasTag(\"Blight\") then\r\n        ReturnBlight.call(\"returnBlight\", object)\r\n        return true\r\n    end\r\n    if object.hasTag(\"Spark\") then\r\n        local bag = getObjectsWithAllTags({'Spark', 'Bag'})[1]\r\n        bag.putObject(object)\r\n        return true\r\n    end\r\n    if object.hasTag(\"Progress\") then\r\n        local bag = getObjectsWithAllTags({'Progress', 'Bag'})[1]\r\n        bag.putObject(object)\r\n        return true\r\n    end\r\n    if object.hasTag(\"Time\") then\r\n        local bag = getObjectsWithAllTags({'Time', 'Bag'})[1]\r\n        bag.putObject(object)\r\n        return true\r\n    end\r\n    if object.hasTag(\"Key\") then\r\n        local bag = getObjectsWithAllTags({'Key', 'Bag'})[1]\r\n        bag.putObject(object)\r\n        return true\r\n    end\r\n    if object.hasTag(\"Item\") then\r\n        ItemBag.putObject(object)\r\n        return true\r\n    end\r\nend\r\n\r\nfunction test()\r\n\r\nend\r\n\r\n-- Called when the game is saved.\r\nfunction onSave()\r\n    -- Save the game's Settings.\r\n    return JSON.encode(Settings)\r\nend\r\n\r\nfunction darknessCardsSelected(player, selected) \r\n    local options = {\r\n         '-1 dm: 1 card (at 15)',\r\n         '+0 dm: 2 cards (at 10, 20)',\r\n         '+1 dm: 3 cards (at 7, 14, 21)',\r\n         '+2 dm: 4 cards (at 5, 10, 15, 20)',\r\n         '+3 dm: 5 cards (at 4, 8, 12, 16, 20)',\r\n         '+4 dm: 6 cards (at 2, 6, 10, 14, 18, 22)',\r\n         '+5 dm: 7 cards (at 0, 4, 8, 12, 16, 20, 24)',\r\n         '+6 dm: 8 cards (at 0, 3, 6, 9, 12, 15, 18, 21)'\r\n    }\r\n    for index, option in ipairs(options) do\r\n        if option == selected then\r\n            Settings.difficultyOptions[1] = index - 2\r\n        end\r\n    end\r\n    updateTitle()\r\nend\r\nfunction startingBlightsSelected(player, selected)\r\n    local options = {\r\n        '-3 dm: Start with no blights',\r\n        '+0 dm: 1 blight per location (except the Monastery)',\r\n        '+3 dm: 2 blights per location (except the Monastery)'\r\n    }\r\n    for index, option in ipairs(options) do\r\n        if option == selected then\r\n            Settings.difficultyOptions[2] = (index - 2) * 3\r\n        end\r\n    end\r\n    updateTitle()\r\nend\r\n\r\nfunction startingDarknessSelected(player, selected)\r\n    local options = {\r\n        '-1 dm: Darkness -5',\r\n        '+0 dm: Darkness 0',\r\n        '+1 dm: Darkness 5'\r\n    }\r\n    for index, option in ipairs(options) do\r\n        if option == selected then\r\n            Settings.difficultyOptions[3] = index - 2\r\n        end\r\n    end\r\n    updateTitle()\r\nend\r\n\r\nfunction startingPowerCardsSelected(player, selected)\r\n    local options = {\r\n        '-2 dm: Start every hero with 5 power cards',\r\n        '-1 dm: Start every hero with 4 power cards',\r\n        '+0 dm: Start every hero with 3 power cards'\r\n    }\r\n    for index, option in ipairs(options) do\r\n        if option == selected then\r\n            Settings.difficultyOptions[4] = index - 3\r\n        end\r\n    end\r\n    updateTitle()\r\nend\r\n\r\nfunction startingGraceSelected(player, selected)\r\n    local options = {\r\n        '-1 dm: Start every hero with 2 extra Grace',\r\n        '+0 dm: Start every hero with 0 extra Grace'\r\n    }\r\n    for index, option in ipairs(options) do\r\n        if option == selected then\r\n            Settings.difficultyOptions[5] = index - 2\r\n        end\r\n    end\r\n    updateTitle()\r\nend\r\n\r\nfunction startingSparksSelected(player, selected)\r\n    local options = {\r\n        '-1 dm: Start every hero with 3 sparks',\r\n        '+0 dm: Start every hero with 0 sparks'\r\n    }\r\n    for index, option in ipairs(options) do\r\n        if option == selected then\r\n            Settings.difficultyOptions[6] = index - 2\r\n        end\r\n    end\r\n    updateTitle()\r\nend\r\n\r\nfunction numberOfHeroesSelected(player, selected)\r\n    local options = {\r\n        '+4 dm: Play with 3 heroes',\r\n        '+0 dm: Play with 4 heroes',\r\n        '+0 dm: Play with 5 heroes. (See extra rules)'\r\n    }\r\n    for index, option in ipairs(options) do\r\n        if option == selected then\r\n            if index == 1 then\r\n                Settings.difficultyOptions[7] = 4\r\n            else\r\n                Settings.difficultyOptions[7] = 0\r\n            end\r\n        end\r\n    end\r\n    updateTitle()\r\nend\r\n\r\nfunction updateTitle()\r\n    difficulty = 0\r\n    for _, option in ipairs(Settings.difficultyOptions) do\r\n        difficulty = difficulty + option\r\n    end\r\n    \r\n    if difficulty >= 0  then\r\n        difficulty = \"+\" .. difficulty\r\n    end\r\n    \r\n    UI.setAttributes('difficultyOptionsTitle', {\r\n        text = \"Difficulty Options (Modifier \" .. difficulty .. \")\"\r\n    })\r\nend\r\n\r\nfunction setDifficulty()\r\n    print('Game difficulty chosen')\r\n    \r\n    -- Move starting darkness and add cards\r\n    AddDarknessScript.call(\"moveStartingDarkness\")\r\n    \r\n    for _, player in ipairs(Player.getPlayers()) do\r\n        closeDifficultyPanel(player)\r\n        UI.setAttribute('MapPanel', 'active', true)\r\n        UI.setAttribute('MapPanelButton', 'active', true)\r\n        openMapPanel(player)\r\n    end\r\nend\r\n\r\nfunction duplicateSnapPoints()\r\n    local points = getObjectFromGUID('1baac0').getSnapPoints()\r\n    local characterDeck = getObjectsWithAllTags({'Quest', 'Deck'})[1];\r\n    for index, card in ipairs(characterDeck.getObjects(true)) do\r\n        local obj = characterDeck.takeObject({\r\n            position = {-16.28, (index / 10)+1, 29.68}\r\n        })\r\n        obj.setSnapPoints(points)\r\n    end\r\nend\r\n\r\nfunction shuffleDecks()\r\n    for _, deck in ipairs(getObjectsWithTag('deck')) do\r\n        deck.shuffle()\r\n    end\r\nend\r\n\r\nfunction mapDeckSelected(player, option, id)\r\n    SelectedMapDeck = MapDecks[option + 1]\r\nend\r\n\r\nfunction setMapDeck()\r\n    for _, player in ipairs(Player.getPlayers()) do\r\n        closeMapPanel(player)\r\n    end\r\n    \r\n    shuffleDecks()\r\n    print('Selected \"' .. DeckMapNames[SelectedMapDeck] .. '\" map deck.')\r\n    for _, player in ipairs(Player.getPlayers()) do\r\n        closeMapPanel(player)\r\n    end\r\n    \r\n    if SelectedMapDeck ~= 'Everything' then \r\n        createMapDeck(SelectedMapDeck)\r\n    end    \r\n    \r\n    -- Add starting blights\r\n    local blightDm = Settings.difficultyOptions[2]\r\n    local startingBlights = 0\r\n    if blightDm == 0 then startingBlights = 1 end\r\n    if blightDm == 3 then startingBlights = 2 end\r\n    AddBlightScript.call(\"createStartingBlights\", startingBlights)\r\nend\r\n\r\nfunction setCharacters()\r\n    local pawns = {}\r\n    for _, color in ipairs(Colors) do\r\n        local pawn = getStarterPawn(color)\r\n        if pawn != nil then\r\n            table.insert(pawns, {Color = color, Pawn = getStarterPawn(color)})\r\n        end\r\n    end\r\n    \r\n    for _, p in ipairs(pawns) do\r\n        -- Move the pawn to the Monestary\r\n        getObjectsWithAllTags({'Pawn', p['Pawn']})[1].setPositionSmooth(MonestaryPositions[p['Color']])\r\n        dealPlayerCards(p['Color'], p['Pawn'])\r\n        dealCharacterSheet(p['Color'], p['Pawn'])\r\n    end\r\n     \r\n    -- Use DM Starting Power Cards\r\n    if Settings.difficultyOptions[4] == -2 then\r\n        print('You get to begin with all five starting cards.')\r\n    else\r\n        local startingCardAmount = 'three'\r\n        if Settings.difficultyOptions[4] == -1 then startingCardAmount = 'four' end\r\n        print('Choose ' .. startingCardAmount .. ' of your starting cards, put the other two back in your character deck, and then shuffle it.')\r\n    end\r\nend\r\n\r\nfunction getStarterPawn(color)\r\n    local sheetStarterZone = getObjectsWithAllTags({'Character Sheet', 'Zone', color})[1];\r\n    local pawns = {}\r\n    for _, object in ipairs(sheetStarterZone.getObjects(true)) do\r\n        if object.hasTag('Pawn') then\r\n            table.insert(pawns, object)\r\n        end\r\n    end\r\n    if #pawns > 1 then\r\n        print('Only one pawn may be selected per player color.')\r\n        return;\r\n    end\r\n    if pawns[1] == nil then return end\r\n    pawns[1].highlightOn(color)\r\n    return pawns[1].getName()\r\nend\r\n\r\nfunction dealCharacterSheet(color, character)\r\n    local characterSheetDeck = getObjectsWithAllTags({'Character Sheet', 'Deck'})[1];\r\n    local sheetStarterZone = getObjectsWithAllTags({'Character Sheet', 'Zone', color})[1];\r\n    for _, card in ipairs(characterSheetDeck.getObjects(true)) do\r\n        if has_value(card.tags, character) then\r\n            characterSheetDeck.takeObject({\r\n                guid = card.guid,\r\n                position = sheetStarterZone.getPosition(),\r\n                callback_function = function(spawnedObject)\r\n                    Wait.time(function() setCharacterSheetTokens(spawnedObject) end, 1.3)\r\n                end\r\n            })\r\n        end\r\n    end\r\n    \r\n    -- Use DM starting sparks\r\n    if Settings.difficultyOptions[6] == -1 then\r\n        Wait.time(function()  AddBlightScript.call(\"getItemFromBag\", {tag = 'Spark', color = color}) end, 1.3)\r\n        Wait.time(function()  AddBlightScript.call(\"getItemFromBag\", {tag = 'Spark', color = color}) end, 2)\r\n        Wait.time(function()  AddBlightScript.call(\"getItemFromBag\", {tag = 'Spark', color = color}) end, 2.7)\r\n    end\r\nend\r\n\r\nfunction setCharacterSheetTokens(object)\r\n    object.setLock(true)\r\n    local graceBag = getObjectsWithAllTags({'Grace', 'Bag'})[1];\r\n    local secrecyBag = getObjectsWithAllTags({'Secrecy', 'Bag'})[1];\r\n    for _, point in ipairs(object.getSnapPoints()) do\r\n        if has_value(point.tags, 'Default Secrecy') then\r\n            secrecyBag.takeObject({\r\n                position = object.positionToWorld(point.position),\r\n                rotation = {0,180,0}\r\n            })\r\n        end\r\n        \r\n        -- Use DM Starting Grace. A 2 modifier is the same as +1.31 x coords\r\n        local startingGraceModifer = 0\r\n        if Settings.difficultyOptions[5] == -1 then startingGraceModifer = 1.31 end\r\n        \r\n        if has_value(point.tags, 'Default Grace') then\r\n            local gracePos = object.positionToWorld(point.position)\r\n            gracePos[1] = gracePos[1] + startingGraceModifer\r\n            graceBag.takeObject({\r\n                position = gracePos,\r\n                rotation = {0,180,0}\r\n            })\r\n        end\r\n    end\r\nend\r\n\r\nfunction createMapDeck(color)\r\n    local MapDeck = getObjectsWithAllTags({'Map', 'Deck'})[1];\r\n    for _, card in ipairs(MapDeck.getObjects(true)) do\r\n        if has_value(card.tags, color) == false then\r\n            MapDeck.takeObject({\r\n                guid = card.guid,\r\n                position = {-30.37, 1.13, 32.43}\r\n            })\r\n        end\r\n    end\r\nend\r\n\r\n-- Check if a table contains a value \r\nfunction has_value(tableObject, matchValue)\r\n    for index, value in ipairs(tableObject) do\r\n        if value == matchValue then\r\n            return true\r\n        end\r\n    end\r\n    return false\r\nend\r\n\r\nfunction dealPlayerCards(color, character)\r\n    local characterDeck = getObjectsWithAllTags({'Characters', 'Deck'})[1];\r\n    local colorDeckZone = getObjectsWithAllTags({'Deck', 'Zone', color})[1];\r\n    for _, card in ipairs(characterDeck.getObjects(true)) do\r\n        if has_value(card.tags, character) then\r\n            characterDeck.takeObject({\r\n                guid = card.guid,\r\n                position = colorDeckZone.getPosition()\r\n            })\r\n        end\r\n    end\r\n    \r\n    Wait.time(function() dealStarterCards(colorDeckZone, color) end, 1.8)\r\nend\r\n\r\nfunction dealStarterCards(zone, color)\r\n    local deck = getDeckFromZone(zone)\r\n    if deck == nil then return end\r\n    \r\n    local dealt = 1;\r\n    for _, card in ipairs(deck.getObjects(true)) do\r\n        if has_value(card.tags, 'Starter') then\r\n            local index = dealt % 4;\r\n            if index == 0 then index = 4 end\r\n            local pos = { Players[color][index], Players['PlayedY'], Players['PlayedZ'][math.ceil(dealt/4)]}\r\n            deck.takeObject({\r\n                guid = card.guid,\r\n                position = pos,\r\n                flip = true\r\n            })\r\n            dealt = dealt + 1\r\n        end\r\n    end\r\nend\r\n\r\nfunction getDeckFromZone(zone)\r\n    if (zone == nil) then return end\r\n    for _, object in ipairs(zone.getObjects(true)) do\r\n        if (object.type == 'Deck') then\r\n            return object\r\n        end\r\n    end\r\n    return nil \r\nend\r\n\r\nfunction closeHeroTurnPanel(player) closePanel(player.color, 'heroTurnPanelClosedBy', 'HeroTurnPanel') end\r\nfunction closeActionsPanel(player) closePanel(player.color, 'actionsPanelClosedBy', 'ActionsPanel') end\r\nfunction closeDifficultyPanel(player) closePanel(player.color, 'difficultyPanelClosedBy', 'DifficultyPanel') end\r\nfunction closeMapPanel(player) closePanel(player.color, 'mapPanelClosedBy', 'MapPanel') end\r\n\r\nfunction openHeroTurnPanel(player) openPanel(player.color, 'heroTurnPanelClosedBy', 'HeroTurnPanel') end\r\nfunction openActionsPanel(player) openPanel(player.color, 'actionsPanelClosedBy', 'ActionsPanel') end\r\nfunction openDifficultyPanel(player) openPanel(player.color, 'difficultyPanelClosedBy', 'DifficultyPanel') end\r\nfunction openMapPanel(player) openPanel(player.color, 'mapPanelClosedBy', 'MapPanel') end\r\n\r\nfunction closePanel(color, tableName, elementId)\r\n    table.insert(Settings[tableName], color)\r\n    showHidePanelsForPlayers(tableName, elementId)\r\nend\r\nfunction openPanel(color, tableName, elementId)\r\n    table.removeByValue(Settings[tableName], color)\r\n    showHidePanelsForPlayers(tableName, elementId)\r\nend\r\n\r\nfunction showHidePanelForAllPlayers()\r\n    showHidePanelsForPlayers('heroTurnPanelClosedBy', 'HeroTurnPanel')\r\n    showHidePanelsForPlayers('actionsPanelClosedBy', 'ActionsPanel')\r\n    showHidePanelsForPlayers('mapPanelClosedBy', 'MapPanel')\r\n    showHidePanelsForPlayers('difficultyPanelClosedBy', 'DifficultyPanel')\r\nend\r\n\r\nfunction showHidePanelsForPlayers(tableName, elementId)\r\n    local visibility = getVisibilityString(invertUIVisibilityTable(Settings[tableName]), true)\r\n    UI.setAttribute(elementId, \"visibility\", visibility)\r\n    local buttonVisibility = getVisibilityString(Settings[tableName], true)\r\n    UI.setAttribute(elementId .. \"Button\", \"visibility\", buttonVisibility)\r\nend\r\n\r\n-- Turns a visibility table (a table of players) into a string suitable for the visibility attribute.\r\nfunction getVisibilityString(visibilityTable, hideForAllIfEmpty)\r\n    local tableSize = #visibilityTable\r\n\r\n    -- If the table is empty, hide the UI for everybody if enabled. This is done by setting the visibility to \"Nobody\". If disabled, everybody will see the UI.\r\n    if hideForAllIfEmpty and tableSize == 0 then\r\n        table.insert(visibilityTable, \"Nobody\")\r\n    -- Otherwise, make sure \"Nobody\" is removed if it's not the only value in the table.\r\n    elseif tableSize > 1 then\r\n        table.removeByValue(visibilityTable, \"Nobody\")\r\n    end\r\n\r\n    -- Implode the string, separating by a pipe.\r\n    return table.concat(visibilityTable, \"|\")\r\nend\r\n\r\n-- Inverts a UI visibility table, so all players currently present in it are removed, while all players not present are added.\r\nfunction invertUIVisibilityTable(visibilityTable)\r\n    local newVisibilityTable = {}\r\n\r\n    -- Loop through the available seats.\r\n    for _, value in ipairs(Player.getColors()) do\r\n        -- If they're not currently in the table, add them.\r\n        if not table.inTable(visibilityTable, value) then\r\n            table.insert(newVisibilityTable, value)\r\n        end\r\n    end\r\n\r\n    return newVisibilityTable\r\nend\r\n\r\n-- Check if a value is in a table.\r\nfunction table:inTable(value)\r\n    for tableKey, tableValue in ipairs(self) do\r\n        if value == tableValue then\r\n            return true\r\n        end\r\n    end\r\n\r\n    return false\r\nend\r\n\r\n-- Gets the index of a value in a given table.\r\nfunction table:indexOf(value)\r\n    for tableKey, tableValue in ipairs(self) do \r\n        if tableValue == value then \r\n            return tableKey\r\n        end\r\n    end\r\nend\r\n\r\n-- Removes an element from a table by value.\r\nfunction table:removeByValue(value)\r\n    local index = table.indexOf(self, value)\r\n    if index then\r\n        table.remove(self, index)\r\n    end\r\n\r\n    return self\r\nend\r\n\r\nPlayerBoard = nil\r\nSelectedMapDeck = 'Green';\r\nDeckMapNames = {\r\n    Green = 'Simplicity',\r\n    Yellow = 'Hunted',\r\n    Orange = 'Overrun',\r\n    Red = 'Entropy',\r\n    Purple = 'Spiritual Warfare',\r\n    Blue = 'Classic',\r\n    Everything = 'Everything'\r\n}\r\nMapDecks = {'Green', 'Yellow', 'Orange', 'Red', 'Purple', 'Blue', 'Everything'}\r\nColors = {'Red', 'Orange', 'Green', 'Blue', 'Purple'}\r\nMonestaryPositions = {\r\n    Red = {-12.3, 1.25, 13.50},\r\n    Orange = {-10, 1.25, 13.50},\r\n    Green = {-12.3, 1.25, 11.25},\r\n    Blue = {-10, 1.25, 11.25},\r\n    Purple = {-7.7, 1.25, 12.38}\r\n}\r\nPlayers = {\r\n    PlayedY = 1.1,\r\n    PlayedZ = {-12.20, -15.55},\r\n    Red = {-29.25, -26.78, -24.34, -21.86},\r\n    Orange = {-15.92, -13.45, -11.01, -8.53},\r\n    Green = {-2.57, -0.10, 2.34, 4.87},\r\n    Blue = {10.44, 12.91, 15.35, 17.83},\r\n    Purple = {23.22, 25.69, 28.13, 30.63},\r\n}",
   "LuaScriptState": "{\"actionsPanelClosedBy\":[\"Nobody\"],\"difficultyOptions\":[0,0,0,0,0,0,0],\"difficultyPanelClosedBy\":[\"Nobody\"],\"heroTurnPanelClosedBy\":[\"Nobody\"],\"mapPanelClosedBy\":[\"Nobody\"]}",
   "XmlUI": "<!-- Default values for UI elements. -->\r\n<Defaults>\r\n    <Panel\r\n        active=\"false\"\r\n        allowDragging=\"true\"\r\n        color=\"#FFFFFF\"\r\n        class=\"SetupPanel\"\r\n        outline=\"#000000\"\r\n        outlineSize=\"2 -2\"\r\n        rectAlignment=\"MiddleCenter\"\r\n        returnToOriginalPositionWhenReleased=\"false\"\r\n        showAnimation=\"FadeIn\"\r\n        showAnimationDelay=\"2\"/>\r\n\r\n    <Panel\r\n        class=\"SetupTopBar\"\r\n        color=\"#000000\"\r\n        height=\"28\"\r\n        rectAlignment=\"UpperLeft\"/>\r\n    \r\n    <Text\r\n        alignment=\"UpperLeft\"\r\n        class=\"SetupPanelTitle\"\r\n        color=\"#FFFFFF\"\r\n        fontSize=\"18\"\r\n        fontStyle=\"Bold\"\r\n        offsetXY=\"5 -4\"/>\r\n\r\n    <Text\r\n        alignment=\"UpperLeft\"\r\n        class=\"SetupTitle\"\r\n        fontSize=\"16\"\r\n        fontStyle=\"Bold\"/>\r\n\r\n    <Button\r\n        class=\"SetupPanelCloseButton\"\r\n        color=\"#990000\"\r\n        height=\"20\"\r\n        rectAlignment=\"UpperRight\"\r\n        text=\"X\"\r\n        textColor=\"#FFFFFF\"\r\n        offsetXY=\"-5 -4\"\r\n        width=\"20\"/>\r\n\r\n    <VerticalLayout \r\n        childForceExpandHeight=\"false\"\r\n        class=\"SetupGroup\"\r\n        padding=\"0 0 10 0\"\r\n        spacing=\"5\"/>\r\n\r\n    <VerticalLayout\r\n        childForceExpandHeight=\"true\"\r\n        class=\"SetupButtonGroup\"\r\n        padding=\"0 0 50 0\"\r\n        spacing=\"5\"/>\r\n\r\n    <VerticalLayout\r\n        childForceExpandHeight=\"false\"\r\n        class=\"SetupMainLayout\"\r\n        padding=\"5 5 30 0\"\r\n        rectAlignment=\"UpperLeft\"/>\r\n\r\n    <Text\r\n        alignment=\"UpperLeft\"\r\n        class=\"SetupText\"/>\r\n\r\n    <Button\r\n        class=\"SetupButton\"\r\n        height=\"30\"\r\n        ignoreLayout=\"true\"/>\r\n    \r\n    <Text\r\n        class=\"H1Title\"\r\n        fontSize=\"16\"\r\n        fontStyle=\"Bold\"\r\n        alignment=\"UpperCenter\" />\r\n        \r\n    <Text\r\n        class=\"H2Title\"\r\n        fontSize=\"14\"\r\n        fontStyle=\"Bold\"\r\n        alignment=\"UpperLeft\" />\r\n        \r\n    <Text\r\n        class=\"GuideBody\"\r\n        fontSize=\"12\"\r\n        alignment=\"UpperLeft\" />\r\n</Defaults>\r\n\r\n<Panel id=\"DifficultyPanel\" active=\"true\" width=\"500\" height=\"680\" rectAlignment=\"MiddleCenter\" returnToOriginalPositionWhenReleased=\"false\" allowDragging=\"true\" color=\"rgba(1,1,1,1)\" outline=\"Black\" >\r\n    <!-- The top row panel, containing the title and close buttons. -->\r\n    <Panel class=\"SetupTopBar\" width=\"500\">\r\n        <Text class=\"SetupPanelTitle\" id=\"difficultyOptionsTitle\">Difficulty Options (Modifier +0)</Text>\r\n        <Button class=\"SetupPanelCloseButton\" onClick=\"closeDifficultyPanel\"></Button>\r\n    </Panel>\r\n    \r\n    \r\n    <TableLayout autoCalculateHeight=\"true\" cellBackgroundColor=\"clear\" padding=\"10 10 40 10\">\r\n        <Row preferredHeight=\"60\"><Cell>\r\n            <Text fontSize=\"14\" alignment=\"UpperLeft\">Some optional rules have a greater impact than others. To help you gauge the effect of an optional rule, each rule is rated with a difficulty modifier (dm) showing its approximate magnitude.</Text>\r\n        </Cell></Row>\r\n        <Row preferredHeight=\"5\"><Cell></Cell></Row>\r\n        \r\n        <Row preferredHeight=\"20\"><Cell>\r\n            <Text fontSize=\"16\" fontStyle=\"Bold\" alignment=\"UpperLeft\">Starting Darkness</Text>\r\n        </Cell></Row>\r\n        <Row preferredHeight=\"30\"><Cell>\r\n            <Dropdown onValueChanged=\"startingDarknessSelected\">\r\n                <Option>-1 dm: Darkness -5</Option>\r\n                <Option selected=\"true\">+0 dm: Darkness 0</Option>\r\n                <Option>+1 dm: Darkness 5</Option>\r\n            </Dropdown>\r\n        </Cell></Row>\r\n        \r\n        <Row preferredHeight=\"20\"><Cell></Cell></Row>\r\n        <Row preferredHeight=\"20\"><Cell>\r\n            <Text fontSize=\"16\" fontStyle=\"Bold\" alignment=\"UpperLeft\">Darkness Cards</Text>\r\n        </Cell></Row>\r\n        <Row preferredHeight=\"30\"><Cell>\r\n            <Dropdown onValueChanged=\"darknessCardsSelected\">\r\n                <Option>-1 dm: 1 card (at 15)</Option>\r\n                <Option selected=\"true\">+0 dm: 2 cards (at 10, 20)</Option>\r\n                <Option>+1 dm: 3 cards (at 7, 14, 21)</Option>\r\n                <Option>+2 dm: 4 cards (at 5, 10, 15, 20)</Option>\r\n                <Option>+3 dm: 5 cards (at 4, 8, 12, 16, 20)</Option>\r\n                <Option>+4 dm: 6 cards (at 2, 6, 10, 14, 18, 22)</Option>\r\n                <Option>+5 dm: 7 cards (at 0, 4, 8, 12, 16, 20, 24)</Option>\r\n                <Option>+6 dm: 8 cards (at 0, 3, 6, 9, 12, 15, 18, 21)</Option>\r\n            </Dropdown>\r\n        </Cell></Row>\r\n        \r\n        <Row preferredHeight=\"20\"><Cell></Cell></Row>\r\n        <Row preferredHeight=\"20\"><Cell>\r\n            <Text fontSize=\"16\" fontStyle=\"Bold\" alignment=\"UpperLeft\">Starting Blights</Text>\r\n        </Cell></Row>\r\n        <Row preferredHeight=\"30\"><Cell>\r\n            <Dropdown onValueChanged=\"startingBlightsSelected\">\r\n                <Option>-3 dm: Start with no blights</Option>\r\n                <Option selected=\"true\">+0 dm: 1 blight per location (except the Monastery)</Option>\r\n                <Option>+3 dm: 2 blights per location (except the Monastery)</Option>\r\n            </Dropdown>\r\n        </Cell></Row>\r\n        \r\n        <Row preferredHeight=\"20\"><Cell></Cell></Row>\r\n        <Row preferredHeight=\"20\"><Cell>\r\n            <Text fontSize=\"16\" fontStyle=\"Bold\" alignment=\"UpperLeft\">Starting Power Cards</Text>\r\n        </Cell></Row>\r\n        <Row preferredHeight=\"30\"><Cell>\r\n            <Dropdown onValueChanged=\"startingPowerCardsSelected\">\r\n                <Option>-2 dm: Start every hero with 5 power cards</Option>\r\n                <Option>-1 dm: Start every hero with 4 power cards</Option>\r\n                <Option selected=\"true\">+0 dm: Start every hero with 3 power cards</Option>\r\n            </Dropdown>\r\n        </Cell></Row>\r\n       \r\n        <Row preferredHeight=\"20\"><Cell></Cell></Row>\r\n        <Row preferredHeight=\"20\"><Cell>\r\n            <Text fontSize=\"16\" fontStyle=\"Bold\" alignment=\"UpperLeft\">Starting Grace</Text>\r\n        </Cell></Row>\r\n        <Row preferredHeight=\"30\"><Cell>\r\n            <Dropdown onValueChanged=\"startingGraceSelected\">\r\n                <Option>-1 dm: Start every hero with 2 extra Grace</Option>\r\n                <Option selected=\"true\">+0 dm: Start every hero with 0 extra Grace</Option>\r\n            </Dropdown>\r\n        </Cell></Row>\r\n        \r\n        <Row preferredHeight=\"20\"><Cell></Cell></Row>\r\n        <Row preferredHeight=\"20\"><Cell>\r\n            <Text fontSize=\"16\" fontStyle=\"Bold\" alignment=\"UpperLeft\">Starting Sparks</Text>\r\n        </Cell></Row>\r\n        <Row preferredHeight=\"30\"><Cell>\r\n            <Dropdown onValueChanged=\"startingSparksSelected\">\r\n                <Option>-1 dm: Start every hero with 3 sparks</Option>\r\n                <Option selected=\"true\">+0 dm: Start every hero with 0 sparks</Option>\r\n            </Dropdown>\r\n        </Cell></Row>\r\n        \r\n        <Row preferredHeight=\"20\"><Cell></Cell></Row>\r\n        <Row preferredHeight=\"20\"><Cell>\r\n            <Text fontSize=\"16\" fontStyle=\"Bold\" alignment=\"UpperLeft\">Number of Heroes</Text>\r\n        </Cell></Row>\r\n        <Row preferredHeight=\"30\"><Cell>\r\n            <Dropdown onValueChanged=\"numberOfHeroesSelected\">\r\n                <Option>+4 dm: Play with 3 heroes</Option>\r\n                <Option selected=\"true\">+0 dm: Play with 4 heroes</Option>\r\n                <Option>+0 dm: Play with 5 heroes. (See extra rules)</Option>\r\n            </Dropdown>\r\n        </Cell></Row>\r\n        \r\n        <Row preferredHeight=\"40\"><Cell></Cell></Row>\r\n        <Row preferredHeight=\"40\"><Cell>\r\n            <Button onClick=\"setDifficulty\" color=\"rgb(0.19,0.7,0.12)\" textColor=\"white\" fontSize=\"20\"  height=\"40\" width=\"120\">Set Difficulty</Button>\r\n        </Cell></Row>\r\n    </TableLayout>\r\n   \r\n</Panel>\r\n\r\n\r\n<Panel id=\"MapPanel\" active=\"false\" visibility=\"Nobody\" width=\"500\" height=\"620\" rectAlignment=\"MiddleCenter\" returnToOriginalPositionWhenReleased=\"false\" allowDragging=\"true\" color=\"rgba(1,1,1,1)\" outline=\"Black\">\r\n    <!-- The top row panel, containing the title and close buttons. -->\r\n    <Panel class=\"SetupTopBar\" width=\"500\">\r\n        <Text class=\"SetupPanelTitle\">Map Deck</Text>\r\n        <Button class=\"SetupPanelCloseButton\" onClick=\"closeMapPanel\"></Button>\r\n    </Panel>\r\n    <TableLayout autoCalculateHeight=\"true\" cellBackgroundColor=\"clear\" padding=\"10 10 40 10\">\r\n        <Row preferredHeight=\"330\"><Cell>\r\n            <Text fontSize=\"14\" alignment=\"UpperLeft\">Simplicity: This subdeck has the smallest variety of blights and search results; recommended for your first game.\r\n\r\nHunted: Everything is out to get you in this subdeck filled with traps and detection.\r\n\r\nOverrun: Face the teeming hordes of undead in this subdeck with an emphasis on monster blights.\r\n\r\nEntropy: The world has fallen into shadow in this subdeck including every kind of global-effect blight.\r\n\r\nSpiritual Warfare: Enter a battle of wills in this subdeck containing NO monster blights.\r\n\r\nClassic: This subdeck uses the blights and search results from the original release of Darkest Night.\r\n\r\nEverything: You can also play with the entire Map Deck at once, for maximum variety.</Text>\r\n        </Cell></Row>\r\n        <Row preferredHeight=\"160\"><Cell>\r\n        <ToggleGroup onValueChanged=\"mapDeckSelected\">\r\n            <VerticalLayout>\r\n                <Toggle selected=\"true\">Simplicity</Toggle>\r\n                <Toggle>Hunted</Toggle>\r\n                <Toggle>Overrun</Toggle>\r\n                <Toggle>Entropy</Toggle>\r\n                <Toggle>Spiritual Warfare</Toggle>\r\n                <Toggle>Classic</Toggle>\r\n                <Toggle>Everything</Toggle>\r\n            </VerticalLayout>\r\n        </ToggleGroup>\r\n            \r\n        </Cell></Row>\r\n        <Row preferredHeight=\"20\"><Cell>\r\n        </Cell></Row>\r\n        <Row preferredHeight=\"40\"><Cell>\r\n            <Button id=\"setMapDeck\" onClick=\"setMapDeck\" color=\"rgb(0.19,0.7,0.12)\" textColor=\"white\" fontSize=\"20\"  height=\"40\" width=\"120\">Select Deck</Button>\r\n        </Cell></Row>\r\n    </TableLayout>\r\n</Panel>\r\n\r\n<Panel id=\"HeroTurnPanel\" active=\"true\" width=\"200\" height=\"460\" rectAlignment=\"LowerRight\" returnToOriginalPositionWhenReleased=\"false\" allowDragging=\"true\" color=\"rgba(1,1,1,0.9)\" offsetXY=\"-262, 0\">\r\n    <!-- The top row panel, containing the title and close buttons. -->\r\n    <Panel class=\"SetupTopBar\">\r\n        <Text class=\"SetupPanelTitle\">Hero Turn</Text>\r\n        <Button class=\"SetupPanelCloseButton\" onClick=\"closeHeroTurnPanel\"></Button>\r\n    </Panel>\r\n    <VerticalLayout padding=\"5 5 30 5\">\r\n        <Text class=\"GuideBody\"><i>In any order, each hero takes a turn.</i></Text>\r\n        <Text></Text>\r\n                \r\n        <Text class=\"H2Title\">Start</Text>\r\n        <Text class=\"GuideBody\">Lose 1 secrecy if Necromancer is present. Lose 1 secrecy if carrying a holy relic.</Text>\r\n        <Text class=\"GuideBody\">Resolve start-of-turn instructions on power cards.</Text>\r\n        <Text></Text>\r\n        \r\n        <Text class=\"H2Title\">Event</Text>\r\n        <Text class=\"GuideBody\" color=\"Red\"><i>(Skip this step if in the Monastery)</i></Text>\r\n        <Text class=\"GuideBody\">If the Necromancer is present <b>and</b> your secrecy is 0, combat the Necromancer (7 strength, 6 awareness); otherwise, draw an event card.</Text>\r\n        <Text></Text>\r\n        \r\n        <Text class=\"H2Title\">Action</Text>\r\n        <Text class=\"GuideBody\">Perform one action of your choice.</Text>\r\n        <Text></Text>\r\n        \r\n        <Text class=\"H2Title\">End</Text>\r\n        <Text class=\"GuideBody\">If any blights in your location have end-of-turn effects, resolve them.</Text>\r\n        <Text class=\"GuideBody\">If you spent your entire turn in the Monastery, gain 1 secrect <i>(up to default)</i>.</Text>             \r\n    </VerticalLayout>\r\n</Panel>\r\n\r\n<Panel id=\"ActionsPanel\" active=\"true\" width=\"200\" height=\"360\" rectAlignment=\"LowerRight\" returnToOriginalPositionWhenReleased=\"false\" allowDragging=\"true\" color=\"rgba(1,1,1,0.9)\" offsetXY=\"-60, 0\">\r\n    <!-- The top row panel, containing the title and close buttons. -->\r\n    <Panel class=\"SetupTopBar\">\r\n        <Text class=\"SetupPanelTitle\">Actions</Text>\r\n        <Button class=\"SetupPanelCloseButton\" onClick=\"closeActionsPanel\"></Button>\r\n    </Panel>\r\n    <VerticalLayout padding=\"5 5 30 5\">\r\n        <Text class=\"GuideBody\"><b>Travel:</b> Move, gain 1 secrecy <i>(up to 5)</i></Text>\r\n        <Text class=\"GuideBody\"><b>Hide:</b> Refresh powers, gain 1 secrecy <i>(up to 5)</i></Text>\r\n        <Text class=\"GuideBody\"><b>Attack:</b> Fight a blight <i>(or the Necromancer)</i> to try to destroy it; lose 1 secrecy</Text>\r\n        <Text class=\"GuideBody\"><b>Search:</b> Roll against search difficulty; draw one map card per success, choose one</Text>\r\n        <Text class=\"GuideBody\"><b>Meditate:</b> Gain 1 spark</Text>\r\n        <Text class=\"GuideBody\"><b>Card:</b> Any Action effect from any available card</Text>\r\n        <Text class=\"GuideBody\"><b>Retrieve Holy Relic:</b> Spent 10 Clues, take holy relic from location</Text>\r\n        <Text class=\"GuideBody\"><b>Pray:</b> <i><textcolor color=\"Red\">(Monastery Only)</textcolor></i> Roll 2 dice, for each 3+ gain 1 Grace <i>(up to default)</i>; refresh powers</Text>\r\n    </VerticalLayout>\r\n</Panel>\r\n\r\n<!-- The side menu panel. -->\r\n<Panel \r\n    height=\"60\"\r\n    offsetXY=\"-225 0\"\r\n\r\n    raycastTarget=\"true\"\r\n    rectAlignment=\"UpperRight\"\r\n    showAnimation=\"FadeIn\"\r\n    showAnimationDelay=\"2\"\r\n    width=\"200\">\r\n\r\n    <GridLayout cellSize=\"(100 30)\">\r\n        <Button\r\n            visibility=\"Nobody\"\r\n            id=\"HeroTurnPanelButton\"\r\n            onClick=\"openHeroTurnPanel\">\r\n            Hero Turn\r\n        </Button>\r\n        <Button\r\n            visibility=\"Nobody\"\r\n            id=\"ActionsPanelButton\"\r\n            onClick=\"openActionsPanel\">\r\n            Actions\r\n        </Button>\r\n        <Button\r\n            visibility=\"Nobody\"\r\n            id=\"DifficultyPanelButton\"\r\n            onClick=\"openDifficultyPanel\">\r\n            Difficulty\r\n        </Button>\r\n        <Button\r\n            visibility=\"\"\r\n            active=\"false\"\r\n            id=\"MapPanelButton\"\r\n            onClick=\"openMapPanel\">\r\n            Map\r\n        </Button>\r\n    </GridLayout>\r\n\r\n</Panel>",
   "CustomUIAssets": [
@@ -2701,9 +2701,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.3377842,
-        "g": 0.300593555,
-        "b": 0.37106
+        "r": 0.337784082,
+        "g": 0.300593436,
+        "b": 0.3710599
       },
       "Tags": [
         "Uninteractable"
@@ -2749,9 +2749,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.337234765,
-        "g": 0.30194065,
-        "b": 0.372528851
+        "r": 0.337234646,
+        "g": 0.3019405,
+        "b": 0.372528732
       },
       "Tags": [
         "Uninteractable"
@@ -3071,7 +3071,7 @@
         "posX": -13.3262825,
         "posY": 1.59348047,
         "posZ": -1.31421053,
-        "rotX": -3.20689433E-05,
+        "rotX": -3.21051848E-05,
         "rotY": 179.999908,
         "rotZ": 180.000122,
         "scaleX": 1.25,
@@ -6831,8 +6831,8 @@
       "Transform": {
         "posX": -7.93473339,
         "posY": 1.50683427,
-        "posZ": -1.31421423,
-        "rotX": -3.20822874E-05,
+        "posZ": -1.31421411,
+        "rotX": -3.2262793E-05,
         "rotY": 179.99968,
         "rotZ": 180.000122,
         "scaleX": 1.25,
@@ -9699,7 +9699,7 @@
         "posX": -13.261241,
         "posY": 1.44424689,
         "posZ": 24.5800056,
-        "rotX": 1.463084E-07,
+        "rotX": 3.42355122E-07,
         "rotY": 180.021072,
         "rotZ": 180.0,
         "scaleX": 1.0,
@@ -11984,11 +11984,11 @@
       "Name": "Figurine_Custom",
       "Transform": {
         "posX": 8.57,
-        "posY": 1.22854018,
+        "posY": 1.22854006,
         "posZ": 6.17999935,
-        "rotX": -1.05088538E-05,
+        "rotX": -1.04964492E-05,
         "rotY": 359.833435,
-        "rotZ": 3.34756842E-05,
+        "rotZ": 3.32622221E-05,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -12075,9 +12075,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.123680182,
-        "g": 0.123680182,
-        "b": 0.123680182
+        "r": 0.123680048,
+        "g": 0.123680048,
+        "b": 0.123680048
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
@@ -12104,7 +12104,7 @@
             "z": 0.317226827
           },
           "Rotation": {
-            "x": -3.694847E-07,
+            "x": -3.694849E-07,
             "y": 180.033463,
             "z": 3.59941E-07
           },
@@ -12299,7 +12299,7 @@
             "z": 0.00270925742
           },
           "Rotation": {
-            "x": -4.66696378E-07,
+            "x": -4.66696576E-07,
             "y": 180.019257,
             "z": 4.77796846E-07
           },
@@ -12331,7 +12331,7 @@
           "Rotation": {
             "x": -4.21951484E-07,
             "y": 180.034317,
-            "z": 2.24695484E-07
+            "z": 2.24695384E-07
           },
           "Tags": [
             "Omen"
@@ -12451,7 +12451,7 @@
           "Rotation": {
             "x": -2.516201E-07,
             "y": 179.979324,
-            "z": 4.00264071E-07
+            "z": 4.00264184E-07
           },
           "Tags": [
             "Vampire"
@@ -12494,7 +12494,7 @@
             "z": -0.311808169
           },
           "Rotation": {
-            "x": -1.6932573E-07,
+            "x": -1.69325787E-07,
             "y": 180.022034,
             "z": 3.42283784E-07
           },
@@ -12526,7 +12526,7 @@
           "Rotation": {
             "x": -3.93898546E-07,
             "y": 179.983734,
-            "z": 3.84898442E-07
+            "z": 3.84898556E-07
           },
           "Tags": [
             "Stigma"
@@ -12553,12 +12553,12 @@
       "GUID": "62f95a",
       "Name": "Custom_Tile",
       "Transform": {
-        "posX": -13.79808,
-        "posY": 1.06148243,
-        "posZ": 3.081979,
-        "rotX": -0.000294645724,
-        "rotY": 180.013092,
-        "rotZ": -4.773704E-06,
+        "posX": -13.7980795,
+        "posY": 1.061482,
+        "posZ": 3.0819788,
+        "rotX": 0.000116185714,
+        "rotY": 180.012985,
+        "rotZ": 0.000333131349,
         "scaleX": 0.35,
         "scaleY": 1.0,
         "scaleZ": 0.35
@@ -12572,9 +12572,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.42681703,
-        "g": 0.288534522,
-        "b": 0.06914496
+        "r": 0.426816881,
+        "g": 0.288534373,
+        "b": 0.06914486
       },
       "Tags": [
         "Search",
@@ -12717,11 +12717,11 @@
       "Name": "Custom_PDF",
       "Transform": {
         "posX": 25.7607,
-        "posY": 0.961498857,
+        "posY": 0.961499,
         "posZ": 30.8557529,
-        "rotX": -4.29850253E-08,
+        "rotX": -4.18071622E-08,
         "rotY": 179.984039,
-        "rotZ": -3.19840368E-08,
+        "rotZ": -5.54973418E-08,
         "scaleX": 2.0,
         "scaleY": 1.0,
         "scaleZ": 2.0
@@ -12818,12 +12818,12 @@
       "GUID": "4ff040",
       "Name": "Custom_Tile",
       "Transform": {
-        "posX": -13.7980881,
-        "posY": 1.16147578,
-        "posZ": 3.08197737,
-        "rotX": -0.0008244321,
-        "rotY": 179.977631,
-        "rotZ": -0.00167590939,
+        "posX": -13.798089,
+        "posY": 1.16147637,
+        "posZ": 3.08197927,
+        "rotX": -0.0008628801,
+        "rotY": 179.97757,
+        "rotZ": 0.000340414583,
         "scaleX": 0.35,
         "scaleY": 1.0,
         "scaleZ": 0.35
@@ -12837,9 +12837,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.42681697,
-        "g": 0.288534462,
-        "b": 0.06914491
+        "r": 0.426816821,
+        "g": 0.2885343,
+        "b": 0.0691448152
       },
       "Tags": [
         "Darkness",
@@ -12898,9 +12898,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.125479281,
-        "g": 0.125479281,
-        "b": 0.125479281
+        "r": 0.125479162,
+        "g": 0.125479162,
+        "b": 0.125479162
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
@@ -12969,9 +12969,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.125479251,
-        "g": 0.125479251,
-        "b": 0.125479251
+        "r": 0.125479132,
+        "g": 0.125479132,
+        "b": 0.125479132
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
@@ -13040,9 +13040,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.125479251,
-        "g": 0.125479251,
-        "b": 0.125479251
+        "r": 0.125479132,
+        "g": 0.125479132,
+        "b": 0.125479132
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
@@ -13111,9 +13111,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.125479221,
-        "g": 0.125479221,
-        "b": 0.125479221
+        "r": 0.1254791,
+        "g": 0.1254791,
+        "b": 0.1254791
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
@@ -13182,9 +13182,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.125479221,
-        "g": 0.125479221,
-        "b": 0.125479221
+        "r": 0.1254791,
+        "g": 0.1254791,
+        "b": 0.1254791
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
@@ -13259,7 +13259,7 @@
             "z": -0.017525943
           },
           "Rotation": {
-            "x": 1.21217205E-08,
+            "x": 1.21217241E-08,
             "y": 180.021515,
             "z": 180.0
           }
@@ -13337,9 +13337,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.125479221,
-        "g": 0.125479221,
-        "b": 0.125479221
+        "r": 0.1254791,
+        "g": 0.1254791,
+        "b": 0.1254791
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
@@ -13958,7 +13958,7 @@
       },
       "ColorDiffuse": {
         "r": 0.819607854,
-        "g": 0.429597855,
+        "g": 0.429597735,
         "b": 0.0
       },
       "Tags": [
@@ -14007,9 +14007,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.130346566,
+        "r": 0.130346447,
         "g": 0.597561061,
-        "b": 0.107217111
+        "b": 0.107216977
       },
       "Tags": [
         "Character Sheet",
@@ -14057,8 +14057,8 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.202909172,
-        "g": 0.147123456,
+        "r": 0.202909052,
+        "g": 0.147123337,
         "b": 0.7473868
       },
       "Tags": [
@@ -14108,7 +14108,7 @@
       },
       "ColorDiffuse": {
         "r": 0.47448045,
-        "g": 0.196068227,
+        "g": 0.196068108,
         "b": 0.6392157
       },
       "Tags": [
@@ -14394,11 +14394,11 @@
       "Name": "Figurine_Custom",
       "Transform": {
         "posX": -28.6641865,
-        "posY": 1.12854409,
+        "posY": 1.128544,
         "posZ": 6.35655642,
-        "rotX": 1.79813412E-07,
-        "rotY": 4.678437E-05,
-        "rotZ": 1.06721949E-07,
+        "rotX": 1.957005E-07,
+        "rotY": 4.671924E-05,
+        "rotZ": 2.33774263E-13,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -14470,9 +14470,9 @@
         "posX": -24.6641865,
         "posY": 1.128544,
         "posZ": 6.35655642,
-        "rotX": 3.66314055E-07,
-        "rotY": 2.11287752E-05,
-        "rotZ": 1.067218E-07,
+        "rotX": 3.1175324E-07,
+        "rotY": 2.10567214E-05,
+        "rotZ": 8.66825736E-14,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -14542,11 +14542,11 @@
       "Name": "Figurine_Custom",
       "Transform": {
         "posX": -26.6641865,
-        "posY": 1.128544,
+        "posY": 1.12854409,
         "posZ": 6.356556,
-        "rotX": 1.83673365E-07,
-        "rotY": 7.32877E-05,
-        "rotZ": 3.81094977E-13,
+        "rotX": 7.97919E-08,
+        "rotY": 7.326996E-05,
+        "rotZ": 3.3316267E-13,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -14618,9 +14618,9 @@
         "posX": -22.6641865,
         "posY": 1.128544,
         "posZ": 6.356556,
-        "rotX": 3.82750869E-07,
-        "rotY": 0.00022881139,
-        "rotZ": 1.06723334E-07,
+        "rotX": 4.22012448E-07,
+        "rotY": 0.000228884062,
+        "rotZ": 1.693383E-12,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -14690,11 +14690,11 @@
       "Name": "Figurine_Custom",
       "Transform": {
         "posX": -20.6641865,
-        "posY": 1.12854409,
+        "posY": 1.128544,
         "posZ": 6.35655642,
-        "rotX": 3.7491386E-08,
-        "rotY": -6.083297E-05,
-        "rotZ": -2.72720079E-13,
+        "rotX": -4.795103E-08,
+        "rotY": -6.09041526E-05,
+        "rotZ": 1.06721494E-07,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -14764,11 +14764,11 @@
       "Name": "Figurine_Custom",
       "Transform": {
         "posX": -18.6641865,
-        "posY": 1.12854409,
+        "posY": 1.128544,
         "posZ": 6.35655642,
-        "rotX": -1.1371997E-07,
-        "rotY": -0.0001298117,
-        "rotZ": -3.75994456E-13,
+        "rotX": 2.4273886E-08,
+        "rotY": -0.000129809327,
+        "rotZ": 1.06721153E-07,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -14838,11 +14838,11 @@
       "Name": "Figurine_Custom",
       "Transform": {
         "posX": -28.6641865,
-        "posY": 1.128544,
+        "posY": 1.12854409,
         "posZ": 8.956558,
-        "rotX": 2.06473828E-07,
-        "rotY": 0.000229382029,
-        "rotZ": 1.304353E-12,
+        "rotX": 2.24630114E-07,
+        "rotY": 0.000229357043,
+        "rotZ": 1.06723043E-07,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -14912,11 +14912,11 @@
       "Name": "Figurine_Custom",
       "Transform": {
         "posX": -26.6641865,
-        "posY": 1.12854409,
+        "posY": 1.128544,
         "posZ": 8.956558,
-        "rotX": 2.14898918E-07,
-        "rotY": 0.000252949336,
-        "rotZ": 1.0687323E-07,
+        "rotX": 3.343179E-07,
+        "rotY": 0.000252956874,
+        "rotZ": 1.06873472E-07,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -14986,11 +14986,11 @@
       "Name": "Figurine_Custom",
       "Transform": {
         "posX": -24.6641865,
-        "posY": 1.12854409,
+        "posY": 1.128544,
         "posZ": 8.956558,
-        "rotX": 3.43845556E-08,
-        "rotY": 0.00021370966,
-        "rotZ": 1.06848432E-07,
+        "rotX": -6.519113E-09,
+        "rotY": 0.000213691412,
+        "rotZ": 1.26635147E-10,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -15060,11 +15060,11 @@
       "Name": "Figurine_Custom",
       "Transform": {
         "posX": -22.6641865,
-        "posY": 1.128544,
+        "posY": 1.12854409,
         "posZ": 8.956558,
-        "rotX": 2.72067354E-07,
-        "rotY": 0.000224140676,
-        "rotZ": 1.39026637E-12,
+        "rotX": 2.68272174E-07,
+        "rotY": 0.000224099451,
+        "rotZ": 1.38325636E-12,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -15134,11 +15134,11 @@
       "Name": "Figurine_Custom",
       "Transform": {
         "posX": -20.6641865,
-        "posY": 1.128544,
+        "posY": 1.12854409,
         "posZ": 8.95656,
-        "rotX": 9.42869249E-08,
-        "rotY": 0.000305338268,
-        "rotZ": 1.06904324E-07,
+        "rotX": 3.27039629E-07,
+        "rotY": 0.000305328955,
+        "rotZ": 1.06904885E-07,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -15208,11 +15208,11 @@
       "Name": "Figurine_Custom",
       "Transform": {
         "posX": -18.6641865,
-        "posY": 1.12854409,
+        "posY": 1.128544,
         "posZ": 8.956558,
-        "rotX": 2.62312483E-07,
-        "rotY": 0.000144748628,
-        "rotZ": 8.700013E-13,
+        "rotX": 2.408512E-07,
+        "rotY": 0.0001447599,
+        "rotZ": 8.46803747E-13,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -15284,9 +15284,9 @@
         "posX": -28.6641865,
         "posY": 1.128544,
         "posZ": 11.5565577,
-        "rotX": 3.15165153E-07,
-        "rotY": 3.84574378E-05,
-        "rotZ": 2.0495354E-13,
+        "rotX": 3.23707724E-07,
+        "rotY": 3.84456362E-05,
+        "rotZ": 2.06210944E-13,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -15356,11 +15356,11 @@
       "Name": "Figurine_Custom",
       "Transform": {
         "posX": -26.6641865,
-        "posY": 1.128544,
+        "posY": 1.12854409,
         "posZ": 11.5565577,
-        "rotX": 4.1522167E-08,
-        "rotY": -2.226939E-05,
-        "rotZ": -1.05594116E-13,
+        "rotX": 1.13759079E-07,
+        "rotY": -2.22691415E-05,
+        "rotZ": -1.32558339E-13,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -15432,9 +15432,9 @@
         "posX": -24.6641865,
         "posY": 1.128544,
         "posZ": 11.5565577,
-        "rotX": 2.17474579E-07,
-        "rotY": 4.227818E-05,
-        "rotZ": 1.06721913E-07,
+        "rotX": 2.76444865E-07,
+        "rotY": 4.22447447E-05,
+        "rotZ": 1.0672192E-07,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -15504,11 +15504,11 @@
       "Name": "Figurine_Custom",
       "Transform": {
         "posX": -22.6641865,
-        "posY": 1.128544,
+        "posY": 1.12854409,
         "posZ": 11.5565577,
-        "rotX": 2.17210768E-07,
-        "rotY": 8.52746452E-05,
-        "rotZ": 4.67758536E-13,
+        "rotX": 2.16592653E-07,
+        "rotY": 8.524616E-05,
+        "rotZ": 1.06722176E-07,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -15578,11 +15578,11 @@
       "Name": "Figurine_Custom",
       "Transform": {
         "posX": -20.6641865,
-        "posY": 1.128544,
+        "posY": 1.12854409,
         "posZ": 11.5565577,
-        "rotX": 1.8069268E-07,
-        "rotY": 7.761288E-05,
-        "rotZ": 1.06721835E-07,
+        "rotX": -1.88523444E-07,
+        "rotY": 7.74434E-05,
+        "rotZ": -1.27408134E-13,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -15654,9 +15654,9 @@
         "posX": -18.6641865,
         "posY": 1.128544,
         "posZ": 11.5565577,
-        "rotX": 1.58488831E-06,
+        "rotX": 1.48316974E-06,
         "rotY": 359.833344,
-        "rotZ": 4.23457749E-07,
+        "rotZ": 4.23605741E-07,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -15726,11 +15726,11 @@
       "Name": "Figurine_Custom",
       "Transform": {
         "posX": -28.6641865,
-        "posY": 1.128544,
+        "posY": 1.12854409,
         "posZ": 14.1565647,
-        "rotX": 6.18050962E-08,
-        "rotY": 0.000123893056,
-        "rotZ": 5.56988266E-13,
+        "rotX": 8.82994158E-08,
+        "rotY": 0.000123887352,
+        "rotZ": 1.0672229E-07,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -15800,11 +15800,11 @@
       "Name": "Figurine_Custom",
       "Transform": {
         "posX": -26.6641865,
-        "posY": 1.12854409,
+        "posY": 1.128544,
         "posZ": 14.1565151,
-        "rotX": 1.73185114E-07,
-        "rotY": -0.00197091163,
-        "rotZ": 1.05541453E-07,
+        "rotX": 1.21525034E-07,
+        "rotY": -0.00197093887,
+        "rotZ": 1.05542341E-07,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -15876,9 +15876,9 @@
         "posX": -24.6641865,
         "posY": 1.12854385,
         "posZ": 14.1564589,
-        "rotX": 2.58205262E-07,
+        "rotX": 6.914963E-08,
         "rotY": 359.832733,
-        "rotZ": 1.06344906E-07,
+        "rotZ": 1.06620874E-07,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -15950,9 +15950,9 @@
         "posX": -22.6641865,
         "posY": 1.128544,
         "posZ": 14.1566563,
-        "rotX": 1.43114249E-07,
-        "rotY": 0.0009018121,
-        "rotZ": 1.06726468E-07,
+        "rotX": 4.981662E-08,
+        "rotY": 0.000901782769,
+        "rotZ": 1.06725743E-07,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -16022,11 +16022,11 @@
       "Name": "Figurine_Custom",
       "Transform": {
         "posX": -20.6641865,
-        "posY": 1.128544,
+        "posY": 1.12854385,
         "posZ": 14.1607246,
-        "rotX": 1.84765682E-07,
+        "rotX": 1.64391707E-07,
         "rotY": 359.8333,
-        "rotZ": 1.14376832E-07,
+        "rotZ": 7.684703E-09,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -16361,11 +16361,11 @@
       "Name": "Infinite_Bag",
       "Transform": {
         "posX": -26.59745,
-        "posY": 0.9504486,
+        "posY": 0.950448632,
         "posZ": 29.3874969,
-        "rotX": -3.47547058E-07,
-        "rotY": -0.000386783649,
-        "rotZ": 3.20387059E-08,
+        "rotX": 1.27592571E-07,
+        "rotY": -0.0003867469,
+        "rotZ": 1.80967334E-07,
         "scaleX": 0.65,
         "scaleY": 0.65,
         "scaleZ": 0.65
@@ -16476,11 +16476,11 @@
       "Name": "Infinite_Bag",
       "Transform": {
         "posX": -28.448082,
-        "posY": 0.9504486,
+        "posY": 0.950448632,
         "posZ": 29.3628922,
-        "rotX": -4.434863E-09,
-        "rotY": -8.1836326E-05,
-        "rotZ": -3.903936E-07,
+        "rotX": -9.63547748E-08,
+        "rotY": -8.18162443E-05,
+        "rotZ": 2.69732936E-07,
         "scaleX": 0.65,
         "scaleY": 0.65,
         "scaleZ": 0.65
@@ -16593,9 +16593,9 @@
         "posX": 14.373662,
         "posY": 1.06149864,
         "posZ": 10.0673428,
-        "rotX": 1.05560866E-05,
+        "rotX": 1.06826246E-05,
         "rotY": 179.983887,
-        "rotZ": -3.00595366E-05,
+        "rotZ": -3.01549371E-05,
         "scaleX": 0.7,
         "scaleY": 1.0,
         "scaleZ": 0.7
@@ -16609,8 +16609,8 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.423332125,
-        "g": 0.316316336,
+        "r": 0.423331976,
+        "g": 0.316316217,
         "b": 0.0
       },
       "Tags": [
@@ -16653,9 +16653,9 @@
         "posX": 4.81781244,
         "posY": 1.0614928,
         "posZ": 5.32008743,
-        "rotX": 1.05992958E-05,
+        "rotX": 1.06589905E-05,
         "rotY": 179.989365,
-        "rotZ": -3.010242E-05,
+        "rotZ": -3.00780848E-05,
         "scaleX": 0.7,
         "scaleY": 1.0,
         "scaleZ": 0.7
@@ -16669,8 +16669,8 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.423332125,
-        "g": 0.316316336,
+        "r": 0.423331976,
+        "g": 0.316316217,
         "b": 0.0
       },
       "Tags": [
@@ -16713,9 +16713,9 @@
         "posX": -6.48604965,
         "posY": 1.061489,
         "posZ": 17.25087,
-        "rotX": 1.0527282E-05,
+        "rotX": 1.06080643E-05,
         "rotY": 179.989334,
-        "rotZ": -3.00440915E-05,
+        "rotZ": -3.0077088E-05,
         "scaleX": 0.7,
         "scaleY": 1.0,
         "scaleZ": 0.7
@@ -16729,8 +16729,8 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.423332125,
-        "g": 0.316316336,
+        "r": 0.423331976,
+        "g": 0.316316217,
         "b": 0.0
       },
       "Tags": [
@@ -16773,9 +16773,9 @@
         "posX": -6.301949,
         "posY": 1.06148732,
         "posZ": 7.449423,
-        "rotX": 1.05269228E-05,
+        "rotX": 1.056793E-05,
         "rotY": 179.989334,
-        "rotZ": -3.00422216E-05,
+        "rotZ": -3.00976681E-05,
         "scaleX": 0.7,
         "scaleY": 1.0,
         "scaleZ": 0.7
@@ -16789,8 +16789,8 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.423332125,
-        "g": 0.316316336,
+        "r": 0.423331976,
+        "g": 0.316316217,
         "b": 0.0
       },
       "Tags": [
@@ -16831,11 +16831,11 @@
       "Name": "Custom_Tile",
       "Transform": {
         "posX": -21.5350361,
-        "posY": 0.961498559,
+        "posY": 0.961498439,
         "posZ": -9.279996,
-        "rotX": 6.275174E-07,
+        "rotX": 3.59879459E-06,
         "rotY": 0.000119528311,
-        "rotZ": 1.24202029E-06,
+        "rotZ": -4.240887E-06,
         "scaleX": 0.5,
         "scaleY": 1.0,
         "scaleZ": 0.5
@@ -16849,9 +16849,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.4268172,
-        "g": 0.2885347,
-        "b": 0.0691451
+        "r": 0.4268171,
+        "g": 0.288534582,
+        "b": 0.069145
       },
       "Tags": [
         "Activity"
@@ -16909,11 +16909,11 @@
       "Name": "Custom_Tile",
       "Transform": {
         "posX": -8.135929,
-        "posY": 0.961498559,
+        "posY": 0.961498439,
         "posZ": -9.279993,
-        "rotX": -6.92931451E-07,
+        "rotX": 7.781949E-07,
         "rotY": -3.927359E-05,
-        "rotZ": 2.34608933E-06,
+        "rotZ": 1.27544035E-06,
         "scaleX": 0.5,
         "scaleY": 1.0,
         "scaleZ": 0.5
@@ -16927,9 +16927,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.4268172,
-        "g": 0.2885347,
-        "b": 0.0691451
+        "r": 0.4268171,
+        "g": 0.288534582,
+        "b": 0.069145
       },
       "Tags": [
         "Activity"
@@ -16987,11 +16987,11 @@
       "Name": "Custom_Tile",
       "Transform": {
         "posX": 5.194182,
-        "posY": 0.961498559,
+        "posY": 0.961498439,
         "posZ": -9.28,
-        "rotX": -3.02058947E-06,
-        "rotY": 180.0,
-        "rotZ": 6.816512E-06,
+        "rotX": 1.48403544E-07,
+        "rotY": 180.000015,
+        "rotZ": -1.089938E-06,
         "scaleX": 0.5,
         "scaleY": 1.0,
         "scaleZ": 0.5
@@ -17005,9 +17005,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.4268172,
-        "g": 0.2885347,
-        "b": 0.0691451
+        "r": 0.4268171,
+        "g": 0.288534582,
+        "b": 0.069145
       },
       "Tags": [
         "Activity"
@@ -17065,11 +17065,11 @@
       "Name": "Custom_Tile",
       "Transform": {
         "posX": 18.1600056,
-        "posY": 0.9614987,
+        "posY": 0.961498439,
         "posZ": -9.279992,
-        "rotX": 1.61330888E-07,
+        "rotX": -2.06644449E-06,
         "rotY": 0.000295405684,
-        "rotZ": -6.63307446E-07,
+        "rotZ": 2.6725445E-06,
         "scaleX": 0.5,
         "scaleY": 1.0,
         "scaleZ": 0.5
@@ -17083,9 +17083,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.4268172,
-        "g": 0.2885347,
-        "b": 0.0691451
+        "r": 0.4268171,
+        "g": 0.288534582,
+        "b": 0.069145
       },
       "Tags": [
         "Activity"
@@ -17144,10 +17144,10 @@
       "Transform": {
         "posX": 30.9214725,
         "posY": 0.961498439,
-        "posZ": -9.279981,
-        "rotX": -1.1447562E-06,
-        "rotY": 3.927359E-05,
-        "rotZ": -9.033769E-07,
+        "posZ": -9.27998,
+        "rotX": 1.09809741E-06,
+        "rotY": 4.09811364E-05,
+        "rotZ": 2.86448267E-06,
         "scaleX": 0.5,
         "scaleY": 1.0,
         "scaleZ": 0.5
@@ -17161,9 +17161,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.4268172,
-        "g": 0.2885347,
-        "b": 0.0691451
+        "r": 0.4268171,
+        "g": 0.288534582,
+        "b": 0.069145
       },
       "Tags": [
         "Activity"
@@ -17266,9 +17266,9 @@
       "GUID": "d95ba1",
       "Name": "3DText",
       "Transform": {
-        "posX": -19.43792,
-        "posY": 0.9619297,
-        "posZ": 1.38834012,
+        "posX": -19.43804,
+        "posY": 0.961937368,
+        "posZ": 1.38831151,
         "rotX": 90.0,
         "rotY": 2.71197365E-07,
         "rotZ": 0.0,
@@ -17320,9 +17320,9 @@
       "GUID": "05d3d7",
       "Name": "3DText",
       "Transform": {
-        "posX": -27.03251,
-        "posY": 0.961923957,
-        "posZ": 1.38843358,
+        "posX": -27.0326977,
+        "posY": 0.961931646,
+        "posZ": 1.388403,
         "rotX": 90.0,
         "rotY": 2.35823849E-09,
         "rotZ": 0.0,
@@ -17440,8 +17440,8 @@
       },
       "ColorDiffuse": {
         "r": 0.853658557,
-        "g": 0.144251883,
-        "b": 0.144251883
+        "g": 0.144251764,
+        "b": 0.144251764
       },
       "Tags": [
         "Bag",
@@ -17476,11 +17476,11 @@
       "Name": "Figurine_Custom",
       "Transform": {
         "posX": -18.6641865,
-        "posY": 1.128544,
+        "posY": 1.12854409,
         "posZ": 4.00388861,
-        "rotX": 2.01154833E-07,
-        "rotY": -0.000100460893,
-        "rotZ": 1.06721089E-07,
+        "rotX": 2.36062164E-07,
+        "rotY": -0.000100479891,
+        "rotZ": -6.557418E-13,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -17595,8 +17595,8 @@
       "GUID": "ee5b97",
       "Name": "3DText",
       "Transform": {
-        "posX": -11.0185728,
-        "posY": 1.06136692,
+        "posX": -11.0186787,
+        "posY": 1.061366,
         "posZ": 19.4883385,
         "rotX": 90.0,
         "rotY": 358.334,
@@ -17649,8 +17649,8 @@
       "GUID": "c744bc",
       "Name": "3DText",
       "Transform": {
-        "posX": 1.29863179,
-        "posY": 1.06148815,
+        "posX": 1.29855168,
+        "posY": 1.061489,
         "posZ": 15.0595636,
         "rotX": 90.0,
         "rotY": 2.71197365E-07,
@@ -17703,8 +17703,8 @@
       "GUID": "f40771",
       "Name": "3DText",
       "Transform": {
-        "posX": 13.9767094,
-        "posY": 1.06135082,
+        "posX": 13.9766684,
+        "posY": 1.06135023,
         "posZ": 19.4619274,
         "rotX": 90.0,
         "rotY": 2.71197365E-07,
@@ -17757,9 +17757,9 @@
       "GUID": "a9fad6",
       "Name": "3DText",
       "Transform": {
-        "posX": 14.0398932,
-        "posY": 1.06170368,
-        "posZ": 4.94194746,
+        "posX": 14.0398493,
+        "posY": 1.06171143,
+        "posZ": 4.94192028,
         "rotX": 90.0,
         "rotY": 2.71197365E-07,
         "rotZ": 0.0,
@@ -17811,9 +17811,9 @@
       "GUID": "8c1632",
       "Name": "3DText",
       "Transform": {
-        "posX": -11.0939054,
-        "posY": 1.06168687,
-        "posZ": 5.100772,
+        "posX": -11.0940123,
+        "posY": 1.06169462,
+        "posZ": 5.10074759,
         "rotX": 90.0,
         "rotY": 2.71197365E-07,
         "rotZ": 0.0,
@@ -17865,9 +17865,9 @@
       "GUID": "858b90",
       "Name": "3DText",
       "Transform": {
-        "posX": 14.9398985,
-        "posY": 1.06151712,
-        "posZ": 14.73164,
+        "posX": 14.9398756,
+        "posY": 1.061519,
+        "posZ": 14.731636,
         "rotX": 90.0,
         "rotY": 2.71197365E-07,
         "rotZ": 0.0,
@@ -17919,8 +17919,8 @@
       "GUID": "aebede",
       "Name": "3DText",
       "Transform": {
-        "posX": -12.2903738,
-        "posY": 1.06148064,
+        "posX": -12.2904654,
+        "posY": 1.0614816,
         "posZ": 15.0026579,
         "rotX": 90.0,
         "rotY": 2.71197365E-07,
@@ -17973,12 +17973,12 @@
       "GUID": "ca797c",
       "Name": "Custom_Tile",
       "Transform": {
-        "posX": 6.69356441,
-        "posY": 1.16045666,
-        "posZ": -9.280193,
-        "rotX": 359.986084,
-        "rotY": 180.022217,
-        "rotZ": 180.183655,
+        "posX": 6.69363976,
+        "posY": 1.159751,
+        "posZ": -9.280212,
+        "rotX": 359.985657,
+        "rotY": 180.021957,
+        "rotZ": 180.199966,
         "scaleX": 0.4,
         "scaleY": 1.0,
         "scaleZ": 0.4
@@ -18030,12 +18030,12 @@
       "GUID": "91e584",
       "Name": "Custom_Tile",
       "Transform": {
-        "posX": 6.693973,
-        "posY": 1.25910437,
-        "posZ": -9.281732,
-        "rotX": 0.037997175,
-        "rotY": 180.110718,
-        "rotZ": 180.319122,
+        "posX": 6.693952,
+        "posY": 1.25948119,
+        "posZ": -9.281856,
+        "rotX": 0.0616611354,
+        "rotY": 180.110825,
+        "rotZ": 180.245331,
         "scaleX": 0.4,
         "scaleY": 1.0,
         "scaleZ": 0.4
@@ -18087,12 +18087,12 @@
       "GUID": "dd07b9",
       "Name": "Custom_Tile",
       "Transform": {
-        "posX": 6.693829,
-        "posY": 1.458372,
-        "posZ": -9.279686,
-        "rotX": 0.0220110063,
-        "rotY": 180.0406,
-        "rotZ": 180.219559,
+        "posX": 6.694332,
+        "posY": 1.45845389,
+        "posZ": -9.279862,
+        "rotX": 0.0435650274,
+        "rotY": 180.037155,
+        "rotZ": 180.329056,
         "scaleX": 0.4,
         "scaleY": 1.0,
         "scaleZ": 0.4
@@ -18144,12 +18144,12 @@
       "GUID": "b5e66f",
       "Name": "Custom_Tile",
       "Transform": {
-        "posX": 6.694666,
-        "posY": 1.35891879,
-        "posZ": -9.280007,
-        "rotX": 0.027079992,
-        "rotY": 179.99968,
-        "rotZ": 180.242935,
+        "posX": 6.69488335,
+        "posY": 1.35852873,
+        "posZ": -9.280113,
+        "rotX": 0.010118329,
+        "rotY": 179.999481,
+        "rotZ": 180.324158,
         "scaleX": 0.4,
         "scaleY": 1.0,
         "scaleZ": 0.4
@@ -18201,12 +18201,12 @@
       "GUID": "c66deb",
       "Name": "Custom_Tile",
       "Transform": {
-        "posX": 19.6188564,
-        "posY": 1.35898006,
-        "posZ": -9.290657,
-        "rotX": 0.3065372,
-        "rotY": 180.22522,
-        "rotZ": 180.314423,
+        "posX": 19.6188488,
+        "posY": 1.35849822,
+        "posZ": -9.290402,
+        "rotX": 0.1497022,
+        "rotY": 180.229248,
+        "rotZ": 180.311615,
         "scaleX": 0.4,
         "scaleY": 1.0,
         "scaleZ": 0.4
@@ -18258,12 +18258,12 @@
       "GUID": "aaae82",
       "Name": "Custom_Tile",
       "Transform": {
-        "posX": 19.6150475,
-        "posY": 1.25913417,
-        "posZ": -9.285963,
-        "rotX": 0.301564574,
-        "rotY": 180.166687,
-        "rotZ": 180.257034,
+        "posX": 19.6149483,
+        "posY": 1.25950789,
+        "posZ": -9.285828,
+        "rotX": 0.133863628,
+        "rotY": 180.167374,
+        "rotZ": 180.203354,
         "scaleX": 0.4,
         "scaleY": 1.0,
         "scaleZ": 0.4
@@ -18315,12 +18315,12 @@
       "GUID": "eef468",
       "Name": "Custom_Tile",
       "Transform": {
-        "posX": 19.60972,
-        "posY": 1.06137252,
-        "posZ": -9.2805,
-        "rotX": 0.0280387774,
-        "rotY": 180.249359,
-        "rotZ": 180.040771,
+        "posX": 19.6097183,
+        "posY": 1.061376,
+        "posZ": -9.280509,
+        "rotX": 0.0274831355,
+        "rotY": 180.249832,
+        "rotZ": 180.03952,
         "scaleX": 0.4,
         "scaleY": 1.0,
         "scaleZ": 0.4
@@ -18372,12 +18372,12 @@
       "GUID": "90b8a7",
       "Name": "Custom_Tile",
       "Transform": {
-        "posX": 19.6218853,
-        "posY": 1.15973723,
-        "posZ": -9.282972,
-        "rotX": 0.202930734,
-        "rotY": 180.1853,
-        "rotZ": 180.184647,
+        "posX": 19.6218815,
+        "posY": 1.15978336,
+        "posZ": -9.283083,
+        "rotX": 0.190387577,
+        "rotY": 180.184341,
+        "rotZ": 180.131943,
         "scaleX": 0.4,
         "scaleY": 1.0,
         "scaleZ": 0.4
@@ -18429,12 +18429,12 @@
       "GUID": "c225d3",
       "Name": "Custom_Tile",
       "Transform": {
-        "posX": 32.2934647,
-        "posY": 1.45827138,
-        "posZ": -9.24827,
-        "rotX": 359.66333,
-        "rotY": 179.875687,
-        "rotZ": 180.192322,
+        "posX": 32.2931,
+        "posY": 1.45830846,
+        "posZ": -9.248311,
+        "rotX": 359.763336,
+        "rotY": 179.86792,
+        "rotZ": 180.05127,
         "scaleX": 0.4,
         "scaleY": 1.0,
         "scaleZ": 0.4
@@ -18486,12 +18486,12 @@
       "GUID": "b985b9",
       "Name": "Custom_Tile",
       "Transform": {
-        "posX": 32.27108,
-        "posY": 1.15981579,
-        "posZ": -9.271047,
-        "rotX": 359.73468,
-        "rotY": 180.157242,
-        "rotZ": 180.102966,
+        "posX": 32.2710342,
+        "posY": 1.15982533,
+        "posZ": -9.270906,
+        "rotX": 359.751617,
+        "rotY": 180.158432,
+        "rotZ": 179.989059,
         "scaleX": 0.4,
         "scaleY": 1.0,
         "scaleZ": 0.4
@@ -18543,12 +18543,12 @@
       "GUID": "82ec71",
       "Name": "Custom_Tile",
       "Transform": {
-        "posX": 32.26783,
-        "posY": 1.06139255,
-        "posZ": -9.279567,
-        "rotX": 359.936066,
-        "rotY": 180.271881,
-        "rotZ": 179.997269,
+        "posX": 32.2678337,
+        "posY": 1.0613904,
+        "posZ": -9.279607,
+        "rotX": 359.955872,
+        "rotY": 180.273483,
+        "rotZ": 179.9822,
         "scaleX": 0.4,
         "scaleY": 1.0,
         "scaleZ": 0.4
@@ -18600,12 +18600,12 @@
       "GUID": "079722",
       "Name": "Custom_Tile",
       "Transform": {
-        "posX": 32.2666931,
-        "posY": 1.259192,
-        "posZ": -9.261732,
-        "rotX": 359.6436,
-        "rotY": 180.0249,
-        "rotZ": 180.171783,
+        "posX": 32.2665558,
+        "posY": 1.25908363,
+        "posZ": -9.261649,
+        "rotX": 359.753632,
+        "rotY": 180.021576,
+        "rotZ": 180.09201,
         "scaleX": 0.4,
         "scaleY": 1.0,
         "scaleZ": 0.4
@@ -18657,12 +18657,12 @@
       "GUID": "ec341e",
       "Name": "Custom_Tile",
       "Transform": {
-        "posX": -6.622029,
-        "posY": 1.0613941,
-        "posZ": -9.279589,
-        "rotX": 359.956757,
-        "rotY": 180.3935,
-        "rotZ": 180.024246,
+        "posX": -6.622019,
+        "posY": 1.06139207,
+        "posZ": -9.279584,
+        "rotX": 359.955627,
+        "rotY": 180.393738,
+        "rotZ": 180.024872,
         "scaleX": 0.4,
         "scaleY": 1.0,
         "scaleZ": 0.4
@@ -18714,12 +18714,12 @@
       "GUID": "4c2fa2",
       "Name": "Custom_Tile",
       "Transform": {
-        "posX": -20.121397,
-        "posY": 1.06134808,
-        "posZ": -9.27919,
-        "rotX": 0.05139422,
-        "rotY": 180.262009,
-        "rotZ": 180.00589,
+        "posX": -20.1213875,
+        "posY": 1.06133533,
+        "posZ": -9.279199,
+        "rotX": 0.053658694,
+        "rotY": 180.261475,
+        "rotZ": 180.007339,
         "scaleX": 0.4,
         "scaleY": 1.0,
         "scaleZ": 0.4
@@ -18771,12 +18771,12 @@
       "GUID": "c6dc44",
       "Name": "Custom_Tile",
       "Transform": {
-        "posX": -6.61875343,
-        "posY": 1.16037226,
-        "posZ": -9.278541,
-        "rotX": 359.9041,
-        "rotY": 180.343491,
-        "rotZ": 180.179825,
+        "posX": -6.618602,
+        "posY": 1.16035759,
+        "posZ": -9.278537,
+        "rotX": 359.960358,
+        "rotY": 180.340469,
+        "rotZ": 180.182632,
         "scaleX": 0.4,
         "scaleY": 1.0,
         "scaleZ": 0.4
@@ -18828,12 +18828,12 @@
       "GUID": "553fbb",
       "Name": "Custom_Tile",
       "Transform": {
-        "posX": -6.6172,
-        "posY": 1.25893962,
-        "posZ": -9.27759,
-        "rotX": 359.7821,
-        "rotY": 180.320648,
-        "rotZ": 180.310989,
+        "posX": -6.6169095,
+        "posY": 1.25897443,
+        "posZ": -9.277692,
+        "rotX": 359.888855,
+        "rotY": 180.316711,
+        "rotZ": 180.332855,
         "scaleX": 0.4,
         "scaleY": 1.0,
         "scaleZ": 0.4
@@ -18885,12 +18885,12 @@
       "GUID": "3bee4b",
       "Name": "Custom_Tile",
       "Transform": {
-        "posX": -6.61510229,
-        "posY": 1.35872984,
-        "posZ": -9.276025,
-        "rotX": 359.797333,
-        "rotY": 180.341339,
-        "rotZ": 180.374374,
+        "posX": -6.61487341,
+        "posY": 1.35871518,
+        "posZ": -9.276411,
+        "rotX": 359.963,
+        "rotY": 180.3338,
+        "rotZ": 180.311615,
         "scaleX": 0.4,
         "scaleY": 1.0,
         "scaleZ": 0.4
@@ -18942,12 +18942,12 @@
       "GUID": "bdfa16",
       "Name": "Custom_Tile",
       "Transform": {
-        "posX": -20.1228,
-        "posY": 1.15978026,
-        "posZ": -9.276681,
-        "rotX": 0.17929253,
-        "rotY": 180.214981,
-        "rotZ": 179.881989,
+        "posX": -20.12272,
+        "posY": 1.16036761,
+        "posZ": -9.276755,
+        "rotX": 0.178490117,
+        "rotY": 180.21254,
+        "rotZ": 179.9191,
         "scaleX": 0.4,
         "scaleY": 1.0,
         "scaleZ": 0.4
@@ -18999,12 +18999,12 @@
       "GUID": "b2560e",
       "Name": "Custom_Tile",
       "Transform": {
-        "posX": -20.1236324,
-        "posY": 1.25951111,
-        "posZ": -9.275341,
-        "rotX": 0.2501251,
-        "rotY": 180.174774,
-        "rotZ": 179.935638,
+        "posX": -20.1238728,
+        "posY": 1.25896275,
+        "posZ": -9.275521,
+        "rotX": 0.294159323,
+        "rotY": 180.171661,
+        "rotZ": 179.785172,
         "scaleX": 0.4,
         "scaleY": 1.0,
         "scaleZ": 0.4
@@ -19056,12 +19056,12 @@
       "GUID": "9ce441",
       "Name": "Custom_Tile",
       "Transform": {
-        "posX": -20.1239185,
-        "posY": 1.35877788,
-        "posZ": -9.274076,
-        "rotX": 0.336287528,
-        "rotY": 180.15712,
-        "rotZ": 179.888855,
+        "posX": -20.12448,
+        "posY": 1.358803,
+        "posZ": -9.274419,
+        "rotX": 0.328734219,
+        "rotY": 180.153015,
+        "rotZ": 179.7338,
         "scaleX": 0.4,
         "scaleY": 1.0,
         "scaleZ": 0.4
@@ -19114,11 +19114,11 @@
       "Name": "Infinite_Bag",
       "Transform": {
         "posX": 32.363636,
-        "posY": 0.950448453,
+        "posY": 0.9504486,
         "posZ": -0.729039252,
-        "rotX": -1.86845909E-07,
-        "rotY": -0.000138207732,
-        "rotZ": 5.539731E-07,
+        "rotX": 8.414056E-08,
+        "rotY": -0.000138140851,
+        "rotZ": 2.41351074E-07,
         "scaleX": 0.65,
         "scaleY": 0.65,
         "scaleZ": 0.65
@@ -19376,11 +19376,11 @@
       "GUID": "1bfb5c",
       "Name": "Custom_Dice",
       "Transform": {
-        "posX": 25.0145645,
-        "posY": 1.29169893,
-        "posZ": 6.01295042,
-        "rotX": -7.29297335E-06,
-        "rotY": 299.196259,
+        "posX": 25.0145721,
+        "posY": 1.291699,
+        "posZ": 6.01295137,
+        "rotX": -1.78182163E-05,
+        "rotY": 299.1966,
         "rotZ": 180.0,
         "scaleX": 1.0,
         "scaleY": 1.0,
@@ -19486,7 +19486,7 @@
         "posX": 10.7536907,
         "posY": 1.473139,
         "posZ": -1.31184733,
-        "rotX": -3.22454762E-05,
+        "rotX": -3.192049E-05,
         "rotY": 179.929688,
         "rotZ": 180.000122,
         "scaleX": 1.25,
@@ -22911,12 +22911,12 @@
       "GUID": "a6060f",
       "Name": "Custom_Tile",
       "Transform": {
-        "posX": 32.2704964,
-        "posY": 1.35890269,
-        "posZ": -9.25698,
-        "rotX": 359.7202,
-        "rotY": 180.003555,
-        "rotZ": 180.179382,
+        "posX": 32.27024,
+        "posY": 1.35885358,
+        "posZ": -9.257008,
+        "rotX": 359.813538,
+        "rotY": 179.99411,
+        "rotZ": 180.049423,
         "scaleX": 0.4,
         "scaleY": 1.0,
         "scaleZ": 0.4
@@ -22968,12 +22968,12 @@
       "GUID": "7b5fa9",
       "Name": "Custom_Tile",
       "Transform": {
-        "posX": 19.6231918,
-        "posY": 1.45841491,
-        "posZ": -9.295453,
-        "rotX": 0.349779963,
-        "rotY": 180.238632,
-        "rotZ": 180.367722,
+        "posX": 19.6231556,
+        "posY": 1.45835638,
+        "posZ": -9.295001,
+        "rotX": 0.183172777,
+        "rotY": 180.242233,
+        "rotZ": 180.302933,
         "scaleX": 0.4,
         "scaleY": 1.0,
         "scaleZ": 0.4
@@ -23025,12 +23025,12 @@
       "GUID": "4de2c5",
       "Name": "Custom_Tile",
       "Transform": {
-        "posX": 6.693028,
-        "posY": 1.06139565,
-        "posZ": -9.28002548,
-        "rotX": 0.0376791842,
-        "rotY": 180.016846,
-        "rotZ": 180.043839,
+        "posX": 6.69300652,
+        "posY": 1.06134069,
+        "posZ": -9.280027,
+        "rotX": 0.0414643325,
+        "rotY": 180.016815,
+        "rotZ": 180.032761,
         "scaleX": 0.4,
         "scaleY": 1.0,
         "scaleZ": 0.4
@@ -23082,12 +23082,12 @@
       "GUID": "fe1dee",
       "Name": "Custom_Tile",
       "Transform": {
-        "posX": -6.6121583,
-        "posY": 1.45817113,
-        "posZ": -9.274539,
-        "rotX": 359.763855,
-        "rotY": 180.348022,
-        "rotZ": 180.430237,
+        "posX": -6.6118927,
+        "posY": 1.458161,
+        "posZ": -9.275179,
+        "rotX": 359.966217,
+        "rotY": 180.340515,
+        "rotZ": 180.370132,
         "scaleX": 0.4,
         "scaleY": 1.0,
         "scaleZ": 0.4
@@ -23139,12 +23139,12 @@
       "GUID": "3a40fc",
       "Name": "Custom_Tile",
       "Transform": {
-        "posX": -20.1237755,
-        "posY": 1.45825124,
-        "posZ": -9.272357,
-        "rotX": 0.3907015,
-        "rotY": 180.175568,
-        "rotZ": 179.90155,
+        "posX": -20.1247635,
+        "posY": 1.45829058,
+        "posZ": -9.272756,
+        "rotX": 0.38716948,
+        "rotY": 180.1739,
+        "rotZ": 179.7079,
         "scaleX": 0.4,
         "scaleY": 1.0,
         "scaleZ": 0.4
@@ -23198,9 +23198,9 @@
       "Transform": {
         "posX": 3.62005877,
         "posY": 1.449064,
-        "posZ": -1.31025791,
-        "rotX": 0.000120213444,
-        "rotY": 89.998085,
+        "posZ": -1.31025732,
+        "rotX": 0.000120656339,
+        "rotY": 89.99807,
         "rotZ": 180.000031,
         "scaleX": 1.0,
         "scaleY": 1.0,
@@ -25579,9 +25579,9 @@
       "GUID": "3bd1c0",
       "Name": "3DText",
       "Transform": {
-        "posX": 19.639658,
-        "posY": 0.9615764,
-        "posZ": 9.780275,
+        "posX": 19.639637,
+        "posY": 0.9615803,
+        "posZ": 9.780262,
         "rotX": 90.0,
         "rotY": 2.71197365E-07,
         "rotZ": 0.0,
@@ -25735,9 +25735,9 @@
         "posX": 19.5855045,
         "posY": 1.29169846,
         "posZ": 10.5273905,
-        "rotX": 3.839222E-06,
+        "rotX": -4.50169368E-09,
         "rotY": 27.0733223,
-        "rotZ": -3.679979E-06,
+        "rotZ": 2.53708663E-07,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -25936,12 +25936,12 @@
       "GUID": "b2e3da",
       "Name": "Figurine_Custom",
       "Transform": {
-        "posX": -28.6641655,
-        "posY": 1.12854421,
-        "posZ": 4.002406,
-        "rotX": -5.323041E-07,
-        "rotY": 358.833679,
-        "rotZ": -9.614184E-07,
+        "posX": -28.66416,
+        "posY": 1.12854373,
+        "posZ": 4.00191259,
+        "rotX": 4.88551564E-07,
+        "rotY": 358.8337,
+        "rotZ": -1.852407E-06,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -26013,9 +26013,9 @@
         "posX": -24.6641865,
         "posY": 1.128544,
         "posZ": 4.00388861,
-        "rotX": -1.39125333E-08,
-        "rotY": -8.299248E-05,
-        "rotZ": 1.06721721E-07,
+        "rotX": 2.70482516E-08,
+        "rotY": -8.300495E-05,
+        "rotZ": -1.95925311E-14,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -26085,11 +26085,11 @@
       "Name": "Figurine_Custom",
       "Transform": {
         "posX": -26.6641865,
-        "posY": 1.12854409,
+        "posY": 1.128544,
         "posZ": 4.003887,
-        "rotX": 1.7557403E-07,
+        "rotX": 4.37231677E-07,
         "rotY": 359.994141,
-        "rotZ": -3.27393737E-11,
+        "rotZ": -4.617589E-11,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -26159,11 +26159,11 @@
       "Name": "Figurine_Custom",
       "Transform": {
         "posX": -20.6641865,
-        "posY": 1.12854409,
+        "posY": 1.128544,
         "posZ": 4.00388861,
-        "rotX": 3.28612622E-08,
-        "rotY": -0.0002101072,
-        "rotZ": -9.16149E-13,
+        "rotX": 2.35686226E-08,
+        "rotY": -0.000210103637,
+        "rotZ": -8.974351E-13,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -26235,9 +26235,9 @@
         "posX": -22.6641865,
         "posY": 1.128544,
         "posZ": 4.00388861,
-        "rotX": -1.05368059E-07,
-        "rotY": -0.000143285943,
-        "rotZ": 1.06721281E-07,
+        "rotX": 1.47329558E-07,
+        "rotY": -0.000143324651,
+        "rotZ": -7.904779E-13,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -26306,9 +26306,9 @@
       "GUID": "71fc66",
       "Name": "3DText",
       "Transform": {
-        "posX": -9.43129349,
-        "posY": 0.9616851,
-        "posZ": -3.882966,
+        "posX": -9.431383,
+        "posY": 0.9616932,
+        "posZ": -3.88299775,
         "rotX": 90.0,
         "rotY": 1.00295874E-05,
         "rotZ": 0.0,
@@ -26360,9 +26360,9 @@
       "GUID": "e52522",
       "Name": "3DText",
       "Transform": {
-        "posX": 1.28743184,
-        "posY": 1.21701193,
-        "posZ": 38.29847,
+        "posX": 1.28734028,
+        "posY": 1.21700442,
+        "posZ": 38.2985039,
         "rotX": 90.0,
         "rotY": 359.833435,
         "rotZ": 0.0,
@@ -26463,9 +26463,9 @@
         "posX": 2.47000647,
         "posY": 1.21110559,
         "posZ": 31.5333347,
-        "rotX": -0.00242001982,
+        "rotX": -0.00241991715,
         "rotY": 180.0,
-        "rotZ": 0.00462258141,
+        "rotZ": 0.004622568,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -26479,9 +26479,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.1863985,
-        "g": 0.1863985,
-        "b": 0.1863985
+        "r": 0.186398387,
+        "g": 0.186398387,
+        "b": 0.186398387
       },
       "Tags": [
         "Blight",
@@ -26524,9 +26524,9 @@
         "posX": 13.5699873,
         "posY": 1.21021008,
         "posZ": 31.5329075,
-        "rotX": -0.002420987,
+        "rotX": -0.00242135348,
         "rotY": 179.999619,
-        "rotZ": 0.004626116,
+        "rotZ": 0.00462666526,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -26540,9 +26540,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.1863985,
-        "g": 0.1863985,
-        "b": 0.1863985
+        "r": 0.186398387,
+        "g": 0.186398387,
+        "b": 0.186398387
       },
       "Tags": [
         "Blight",
@@ -26588,9 +26588,9 @@
         "posX": -1.23058987,
         "posY": 1.21129942,
         "posZ": 34.01342,
-        "rotX": -0.00242063077,
+        "rotX": -0.0024204778,
         "rotY": 180.0,
-        "rotZ": 0.0046248436,
+        "rotZ": 0.004625007,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -26604,9 +26604,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.186398476,
-        "g": 0.186398476,
-        "b": 0.186398476
+        "r": 0.186398357,
+        "g": 0.186398357,
+        "b": 0.186398357
       },
       "Tags": [
         "Blight",
@@ -26652,9 +26652,9 @@
         "posX": 6.16999245,
         "posY": 1.2108072,
         "posZ": 31.5328045,
-        "rotX": -0.002420346,
+        "rotX": -0.00242011971,
         "rotY": 180.0,
-        "rotZ": 0.004623976,
+        "rotZ": 0.00462373346,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -26668,9 +26668,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.186398476,
-        "g": 0.186398476,
-        "b": 0.186398476
+        "r": 0.186398357,
+        "g": 0.186398357,
+        "b": 0.186398357
       },
       "Tags": [
         "Blight",
@@ -26716,9 +26716,9 @@
         "posX": 9.869908,
         "posY": 1.21061337,
         "posZ": 29.0530376,
-        "rotX": -0.00242101215,
+        "rotX": -0.00241996325,
         "rotY": 180.0,
-        "rotZ": 0.00462403568,
+        "rotZ": 0.004623755,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -26732,9 +26732,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.1863985,
-        "g": 0.1863985,
-        "b": 0.1863985
+        "r": 0.186398387,
+        "g": 0.186398387,
+        "b": 0.186398387
       },
       "Tags": [
         "Blight",
@@ -26778,11 +26778,11 @@
       "Name": "Custom_Tile_Stack",
       "Transform": {
         "posX": 15.4199085,
-        "posY": 1.21016562,
+        "posY": 1.21016574,
         "posZ": 29.0528469,
-        "rotX": -0.002420021,
+        "rotX": -0.0024205097,
         "rotY": 180.0,
-        "rotZ": 0.00462482357,
+        "rotZ": 0.00462422241,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -26796,9 +26796,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.1863985,
-        "g": 0.1863985,
-        "b": 0.1863985
+        "r": 0.186398387,
+        "g": 0.186398387,
+        "b": 0.186398387
       },
       "Tags": [
         "Blight",
@@ -26844,9 +26844,9 @@
         "posX": 13.5682678,
         "posY": 1.21031511,
         "posZ": 29.0511627,
-        "rotX": -0.00242053112,
+        "rotX": -0.00242057117,
         "rotY": 180.0,
-        "rotZ": 0.00462378375,
+        "rotZ": 0.00462353835,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -26860,9 +26860,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.1863985,
-        "g": 0.1863985,
-        "b": 0.1863985
+        "r": 0.186398387,
+        "g": 0.186398387,
+        "b": 0.186398387
       },
       "Tags": [
         "Blight",
@@ -26906,11 +26906,11 @@
       "Name": "Custom_Tile_Stack",
       "Transform": {
         "posX": 11.7199078,
-        "posY": 1.21046424,
+        "posY": 1.21046412,
         "posZ": 29.0529728,
-        "rotX": -0.00242048036,
+        "rotX": -0.00242028385,
         "rotY": 180.0,
-        "rotZ": 0.00462569948,
+        "rotZ": 0.004625659,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -26924,9 +26924,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.1863985,
-        "g": 0.1863985,
-        "b": 0.1863985
+        "r": 0.186398387,
+        "g": 0.186398387,
+        "b": 0.186398387
       },
       "Tags": [
         "Blight",
@@ -26972,9 +26972,9 @@
         "posX": 9.869993,
         "posY": 1.2105087,
         "posZ": 31.5330372,
-        "rotX": -0.00242104381,
+        "rotX": -0.00242108875,
         "rotY": 180.0,
-        "rotZ": 0.00462471275,
+        "rotZ": 0.004624574,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -26988,9 +26988,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.1863985,
-        "g": 0.1863985,
-        "b": 0.1863985
+        "r": 0.186398387,
+        "g": 0.186398387,
+        "b": 0.186398387
       },
       "Tags": [
         "Blight",
@@ -27036,9 +27036,9 @@
         "posX": 8.019993,
         "posY": 1.21065784,
         "posZ": 31.5334721,
-        "rotX": -0.00242076,
+        "rotX": -0.00242078863,
         "rotY": 180.0,
-        "rotZ": 0.004624001,
+        "rotZ": 0.00462406827,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -27052,9 +27052,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.186398476,
-        "g": 0.186398476,
-        "b": 0.186398476
+        "r": 0.186398357,
+        "g": 0.186398357,
+        "b": 0.186398357
       },
       "Tags": [
         "Blight",
@@ -27100,9 +27100,9 @@
         "posX": 6.169907,
         "posY": 1.21091187,
         "posZ": 29.0531635,
-        "rotX": -0.00242063543,
+        "rotX": -0.00242038933,
         "rotY": 180.0,
-        "rotZ": 0.0046252,
+        "rotZ": 0.00462464336,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -27116,9 +27116,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.1863985,
-        "g": 0.1863985,
-        "b": 0.1863985
+        "r": 0.186398387,
+        "g": 0.186398387,
+        "b": 0.186398387
       },
       "Tags": [
         "Blight",
@@ -27164,9 +27164,9 @@
         "posX": 4.319921,
         "posY": 1.21106112,
         "posZ": 29.0532341,
-        "rotX": -0.00241945451,
+        "rotX": -0.00241999328,
         "rotY": 180.0,
-        "rotZ": 0.00462285,
+        "rotZ": 0.004622778,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -27180,9 +27180,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.186398417,
-        "g": 0.186398417,
-        "b": 0.186398417
+        "r": 0.1863983,
+        "g": 0.1863983,
+        "b": 0.1863983
       },
       "Tags": [
         "Blight",
@@ -27226,11 +27226,11 @@
       "Name": "Custom_Tile_Stack",
       "Transform": {
         "posX": 2.47007775,
-        "posY": 1.21100092,
+        "posY": 1.2110008,
         "posZ": 34.01329,
-        "rotX": -0.002420902,
+        "rotX": -0.00242030062,
         "rotY": 180.0,
-        "rotZ": 0.0046251365,
+        "rotZ": 0.00462486036,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -27244,9 +27244,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.186398476,
-        "g": 0.186398476,
-        "b": 0.186398476
+        "r": 0.186398357,
+        "g": 0.186398357,
+        "b": 0.186398357
       },
       "Tags": [
         "Blight",
@@ -27292,9 +27292,9 @@
         "posX": 2.46990585,
         "posY": 1.21121037,
         "posZ": 29.05329,
-        "rotX": -0.00242063333,
+        "rotX": -0.002420862,
         "rotY": 180.000031,
-        "rotZ": 0.004625892,
+        "rotZ": 0.00462468853,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -27308,9 +27308,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.186398476,
-        "g": 0.186398476,
-        "b": 0.186398476
+        "r": 0.186398357,
+        "g": 0.186398357,
+        "b": 0.186398357
       },
       "Tags": [
         "Blight",
@@ -27356,9 +27356,9 @@
         "posX": 0.6199174,
         "posY": 1.2113595,
         "posZ": 29.0533619,
-        "rotX": -0.00241978234,
+        "rotX": -0.0024198452,
         "rotY": 180.0,
-        "rotZ": 0.00462253,
+        "rotZ": 0.00462266337,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -27372,9 +27372,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.186398417,
-        "g": 0.186398417,
-        "b": 0.186398417
+        "r": 0.1863983,
+        "g": 0.1863983,
+        "b": 0.1863983
       },
       "Tags": [
         "Blight",
@@ -27417,12 +27417,12 @@
       "GUID": "99d3a0",
       "Name": "Custom_Tile_Stack",
       "Transform": {
-        "posX": 0.6200752,
-        "posY": 1.21115,
+        "posX": 0.6200743,
+        "posY": 1.21115017,
         "posZ": 34.0133553,
-        "rotX": -0.00241999235,
+        "rotX": -0.00242060423,
         "rotY": 180.000381,
-        "rotZ": 0.004625092,
+        "rotZ": 0.00462571252,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -27436,9 +27436,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.1863985,
-        "g": 0.1863985,
-        "b": 0.1863985
+        "r": 0.186398387,
+        "g": 0.186398387,
+        "b": 0.186398387
       },
       "Tags": [
         "Blight",
@@ -27484,9 +27484,9 @@
         "posX": 15.4199915,
         "posY": 1.210061,
         "posZ": 31.5328465,
-        "rotX": -0.00242049783,
+        "rotX": -0.00242002262,
         "rotY": 180.0,
-        "rotZ": 0.004624861,
+        "rotZ": 0.00462394767,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -27500,9 +27500,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.1863985,
-        "g": 0.1863985,
-        "b": 0.1863985
+        "r": 0.186398387,
+        "g": 0.186398387,
+        "b": 0.186398387
       },
       "Tags": [
         "Blight",
@@ -27546,11 +27546,11 @@
       "Name": "Custom_Tile_Stack",
       "Transform": {
         "posX": 4.319843,
-        "posY": 1.21095634,
+        "posY": 1.21095645,
         "posZ": 31.5330734,
-        "rotX": -0.00242075277,
+        "rotX": -0.002421162,
         "rotY": 180.000031,
-        "rotZ": 0.004624568,
+        "rotZ": 0.004623667,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -27564,9 +27564,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.1863985,
-        "g": 0.1863985,
-        "b": 0.1863985
+        "r": 0.186398387,
+        "g": 0.186398387,
+        "b": 0.186398387
       },
       "Tags": [
         "Blight",
@@ -27629,7 +27629,7 @@
       },
       "ColorDiffuse": {
         "r": 0.909407556,
-        "g": 0.274087638,
+        "g": 0.274087518,
         "b": 0.84082216
       },
       "Tags": [
@@ -29444,11 +29444,11 @@
       "Name": "Custom_Tile_Stack",
       "Transform": {
         "posX": 15.42008,
-        "posY": 1.20995629,
+        "posY": 1.20995617,
         "posZ": 34.0128479,
-        "rotX": -0.0024202913,
+        "rotX": -0.0024200785,
         "rotY": 180.0,
-        "rotZ": 0.004623351,
+        "rotZ": 0.004624789,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -29462,9 +29462,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.1863985,
-        "g": 0.1863985,
-        "b": 0.1863985
+        "r": 0.186398387,
+        "g": 0.186398387,
+        "b": 0.186398387
       },
       "Tags": [
         "Blight",
@@ -29510,9 +29510,9 @@
         "posX": 13.5700779,
         "posY": 1.21010542,
         "posZ": 34.0129128,
-        "rotX": -0.00242120214,
+        "rotX": -0.0024211572,
         "rotY": 180.0,
-        "rotZ": 0.0046247635,
+        "rotZ": 0.004624713,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -29526,9 +29526,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.186398476,
-        "g": 0.186398476,
-        "b": 0.186398476
+        "r": 0.186398357,
+        "g": 0.186398357,
+        "b": 0.186398357
       },
       "Tags": [
         "Blight",
@@ -29572,11 +29572,11 @@
       "Name": "Custom_Tile_Stack",
       "Transform": {
         "posX": 11.7199926,
-        "posY": 1.21035933,
+        "posY": 1.21035945,
         "posZ": 31.5329723,
-        "rotX": -0.002420159,
+        "rotX": -0.00242043356,
         "rotY": 180.0,
-        "rotZ": 0.004624435,
+        "rotZ": 0.004624136,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -29590,9 +29590,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.186398536,
-        "g": 0.186398536,
-        "b": 0.186398536
+        "r": 0.186398417,
+        "g": 0.186398417,
+        "b": 0.186398417
       },
       "Tags": [
         "Blight",
@@ -29638,9 +29638,9 @@
         "posX": 8.020091,
         "posY": 1.21055317,
         "posZ": 34.0131035,
-        "rotX": -0.00241981237,
+        "rotX": -0.002419871,
         "rotY": 180.000046,
-        "rotZ": 0.00462262,
+        "rotZ": 0.00462255627,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -29654,9 +29654,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.186398387,
-        "g": 0.186398387,
-        "b": 0.186398387
+        "r": 0.186398268,
+        "g": 0.186398268,
+        "b": 0.186398268
       },
       "Tags": [
         "Blight",
@@ -29702,9 +29702,9 @@
         "posX": 11.7200909,
         "posY": 1.21025467,
         "posZ": 34.0129776,
-        "rotX": -0.002420279,
+        "rotX": -0.00241985754,
         "rotY": 180.000061,
-        "rotZ": 0.00462274766,
+        "rotZ": 0.00462205149,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -29718,9 +29718,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.186398357,
-        "g": 0.186398357,
-        "b": 0.186398357
+        "r": 0.186398238,
+        "g": 0.186398238,
+        "b": 0.186398238
       },
       "Tags": [
         "Blight",
@@ -29766,9 +29766,9 @@
         "posX": 6.17009068,
         "posY": 1.21070242,
         "posZ": 34.01317,
-        "rotX": -0.002420375,
+        "rotX": -0.002420365,
         "rotY": 180.000031,
-        "rotZ": 0.00462227734,
+        "rotZ": 0.00462237932,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -29782,9 +29782,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.186398387,
-        "g": 0.186398387,
-        "b": 0.186398387
+        "r": 0.186398268,
+        "g": 0.186398268,
+        "b": 0.186398268
       },
       "Tags": [
         "Blight",
@@ -29874,11 +29874,11 @@
       "GUID": "e6461c",
       "Name": "3DText",
       "Transform": {
-        "posX": 14.7194386,
-        "posY": 0.9615827,
-        "posZ": 0.4681969,
+        "posX": 14.7194157,
+        "posY": 0.96159023,
+        "posZ": 0.468166381,
         "rotX": 90.0,
-        "rotY": 0.166608691,
+        "rotY": 0.166609049,
         "rotZ": 0.0,
         "scaleX": 1.0,
         "scaleY": 1.0,
@@ -29928,11 +29928,11 @@
       "GUID": "379a42",
       "Name": "3DText",
       "Transform": {
-        "posX": 14.7194395,
-        "posY": 0.9615827,
-        "posZ": 0.00268554688,
+        "posX": 14.7194166,
+        "posY": 0.96159023,
+        "posZ": 0.00265502953,
         "rotX": 90.0,
-        "rotY": 0.166608691,
+        "rotY": 0.166609049,
         "rotZ": 0.0,
         "scaleX": 1.0,
         "scaleY": 1.0,
@@ -29982,11 +29982,11 @@
       "GUID": "fce69b",
       "Name": "3DText",
       "Transform": {
-        "posX": 14.7194395,
-        "posY": 0.9615827,
-        "posZ": -0.475122482,
+        "posX": 14.7194166,
+        "posY": 0.96159023,
+        "posZ": -0.475153,
         "rotX": 90.0,
-        "rotY": 0.166608691,
+        "rotY": 0.166609049,
         "rotZ": 0.0,
         "scaleX": 1.0,
         "scaleY": 1.0,
@@ -30036,11 +30036,11 @@
       "GUID": "2238b3",
       "Name": "3DText",
       "Transform": {
-        "posX": 14.7182379,
-        "posY": 0.9615827,
-        "posZ": -0.949148238,
+        "posX": 14.718214,
+        "posY": 0.96159023,
+        "posZ": -0.949173033,
         "rotX": 90.0,
-        "rotY": 0.166608691,
+        "rotY": 0.166609049,
         "rotZ": 0.0,
         "scaleX": 1.0,
         "scaleY": 1.0,
@@ -30090,11 +30090,11 @@
       "GUID": "4e81f5",
       "Name": "3DText",
       "Transform": {
-        "posX": 14.7194347,
-        "posY": 0.9615827,
-        "posZ": -1.87412465,
+        "posX": 14.7194109,
+        "posY": 0.96159023,
+        "posZ": -1.87415516,
         "rotX": 90.0,
-        "rotY": 0.166608691,
+        "rotY": 0.166609049,
         "rotZ": 0.0,
         "scaleX": 1.0,
         "scaleY": 1.0,
@@ -30144,11 +30144,11 @@
       "GUID": "469802",
       "Name": "3DText",
       "Transform": {
-        "posX": 14.7194109,
-        "posY": 0.9615827,
-        "posZ": -1.437277,
+        "posX": 14.719388,
+        "posY": 0.96159023,
+        "posZ": -1.43730736,
         "rotX": 90.0,
-        "rotY": 0.166608691,
+        "rotY": 0.166609049,
         "rotZ": 0.0,
         "scaleX": 1.0,
         "scaleY": 1.0,
@@ -30198,11 +30198,11 @@
       "GUID": "892a71",
       "Name": "3DText",
       "Transform": {
-        "posX": 14.7194386,
-        "posY": 0.9615827,
-        "posZ": -2.33451653,
+        "posX": 14.7194166,
+        "posY": 0.96159023,
+        "posZ": -2.334547,
         "rotX": 90.0,
-        "rotY": 0.166608691,
+        "rotY": 0.166609049,
         "rotZ": 0.0,
         "scaleX": 1.0,
         "scaleY": 1.0,
@@ -30362,9 +30362,9 @@
         "posX": 27.9293461,
         "posY": 1.29169834,
         "posZ": 3.62602544,
-        "rotX": 1.93724372E-06,
+        "rotX": -2.52827533E-07,
         "rotY": 180.512985,
-        "rotZ": -2.16299071E-07,
+        "rotZ": -5.352455E-07,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -30467,9 +30467,9 @@
       "Name": "Custom_Dice",
       "Transform": {
         "posX": 24.3851,
-        "posY": 1.29169893,
+        "posY": 1.29169881,
         "posZ": 2.497517,
-        "rotX": -3.903612E-08,
+        "rotX": 2.0279721E-07,
         "rotY": 156.792267,
         "rotZ": 180.0,
         "scaleX": 1.0,
@@ -30575,7 +30575,7 @@
       "Transform": {
         "posX": 26.7023869,
         "posY": 1.29169846,
-        "posZ": 2.147945,
+        "posZ": 2.147944,
         "rotX": 90.0,
         "rotY": 193.930969,
         "rotZ": 0.0,
@@ -30734,9 +30734,9 @@
         "posX": 8.01992,
         "posY": 1.21076262,
         "posZ": 29.0531082,
-        "rotX": -0.00241943239,
+        "rotX": -0.002419485,
         "rotY": 179.999985,
-        "rotZ": 0.00462266,
+        "rotZ": 0.00462271366,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -30750,9 +30750,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.1863983,
-        "g": 0.1863983,
-        "b": 0.1863983
+        "r": 0.186398178,
+        "g": 0.186398178,
+        "b": 0.186398178
       },
       "Tags": [
         "Blight",
@@ -30798,9 +30798,9 @@
         "posX": 9.870091,
         "posY": 1.21040392,
         "posZ": 34.0130424,
-        "rotX": -0.0024197374,
+        "rotX": -0.00241982122,
         "rotY": 180.000076,
-        "rotZ": 0.00462275138,
+        "rotZ": 0.004621987,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -30814,9 +30814,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.186398327,
-        "g": 0.186398327,
-        "b": 0.186398327
+        "r": 0.186398208,
+        "g": 0.186398208,
+        "b": 0.186398208
       },
       "Tags": [
         "Blight",
@@ -30913,9 +30913,9 @@
         "posX": -21.5168667,
         "posY": 1.12203646,
         "posZ": 31.2302971,
-        "rotX": -1.44491406E-08,
+        "rotX": 2.96070937E-08,
         "rotY": 179.9997,
-        "rotZ": -2.45922127E-08,
+        "rotZ": 3.13056847E-09,
         "scaleX": 1.75,
         "scaleY": 1.0,
         "scaleZ": 1.75
@@ -37237,7 +37237,7 @@
         "posX": -27.3729858,
         "posY": 2.00802875,
         "posZ": 32.3256073,
-        "rotX": 2.053183E-08,
+        "rotX": -2.392411E-08,
         "rotY": 179.999741,
         "rotZ": 180.0,
         "scaleX": 1.0,
@@ -66424,11 +66424,11 @@
       "GUID": "5dd361",
       "Name": "Deck",
       "Transform": {
-        "posX": -3.01622963,
-        "posY": 1.44906652,
-        "posZ": -1.30990362,
-        "rotX": -3.40564657E-05,
-        "rotY": 180.972824,
+        "posX": -2.63994026,
+        "posY": 1.4490658,
+        "posZ": -1.31421363,
+        "rotX": -3.20105974E-05,
+        "rotY": 179.990219,
         "rotZ": 180.000122,
         "scaleX": 1.0,
         "scaleY": 1.0,
@@ -70497,9 +70497,9 @@
         "posX": 4.32007837,
         "posY": 1.21085167,
         "posZ": 34.01323,
-        "rotX": -0.00241990341,
+        "rotX": -0.00241997256,
         "rotY": 180.0,
-        "rotZ": 0.004624555,
+        "rotZ": 0.00462462939,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -70513,9 +70513,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.186398476,
-        "g": 0.186398476,
-        "b": 0.186398476
+        "r": 0.186398357,
+        "g": 0.186398357,
+        "b": 0.186398357
       },
       "Tags": [
         "Blight",
@@ -70559,11 +70559,11 @@
       "Name": "Custom_Tile_Stack",
       "Transform": {
         "posX": 0.619881,
-        "posY": 1.21125484,
+        "posY": 1.21125472,
         "posZ": 31.53334,
-        "rotX": -0.00242026965,
+        "rotX": -0.00242016371,
         "rotY": 180.000092,
-        "rotZ": 0.004622771,
+        "rotZ": 0.004622457,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -70577,9 +70577,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.1863983,
-        "g": 0.1863983,
-        "b": 0.1863983
+        "r": 0.186398178,
+        "g": 0.186398178,
+        "b": 0.186398178
       },
       "Tags": [
         "Blight",
@@ -70623,8 +70623,8 @@
       "Name": "3DText",
       "Transform": {
         "posX": -23.5926456,
-        "posY": 0.9615428,
-        "posZ": 2.492781,
+        "posY": 0.9615503,
+        "posZ": 2.49276733,
         "rotX": 90.0,
         "rotY": -2.947798E-10,
         "rotZ": 0.0,
@@ -70679,9 +70679,9 @@
         "posX": -1.23068,
         "posY": 1.21150887,
         "posZ": 29.0534229,
-        "rotX": -0.002420279,
+        "rotX": -0.00242073555,
         "rotY": 180.000061,
-        "rotZ": 0.00462636538,
+        "rotZ": 0.00462654466,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -70695,9 +70695,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.186398447,
-        "g": 0.186398447,
-        "b": 0.186398447
+        "r": 0.186398327,
+        "g": 0.186398327,
+        "b": 0.186398327
       },
       "Tags": [
         "Blight",
@@ -70740,12 +70740,12 @@
       "GUID": "417584",
       "Name": "Custom_Tile_Stack",
       "Transform": {
-        "posX": -1.23178339,
+        "posX": -1.23178327,
         "posY": 1.2114042,
         "posZ": 31.5334225,
-        "rotX": -0.002420006,
-        "rotY": 179.999985,
-        "rotZ": 0.004622298,
+        "rotX": -0.0024202182,
+        "rotY": 180.0,
+        "rotZ": 0.004622722,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -70759,9 +70759,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.186398327,
-        "g": 0.186398327,
-        "b": 0.186398327
+        "r": 0.186398208,
+        "g": 0.186398208,
+        "b": 0.186398208
       },
       "Tags": [
         "Blight",
@@ -70804,11 +70804,11 @@
       "GUID": "9a475b",
       "Name": "3DText",
       "Transform": {
-        "posX": 7.29611349,
-        "posY": 0.9614987,
-        "posZ": -3.91886425,
+        "posX": 7.29617548,
+        "posY": 0.9615142,
+        "posZ": -3.918896,
         "rotX": 90.0,
-        "rotY": 0.0,
+        "rotY": -2.947798E-10,
         "rotZ": 0.0,
         "scaleX": 1.0,
         "scaleY": 1.0,

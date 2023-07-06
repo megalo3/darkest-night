@@ -63,7 +63,6 @@ function moveNecromancer(dieValue, location)
     if #detected > 0 then
         local names = ''
         for index, d in ipairs(detected) do
-
             if index > 1 and index == #detected then
                 if #detected > 2 then
                     names = names .. ','
@@ -122,7 +121,10 @@ function getBestRoute(necroLocation, pawn)
     local path = LocationPathfinding[necroLocation][pawnLocation]
     -- If the path doesn't exist, the Village is the closest
     if path == nil then return 'Village' end
-    if #path == 2 then return path[rand(2)] end
+    if #path == 2 then
+        printToAll('The Necromancer randomly chooses between equidistant detected characters.', stringColorToRGB('Green'))
+        return path[rand(2)]
+    end
     return path[1]
 end
 
@@ -188,7 +190,13 @@ function attemptDeployBlight(newLocation)
             printToAll('Three map cards have been drawn with no available blight tokens. Create a blight of your choice.', stringColorToRGB('Yellow'))
         end
     else
+        -- Map draw succeeded
         FailedBlightDrawAttempt = 0
+        print('It is now the Hero Turn.')
+        
+        for _, token in ipairs(getObjectsWithAllTags({'Activity'})) do
+            token.setRotationValue("Active")
+        end
     end
 end
 
@@ -280,7 +288,7 @@ LocationPosition = {
     Mountains = {-7.91, 2, 19.40},
     Castle = {10.48, 2, 18.57},
     Village = {-0.79, 2, 12.62},
-    Swamp = {14.62, 2, 12.59},
+    Swamp = {9, 2, 12.59},
     Forest = {-1.68, 2, 6.24},
     Ruins = {8.57, 2, 6.18}
 }

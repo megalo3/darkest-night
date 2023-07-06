@@ -3,12 +3,11 @@ function onLoad()
     BlightBoard = getObjectFromGUID('2f4bb6')
 end
 
-function onObjectEnterContainer(container, object)
-    if (container.guid == self.guid) then
-        local position = findSnapLocation(object.getName())
-        local toWorld = BlightBoard.positionToWorld(position)
-        self.takeObject({position = {toWorld[1], 3, toWorld[3]}})
-    end
+function returnBlight(object)
+    local position = findSnapLocation(object.getName())
+    local toWorld = BlightBoard.positionToWorld(position)
+    object.setPositionSmooth({toWorld[1], 3, toWorld[3]})
+    object.setRotationSmooth({0,180,0})
 end
 
 function findSnapLocation(name)

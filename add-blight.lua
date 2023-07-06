@@ -1,22 +1,42 @@
-MapDrawDeck = nil
+MapDeckScript = nil
 LocationScript = nil
+ItemBag = nil
+DarknessScript = nil
 
 function onLoad()
-   MapDrawDeck = getObjectFromGUID('89075e')
+   MapDeckScript = getObjectFromGUID('89075e')
    LocationScript = getObjectFromGUID('1b4d88')
+   ItemBag = getObjectsWithAllTags({'Item', 'Bag'})[1]
+   DarknessScript = getObjectFromGUID('a4642e')
    for index, location in ipairs(Locations) do
         self.createButton({
             click_function = "createBlight" .. location, 
             function_owner = self,
-            label          = "Add " .. location .. " Blight",
+            label          = "Blight",
             position       = {0,0,(index - 1)/1.63},
             rotation       = {0,0,0},
-            width          = 1000,
+            width          = 500,
             height         = 200,
             font_size      = 100,
-            color          = {0, 0, 0},
+            color          = {0,0,0},
             font_color     = {1, 1, 1},
         })
+    end
+   for index, location in ipairs(Locations) do
+        if location ~= "Monastery" then
+            self.createButton({
+                click_function = "getItem" .. location, 
+                function_owner = self,
+                label          = "Item",
+                position       = {1.1,0,(index - 1)/1.63},
+                rotation       = {0,0,0},
+                width          = 500,
+                height         = 200,
+                font_size      = 100,
+                color          = {.03, .45, .14},
+                font_color     = {1, 1, 1},
+            })
+        end
     end
 end
 
@@ -28,27 +48,143 @@ function createBlightForest(o, c, a) createBlight('Forest') end
 function createBlightRuins(o, c, a) createBlight('Ruins') end
 function createBlightMonastery(o, c, a) createBlight('Monastery') end
 
-function createBlight(location)
-    local card = MapDrawDeck.call('getDiscardDeckTopCard')
-    if card == nil then
-        print('No map card has been played.')
+function getItemMountains(o, c, a) getItem('Mountains',c) end
+function getItemCastle(o, c, a) getItem('Castle',c) end
+function getItemVillage(o, c, a) getItem('Village',c) end
+function getItemSwamp(o, c, a) getItem('Swamp',c) end
+function getItemForest(o, c, a) getItem('Forest',c) end
+function getItemRuins(o, c, a) getItem('Ruins',c) end
+function getItemMonastery(o, c, a) getItem('Monastery',c) end
+
+StartingBlights = {0,0,0,0,0,0}
+function createStartingBlights(n)
+    if n == 0 then return end
+    StartingBlights = {0,0,0,0,0,0}
+    tryCreateStartingBlights(n)
+end
+
+function tryCreateStartingBlights(n)
+    MapDeckScript.call('drawMapCard')
+    
+    Wait.time(function()
+        local card = getTopMapCard()
+        local blightInfo = getBlightInfoFromGUID(card.guid)
+        local retry = false
+
+        for index, location in ipairs(Locations) do
+            if location ~= 'Monastery' then
+                if StartingBlights[index] < n then
+                    local blightName = blightInfo[location][1]
+                    local deployedBlightMessage = deployBlight(blightName, location, StartingBlights[index])
+                    if deployedBlightMessage ~= false then
+                        print(deployedBlightMessage)
+                        StartingBlights[index] = StartingBlights[index] + 1
+                    end
+                end
+                if StartingBlights[index] < n then
+                    retry = true
+                end
+            end
+        end
+        
+        if retry == true then
+            tryCreateStartingBlights(n)
+        end
+    end, 1.5)
+end
+
+function getItem(location, color)
+    local card = getTopMapCard()
+    if card == false then return end
+    
+    local blightInfo = getBlightInfoFromGUID(card.guid)
+    local itemName = blightInfo[location][2]
+    local otherSearchResults = {'Epiphany', 'Forgotten Shrine', 'Inspiration', 'Stardust', 'Supply Cache'}
+    if table.inTable(otherSearchResults, itemName) then
+        printToAll("You've discovered a " .. itemName .. " in the " .. location .. ". It takes effect immediately.", stringColorToRGB(color))
         return
     end
+    printToAll("You've discovered a " .. itemName .. " in the " .. location .. ".", stringColorToRGB(color))
+    dealItem({ ItemName = itemName, Color = color})
+end
+
+-- ItemName, Color
+function dealItem(input)
+    if input.ItemName == "Artifact" then
+        local deck = getObjectsWithAllTags({'Deck', 'Artifact'})[1]
+        deck.deal(1, input.Color)
+        return
+    end
+    if input.ItemName == "Mystery" then
+        local deck = getObjectsWithAllTags({'Deck', 'Mystery'})[1]
+        deck.deal(1, input.Color)
+        return
+    end
+    if input.ItemName == "Revelation" then
+        local clueToken = getObjectsWithAllTags({'Search', 'Token'})[1]
+        local clueLevel = DarknessScript.call("getDarknessLevel", clueToken.getPosition()[1])
+        local pos = DarknessScript.call("getDarknessTrackPosition", clueLevel+3)
+        clueToken.setPositionSmooth(pos)
+        print("Moving the clue track up by 3.")
+        return
+    end
+    getItemFromBag({tag = input.ItemName, color = input.Color})
+end
+
+function getItemFromBag(input)
+    local starter = getObjectsWithAllTags({input.color, 'Character Sheet', 'Starter'})[1]
+    local position = starter.getPosition()
+    
+    if input.tag == "Spark" then
+        local bag = getObjectsWithAllTags({'Bag', 'Spark'})[1]
+        bag.takeObject({
+            position = position,
+        })
+        return
+    end
+    
+    for _, item in ipairs(ItemBag.getObjects()) do
+        if table.inTable(item.tags, input.tag) then
+            ItemBag.takeObject({
+                guid = item.guid,
+                position = {position[1], 2, position[3]},
+                rotation = {0,180,0}
+            })
+            return
+        end
+    end
+    print("There are no remaining " .. input.tag .. " tokens in the supply.")
+end
+
+function createBlight(location)
+    local card = getTopMapCard()
+    if card == false then return end
+    
     -- Make sure there aren't already 4 blights
     local blightCount = LocationScript.call('countBlightsInLocation', location)
     if blightCount >= 4 then
         printToAll('The ' .. location .. ' already has 4 blights. Creating a blight at the Monastery instead. If the Monastery ever has more than 4 blights, the heroes immediately lose the game.', stringColorToRGB('Orange'))
         location = 'Monastery'
+        blightCount = LocationScript.call('countBlightsInLocation', 'Monastery')
     end
     -- If so, the blight location is the Monastery
     local blightInfo = getBlightInfoFromGUID(card.guid)
     local blightName = blightInfo[location][1]
-    local deployedBlightMessage = deployBlight(blightName, location)
+    local deployedBlightMessage = deployBlight(blightName, location, blightCount)
     if deployedBlightMessage == false then
         return false
     end
     print(deployedBlightMessage)
     return true
+end
+
+function getTopMapCard()
+    local card = MapDeckScript.call('getDiscardDeckTopCard')
+    if card == nil then
+        print('No map card has been played.')
+        return false
+    end
+    return card
 end
 
 function getBlightInfoFromGUID(guid)
@@ -59,14 +195,15 @@ function getBlightInfoFromGUID(guid)
     end
 end
 
-function deployBlight(blightName, location)
+function deployBlight(blightName, location, blightCount)
+    local position = {LocationPositions[location][1] + blightCount * 1.5, 2, LocationPositions[location][3]}
     local BlightZone = getObjectsWithAllTags({'Zone', 'Blight', 'Draw'})[1]
     for index, tileStack in ipairs(BlightZone.getObjects()) do
         if (tileStack.getName() == blightName) then
             if (tileStack.name == 'Custom_Tile_Stack') then
-                tileStack.takeObject({position = LocationPositions[location]})
+                tileStack.takeObject({position = position})
             else
-                tileStack.setPositionSmooth(LocationPositions[location])
+                tileStack.setPositionSmooth(position)
             end
             return 'Adding a ' .. blightName .. ' blight to the ' .. location .. '.';
         end
@@ -85,15 +222,26 @@ function has_value(tableObject, matchValue)
     return false
 end
 
+-- Check if a value is in a table.
+function table:inTable(value)
+    for tableKey, tableValue in ipairs(self) do
+        if value == tableValue then
+            return true
+        end
+    end
+
+    return false
+end
+
 Locations = {'Mountains', 'Castle', 'Village', 'Swamp', 'Forest', 'Ruins', 'Monastery'}
 LocationPositions = {
     Mountains = {-6.16, 2, 19.53},
     Castle = {8.46, 2, 18.52},
     Village = {1.30, 2, 12.55},
-    Swamp = {12.49, 2, 12.55},
-    Forest = {-5.81, 2, 5.35},
+    Swamp = {12.35, 2, 12.55},
+    Forest = {-7.25, 2, 5.35},
     Ruins = {10.68, 2, 5.96},
-    Monastery = {-10.90, 2, 12.55}
+    Monastery = {-12.84, 2, 12.65}
 }
 Maps = {
     {

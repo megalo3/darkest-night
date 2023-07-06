@@ -1,47 +1,236 @@
-function darknessCardsSelected(player, option, id) end
-function startingBlightsSelected(player, option, id) end
-function startingDarknessSelected(player, option, id) end
-function startingPowerCardsSelected(player, option, id) end
-function startingGraceSelected(player, option, id) end
-function startingSparksSelected(player, option, id) end
-function numberOfHeroesSelected(player, option, id) end
-function modifyTitle()
+Settings = {
+    difficultyOptions = {0,0,0,0,0,0,0},
+    heroTurnPanelClosedBy = {"Nobody"},
+    actionsPanelClosedBy = {"Nobody"},
+    difficultyPanelClosedBy = {"Nobody"},
+    mapPanelClosedBy = {"Nobody"},
+}
 
-end
-function setDifficulty()
-    print('Game difficulty chosen')
-    PlayerBoard.addTag('DifficultySelected')
-    UI.hide('DifficultyOptions')
-    UI.show('MapDeckPanel')
-end
+ReturnBlight = nil
+ItemBag = nil
+AddDarknessScript = nil
+AddBlightScript = nil
+MapDeckScript = nil
 
-function onLoad()
+function onLoad(saveData)
+     addHotkey("Return Token", function(playerColor, object, pointerPosition, isKeyUp)
+        if isKeyUp == true then return end
+        returnItem(object)
+    end, true)
+    
+    printToAll('Go to Options -> Game Keys and add a hotkey for returning tokens.', stringColorToRGB('Yellow'))
+    
+    -- Load the save data, if present.
+    if saveData and saveData ~= "" then
+       Settings = JSON.decode(saveData)
+    end
+    -- print(JSON.encode(Settings))
+    showHidePanelForAllPlayers()
+    
     math.randomseed(os.time())
+
+    ReturnBlight = getObjectFromGUID('ea4c54')
     PlayerBoard = getObjectFromGUID('65a138')
-    if PlayerBoard.hasTag('DifficultySelected') then
-        UI.hide('DifficultyOptions')
-    end
-    if PlayerBoard.hasTag('MapSelected') then
-        UI.hide('MapDeckPanel')
-    end
+    ItemBag = getObjectsWithAllTags({'Item', 'Bag'})[1]
+    AddDarknessScript = getObjectFromGUID('a4642e')
+    AddBlightScript = getObjectFromGUID('31c6dc')
+    MapDeckScript = getObjectFromGUID('89075e')
 
     -- Set items uninteractable
     for key, uninteractableObject in ipairs(getObjectsWithTag('Uninteractable')) do
         uninteractableObject.interactable = false
     end
+end
+
+function onObjectNumberTyped(object,  player_color,  number)
+    if object.type == 'Deck' then
+        if number > 9 then
+            print("Sorry. You can only draw a maximum of 9 cards.")
+            return true
+        end
+        object.deal(number, player_color)
+        return true
+    end
+end
+
+function returnItem(object)
+    -- Unstack stacks
+    if object.name == 'Custom_Token_Stack' then
+        local newObject = object.takeObject()
+        object = newObject
+    end
     
---     self.createButton({
---         click_function = "duplicateSnapPoints", 
---         function_owner = self,
---         label          = "Clone Snaps",
---         position       = {0,0,0},
---         rotation       = {0,0,0},
---         width          = 850,
---         height         = 200,
---         font_size      = 100,
---         color          = {0, 0, 0},
---         font_color     = {1, 1, 1},
---     })
+    if object.hasTag("Blight") then
+        ReturnBlight.call("returnBlight", object)
+        return true
+    end
+    if object.hasTag("Spark") then
+        local bag = getObjectsWithAllTags({'Spark', 'Bag'})[1]
+        bag.putObject(object)
+        return true
+    end
+    if object.hasTag("Progress") then
+        local bag = getObjectsWithAllTags({'Progress', 'Bag'})[1]
+        bag.putObject(object)
+        return true
+    end
+    if object.hasTag("Time") then
+        local bag = getObjectsWithAllTags({'Time', 'Bag'})[1]
+        bag.putObject(object)
+        return true
+    end
+    if object.hasTag("Key") then
+        local bag = getObjectsWithAllTags({'Key', 'Bag'})[1]
+        bag.putObject(object)
+        return true
+    end
+    if object.hasTag("Item") then
+        ItemBag.putObject(object)
+        return true
+    end
+end
+
+function test()
+
+end
+
+-- Called when the game is saved.
+function onSave()
+    -- Save the game's Settings.
+    return JSON.encode(Settings)
+end
+
+function darknessCardsSelected(player, selected) 
+    local options = {
+         '-1 dm: 1 card (at 15)',
+         '+0 dm: 2 cards (at 10, 20)',
+         '+1 dm: 3 cards (at 7, 14, 21)',
+         '+2 dm: 4 cards (at 5, 10, 15, 20)',
+         '+3 dm: 5 cards (at 4, 8, 12, 16, 20)',
+         '+4 dm: 6 cards (at 2, 6, 10, 14, 18, 22)',
+         '+5 dm: 7 cards (at 0, 4, 8, 12, 16, 20, 24)',
+         '+6 dm: 8 cards (at 0, 3, 6, 9, 12, 15, 18, 21)'
+    }
+    for index, option in ipairs(options) do
+        if option == selected then
+            Settings.difficultyOptions[1] = index - 2
+        end
+    end
+    updateTitle()
+end
+function startingBlightsSelected(player, selected)
+    local options = {
+        '-3 dm: Start with no blights',
+        '+0 dm: 1 blight per location (except the Monastery)',
+        '+3 dm: 2 blights per location (except the Monastery)'
+    }
+    for index, option in ipairs(options) do
+        if option == selected then
+            Settings.difficultyOptions[2] = (index - 2) * 3
+        end
+    end
+    updateTitle()
+end
+
+function startingDarknessSelected(player, selected)
+    local options = {
+        '-1 dm: Darkness -5',
+        '+0 dm: Darkness 0',
+        '+1 dm: Darkness 5'
+    }
+    for index, option in ipairs(options) do
+        if option == selected then
+            Settings.difficultyOptions[3] = index - 2
+        end
+    end
+    updateTitle()
+end
+
+function startingPowerCardsSelected(player, selected)
+    local options = {
+        '-2 dm: Start every hero with 5 power cards',
+        '-1 dm: Start every hero with 4 power cards',
+        '+0 dm: Start every hero with 3 power cards'
+    }
+    for index, option in ipairs(options) do
+        if option == selected then
+            Settings.difficultyOptions[4] = index - 3
+        end
+    end
+    updateTitle()
+end
+
+function startingGraceSelected(player, selected)
+    local options = {
+        '-1 dm: Start every hero with 2 extra Grace',
+        '+0 dm: Start every hero with 0 extra Grace'
+    }
+    for index, option in ipairs(options) do
+        if option == selected then
+            Settings.difficultyOptions[5] = index - 2
+        end
+    end
+    updateTitle()
+end
+
+function startingSparksSelected(player, selected)
+    local options = {
+        '-1 dm: Start every hero with 3 sparks',
+        '+0 dm: Start every hero with 0 sparks'
+    }
+    for index, option in ipairs(options) do
+        if option == selected then
+            Settings.difficultyOptions[6] = index - 2
+        end
+    end
+    updateTitle()
+end
+
+function numberOfHeroesSelected(player, selected)
+    local options = {
+        '+4 dm: Play with 3 heroes',
+        '+0 dm: Play with 4 heroes',
+        '+0 dm: Play with 5 heroes. (See extra rules)'
+    }
+    for index, option in ipairs(options) do
+        if option == selected then
+            if index == 1 then
+                Settings.difficultyOptions[7] = 4
+            else
+                Settings.difficultyOptions[7] = 0
+            end
+        end
+    end
+    updateTitle()
+end
+
+function updateTitle()
+    difficulty = 0
+    for _, option in ipairs(Settings.difficultyOptions) do
+        difficulty = difficulty + option
+    end
+    
+    if difficulty >= 0  then
+        difficulty = "+" .. difficulty
+    end
+    
+    UI.setAttributes('difficultyOptionsTitle', {
+        text = "Difficulty Options (Modifier " .. difficulty .. ")"
+    })
+end
+
+function setDifficulty()
+    print('Game difficulty chosen')
+    
+    -- Move starting darkness and add cards
+    AddDarknessScript.call("moveStartingDarkness")
+    
+    for _, player in ipairs(Player.getPlayers()) do
+        closeDifficultyPanel(player)
+        UI.setAttribute('MapPanel', 'active', true)
+        UI.setAttribute('MapPanelButton', 'active', true)
+        openMapPanel(player)
+    end
 end
 
 function duplicateSnapPoints()
@@ -66,13 +255,25 @@ function mapDeckSelected(player, option, id)
 end
 
 function setMapDeck()
-    UI.hide('MapDeckPanel')
+    for _, player in ipairs(Player.getPlayers()) do
+        closeMapPanel(player)
+    end
     
     shuffleDecks()
     print('Selected "' .. DeckMapNames[SelectedMapDeck] .. '" map deck.')
-    PlayerBoard.addTag('MapSelected')
+    for _, player in ipairs(Player.getPlayers()) do
+        closeMapPanel(player)
+    end
+    
     if SelectedMapDeck == 'Everything' then return end
     createMapDeck(SelectedMapDeck)
+    
+    -- Add starting blights
+    local blightDm = Settings.difficultyOptions[2]
+    local startingBlights = 0
+    if blightDm == 0 then startingBlights = 1 end
+    if blightDm == 3 then startingBlights = 2 end
+    AddBlightScript.call("createStartingBlights", startingBlights)
 end
 
 function setCharacters()
@@ -84,17 +285,21 @@ function setCharacters()
         end
     end
     
-    if #pawns != 4 then
-        printToAll('Four characters are required to play this game. See rules for 3 or 5 player variants.', stringColorToRGB('Red'))
-    end
-    
     for _, p in ipairs(pawns) do
         -- Move the pawn to the Monestary
         getObjectsWithAllTags({'Pawn', p['Pawn']})[1].setPositionSmooth(MonestaryPositions[p['Color']])
         dealPlayerCards(p['Color'], p['Pawn'])
         dealCharacterSheet(p['Color'], p['Pawn'])
     end
-    print('Choose three of your starting cards, put the other two back in your character deck, and then shuffle it.')
+     
+    -- Use DM Starting Power Cards
+    if Settings.difficultyOptions[4] == -2 then
+        print('You get to begin with all five starting cards.')
+    else
+        local startingCardAmount = 'three'
+        if Settings.difficultyOptions[4] == -1 then startingCardAmount = 'four' end
+        print('Choose ' .. startingCardAmount .. ' of your starting cards, put the other two back in your character deck, and then shuffle it.')
+    end
 end
 
 function getStarterPawn(color)
@@ -128,6 +333,13 @@ function dealCharacterSheet(color, character)
             })
         end
     end
+    
+    -- Use DM starting sparks
+    if Settings.difficultyOptions[6] == -1 then
+        Wait.time(function()  AddBlightScript.call("getItemFromBag", {tag = 'Spark', color = color}) end, 1.3)
+        Wait.time(function()  AddBlightScript.call("getItemFromBag", {tag = 'Spark', color = color}) end, 2)
+        Wait.time(function()  AddBlightScript.call("getItemFromBag", {tag = 'Spark', color = color}) end, 2.7)
+    end
 end
 
 function setCharacterSheetTokens(object)
@@ -141,9 +353,16 @@ function setCharacterSheetTokens(object)
                 rotation = {0,180,0}
             })
         end
+        
+        -- Use DM Starting Grace. A 2 modifier is the same as +1.31 x coords
+        local startingGraceModifer = 0
+        if Settings.difficultyOptions[5] == -1 then startingGraceModifer = 1.31 end
+        
         if has_value(point.tags, 'Default Grace') then
+            local gracePos = object.positionToWorld(point.position)
+            gracePos[1] = gracePos[1] + startingGraceModifer
             graceBag.takeObject({
-                position = object.positionToWorld(point.position),
+                position = gracePos,
                 rotation = {0,180,0}
             })
         end
@@ -215,6 +434,100 @@ function getDeckFromZone(zone)
         end
     end
     return nil 
+end
+
+function closeHeroTurnPanel(player) closePanel(player.color, 'heroTurnPanelClosedBy', 'HeroTurnPanel') end
+function closeActionsPanel(player) closePanel(player.color, 'actionsPanelClosedBy', 'ActionsPanel') end
+function closeDifficultyPanel(player) closePanel(player.color, 'difficultyPanelClosedBy', 'DifficultyPanel') end
+function closeMapPanel(player) closePanel(player.color, 'mapPanelClosedBy', 'MapPanel') end
+
+function openHeroTurnPanel(player) openPanel(player.color, 'heroTurnPanelClosedBy', 'HeroTurnPanel') end
+function openActionsPanel(player) openPanel(player.color, 'actionsPanelClosedBy', 'ActionsPanel') end
+function openDifficultyPanel(player) openPanel(player.color, 'difficultyPanelClosedBy', 'DifficultyPanel') end
+function openMapPanel(player) openPanel(player.color, 'mapPanelClosedBy', 'MapPanel') end
+
+function closePanel(color, tableName, elementId)
+    table.insert(Settings[tableName], color)
+    showHidePanelsForPlayers(tableName, elementId)
+end
+function openPanel(color, tableName, elementId)
+    table.removeByValue(Settings[tableName], color)
+    showHidePanelsForPlayers(tableName, elementId)
+end
+
+function showHidePanelForAllPlayers()
+    showHidePanelsForPlayers('heroTurnPanelClosedBy', 'HeroTurnPanel')
+    showHidePanelsForPlayers('actionsPanelClosedBy', 'ActionsPanel')
+    showHidePanelsForPlayers('mapPanelClosedBy', 'MapPanel')
+    showHidePanelsForPlayers('difficultyPanelClosedBy', 'DifficultyPanel')
+end
+
+function showHidePanelsForPlayers(tableName, elementId)
+    local visibility = getVisibilityString(invertUIVisibilityTable(Settings[tableName]), true)
+    UI.setAttribute(elementId, "visibility", visibility)
+    local buttonVisibility = getVisibilityString(Settings[tableName], true)
+    UI.setAttribute(elementId .. "Button", "visibility", buttonVisibility)
+end
+
+-- Turns a visibility table (a table of players) into a string suitable for the visibility attribute.
+function getVisibilityString(visibilityTable, hideForAllIfEmpty)
+    local tableSize = #visibilityTable
+
+    -- If the table is empty, hide the UI for everybody if enabled. This is done by setting the visibility to "Nobody". If disabled, everybody will see the UI.
+    if hideForAllIfEmpty and tableSize == 0 then
+        table.insert(visibilityTable, "Nobody")
+    -- Otherwise, make sure "Nobody" is removed if it's not the only value in the table.
+    elseif tableSize > 1 then
+        table.removeByValue(visibilityTable, "Nobody")
+    end
+
+    -- Implode the string, separating by a pipe.
+    return table.concat(visibilityTable, "|")
+end
+
+-- Inverts a UI visibility table, so all players currently present in it are removed, while all players not present are added.
+function invertUIVisibilityTable(visibilityTable)
+    local newVisibilityTable = {}
+
+    -- Loop through the available seats.
+    for _, value in ipairs(Player.getColors()) do
+        -- If they're not currently in the table, add them.
+        if not table.inTable(visibilityTable, value) then
+            table.insert(newVisibilityTable, value)
+        end
+    end
+
+    return newVisibilityTable
+end
+
+-- Check if a value is in a table.
+function table:inTable(value)
+    for tableKey, tableValue in ipairs(self) do
+        if value == tableValue then
+            return true
+        end
+    end
+
+    return false
+end
+
+-- Gets the index of a value in a given table.
+function table:indexOf(value)
+    for tableKey, tableValue in ipairs(self) do 
+        if tableValue == value then 
+            return tableKey
+        end
+    end
+end
+
+-- Removes an element from a table by value.
+function table:removeByValue(value)
+    local index = table.indexOf(self, value)
+    if index then
+        table.remove(self, index)
+    end
+
+    return self
 end
 
 PlayerBoard = nil

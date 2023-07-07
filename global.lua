@@ -225,11 +225,11 @@ function setDifficulty()
     -- Move starting darkness and add cards
     AddDarknessScript.call("moveStartingDarkness")
     
-    for _, player in ipairs(Player.getPlayers()) do
-        closeDifficultyPanel(player)
-        UI.setAttribute('MapPanel', 'active', true)
-        UI.setAttribute('MapPanelButton', 'active', true)
-        openMapPanel(player)
+    UI.setAttribute('MapPanel', 'active', true)
+    UI.setAttribute('MapPanelButton', 'active', true)
+    for _, color in ipairs(Player.getColors()) do
+        closePanel(color, 'difficultyPanelClosedBy', 'DifficultyPanel')
+        openPanel(color, 'mapPanelClosedBy', 'MapPanel')
     end
 end
 
@@ -255,15 +255,12 @@ function mapDeckSelected(player, option, id)
 end
 
 function setMapDeck()
-    for _, player in ipairs(Player.getPlayers()) do
-        closeMapPanel(player)
+    for _, color in ipairs(Player.getColors()) do
+        closePanel(color, 'mapPanelClosedBy', 'MapPanel')
     end
     
     shuffleDecks()
     print('Selected "' .. DeckMapNames[SelectedMapDeck] .. '" map deck.')
-    for _, player in ipairs(Player.getPlayers()) do
-        closeMapPanel(player)
-    end
     
     if SelectedMapDeck ~= 'Everything' then 
         createMapDeck(SelectedMapDeck)

@@ -121,11 +121,7 @@ function dealItem(input)
         return
     end
     if input.ItemName == "Revelation" then
-        local clueToken = getObjectsWithAllTags({'Search', 'Token'})[1]
-        local clueLevel = DarknessScript.call("getDarknessLevel", clueToken.getPosition()[1])
-        local pos = DarknessScript.call("getDarknessTrackPosition", clueLevel+3)
-        clueToken.setPositionSmooth(pos)
-        print("Moving the clue track up by 3.")
+        DarknessScript.call("moveClues", 3)
         return
     end
     getItemFromBag({tag = input.ItemName, color = input.Color})

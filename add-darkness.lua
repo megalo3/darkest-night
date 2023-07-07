@@ -1,6 +1,11 @@
+ClueToken = nil
+DarknessToken = nil
+
 function onLoad()
+    ClueToken = getObjectsWithAllTags({'Search', 'Token'})[1]
+    DarknessToken = getObjectsWithAllTags({'Darkness', 'Token'})[1]
     self.createButton({
-        click_function = "moveDarkness", 
+        click_function = "increaseDarkness", 
         function_owner = self,
         label          = "Add Darkness",
         position       = {0,0,0},
@@ -13,12 +18,24 @@ function onLoad()
     })
 end
 
-function moveDarkness()
+function increaseDarkness() moveDarkness(1) end
+function decreaseDarkness() moveDarkness(-1) end
+function increaseClues() moveClues(1) end
+function decreaseClues() moveClues(-1) end
+
+function moveClues(amount)
+    local clueLevel = getTrackLevel('Clues')
+    local pos = getDarknessTrackPosition(clueLevel + amount)
+    ClueToken.setPositionSmooth(pos)
+    print('Moving clues to level ' .. clueLevel + amount .. '.')
+end
+
+function moveDarkness(amount)
     local darknessCardLevels = getDarknessCardLevels()
     
-    local darknessLevel = getDarknessLevel()
-    local nextLevel = darknessLevel + 1
-    print('Moving darkness to ' .. nextLevel .. '.')
+    local darknessLevel = getTrackLevel('Darkness')
+    local nextLevel = darknessLevel + amount
+    print('Moving darkness to level ' .. nextLevel .. '.')
     
     local darknessIndex = getDarknessCardIndex(nextLevel, darknessCardLevels)
     if darknessIndex ~= false then
@@ -105,8 +122,8 @@ function drawDarknessCard(n)
     deck.takeObject({ position = {xPos, 2, position[3]}, flip = true })
 end
 
-function getDarknessLevel()
-    local token = getObjectsWithAllTags({'Darkness', 'Token'})[1];
+function getTrackLevel(pType)
+    local token = pType == 'Darkness' and DarknessToken or ClueToken
     local xpos = math.floor(token.getPosition()[1])
     local darknessLevel = xpos + 14;
     if  math.floor(token.getPosition()[3]) == math.floor(NegativeTrackZ)

@@ -93,11 +93,14 @@ function tryCreateStartingBlights(n)
     end, 1.5)
 end
 
-function getItem(location, color)
+function getMapCardInfo()
     local card = getTopMapCard()
     if card == false then return end
-    
-    local blightInfo = getBlightInfoFromGUID(card.guid)
+    return getBlightInfoFromGUID(card.guid)
+end
+
+function getItem(location, color)
+    local blightInfo = getMapCardInfo()
     local itemName = blightInfo[location][2]
     local otherSearchResults = {'Epiphany', 'Forgotten Shrine', 'Inspiration', 'Stardust', 'Supply Cache'}
     if table.inTable(otherSearchResults, itemName) then

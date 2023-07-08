@@ -1,5 +1,5 @@
 Settings = {
-    difficultyOptions = {0,0,0,0,0,0,0},
+    difficultyOptions = {0,0,0,0,0,0,0,0},
     heroTurnPanelClosedBy = {"Nobody"},
     actionsPanelClosedBy = {"Nobody"},
     difficultyPanelClosedBy = {"Nobody"},
@@ -15,7 +15,9 @@ MapDeckScript = nil
 function onLoad(saveData)
      addHotkey("Return Token", function(playerColor, object, pointerPosition, isKeyUp)
         if isKeyUp == true then return end
-        returnItem(object)
+        if object ~= nil then
+            returnItem(object)
+        end
     end, true)
     
     printToAll('Go to Options -> Game Keys and add a hotkey for returning tokens.', stringColorToRGB('Yellow'))
@@ -201,6 +203,13 @@ function numberOfHeroesSelected(player, selected)
             end
         end
     end
+    updateTitle()
+end
+
+function increaseQuestsSelected(player, selected)
+    local amount = 0
+    if selected == 'True' then amount = 1 end
+    Settings.difficultyOptions[8] = amount
     updateTitle()
 end
 

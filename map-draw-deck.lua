@@ -1,4 +1,3 @@
--- MapDrawDeckZone = self;
 MapDiscardDeckZone = nil;
 
 function onLoad()

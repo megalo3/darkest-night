@@ -98,6 +98,21 @@ function moveNecromancer(dieValue, location)
     local necromancer = getObjectsWithAllTags({'Necromancer', 'Pawn'})[1]
     necromancer.setPositionSmooth(LocationPosition[newLocation])
     deployBlight(newLocation)
+    
+    -- Increase Quests DM
+    if Global.getVar('Settings').difficultyOptions[8] == 1 then
+        Wait.time(function()
+            local info = BlightScript.call('getMapCardInfo')
+            if info.Quest ~= '' then
+                print(info.Quest)
+                local deck = getObjectsWithAllTags({'Deck', 'Quest'})[1]
+                deck.takeObject({
+                    position = LocationPosition[info.Quest],
+                    flip = true
+                })
+            end
+        end, 1.45)
+    end
 end
 
 function movesOrStays(location, newLocation)

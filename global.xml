@@ -177,7 +177,19 @@
   <TableLayout autoCalculateHeight="true" cellBackgroundColor="clear" padding="10 10 40 10">
     <Row preferredHeight="330">
       <Cell>
-        <Text fontSize="14" alignment="UpperLeft">Simplicity: This subdeck has the smallest variety of blights and search results; recommended for your first game. Hunted: Everything is out to get you in this subdeck filled with traps and detection. Overrun: Face the teeming hordes of undead in this subdeck with an emphasis on monster blights. Entropy: The world has fallen into shadow in this subdeck including every kind of global-effect blight. Spiritual Warfare: Enter a battle of wills in this subdeck containing NO monster blights. Classic: This subdeck uses the blights and search results from the original release of Darkest Night. Everything: You can also play with the entire Map Deck at once, for maximum variety.</Text>
+        <Text fontSize="14" alignment="UpperLeft"><b>Simplicity</b>: This subdeck has the smallest variety of blights and search results; recommended for your first game.
+        
+        <b>Hunted</b>: Everything is out to get you in this subdeck filled with traps and detection.
+        
+        <b>Overrun</b>: Face the teeming hordes of undead in this subdeck with an emphasis on monster blights.
+        
+        <b>Entropy</b>: The world has fallen into shadow in this subdeck including every kind of global-effect blight.
+        
+        <b>Spiritual Warfare</b>: Enter a battle of wills in this subdeck containing NO monster blights.
+        
+        <b>Classic</b>: This subdeck uses the blights and search results from the original release of Darkest Night.
+        
+        <b>Everything</b>: You can also play with the entire Map Deck at once, for maximum variety.</Text>
       </Cell>
     </Row>
     <Row preferredHeight="160">

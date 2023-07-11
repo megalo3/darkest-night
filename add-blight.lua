@@ -101,6 +101,10 @@ end
 
 function getItem(location, color)
     local blightInfo = getMapCardInfo()
+    if blightInfo == nil then
+        -- print('No map card has been played.')
+        return
+    end
     local itemName = blightInfo[location][2]
     local otherSearchResults = {'Epiphany', 'Forgotten Shrine', 'Inspiration', 'Stardust', 'Supply Cache'}
     if table.inTable(otherSearchResults, itemName) then
@@ -114,12 +118,14 @@ end
 -- ItemName, Color
 function dealItem(input)
     if input.ItemName == "Artifact" then
-        local deck = getObjectsWithAllTags({'Deck', 'Artifact'})[1]
+        local zone = getObjectsWithAllTags({'Zone', 'Artifact'})[1]
+        local deck = Global.call('getDeckFromZone', zone)
         deck.deal(1, input.Color)
         return
     end
     if input.ItemName == "Mystery" then
-        local deck = getObjectsWithAllTags({'Deck', 'Mystery'})[1]
+        local zone = getObjectsWithAllTags({'Zone', 'Mystery'})[1]
+        local deck = Global.call('getDeckFromZone', zone)
         deck.deal(1, input.Color)
         return
     end

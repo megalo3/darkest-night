@@ -42,6 +42,8 @@ function onLoad(saveData)
     for key, uninteractableObject in ipairs(getObjectsWithTag('Uninteractable')) do
         uninteractableObject.interactable = false
     end
+    
+    highlightPawns()
 end
 
 function onObjectNumberTyped(object,  player_color,  number)
@@ -55,12 +57,21 @@ function onObjectNumberTyped(object,  player_color,  number)
     end
 end
 
+function returnSingleItem(object, bag)
+    local taken = object.takeObject()
+    if taken ~= nil then
+        bag.putObject(taken) 
+    else
+        bag.putObject(object) 
+    end
+end
+
 function returnItem(object)
     -- Unstack stacks
     if object.name == 'Custom_Token_Stack' then
         local newObject = object.takeObject()
         object = newObject
-    end
+    end  
     
     if object.hasTag("Blight") then
         ReturnBlight.call("returnBlight", object)
@@ -68,26 +79,26 @@ function returnItem(object)
     end
     if object.hasTag("Spark") then
         local bag = getObjectsWithAllTags({'Spark', 'Bag'})[1]
-        bag.putObject(object)
+        returnSingleItem(object, bag)
         return true
     end
     if object.hasTag("Progress") then
         local bag = getObjectsWithAllTags({'Progress', 'Bag'})[1]
-        bag.putObject(object)
+        returnSingleItem(object, bag)
         return true
     end
     if object.hasTag("Time") then
         local bag = getObjectsWithAllTags({'Time', 'Bag'})[1]
-        bag.putObject(object)
+        returnSingleItem(object, bag)
         return true
     end
     if object.hasTag("Key") then
         local bag = getObjectsWithAllTags({'Key', 'Bag'})[1]
-        bag.putObject(object)
+        returnSingleItem(object, bag)
         return true
     end
     if object.hasTag("Item") then
-        ItemBag.putObject(object)
+        returnSingleItem(object, ItemBag)
         return true
     end
 end
@@ -242,16 +253,16 @@ function setDifficulty()
     end
 end
 
-function duplicateSnapPoints()
-    local points = getObjectFromGUID('1baac0').getSnapPoints()
-    local characterDeck = getObjectsWithAllTags({'Quest', 'Deck'})[1];
-    for index, card in ipairs(characterDeck.getObjects(true)) do
-        local obj = characterDeck.takeObject({
-            position = {-16.28, (index / 10)+1, 29.68}
-        })
-        obj.setSnapPoints(points)
-    end
-end
+-- function duplicateSnapPoints()
+    -- local points = getObjectFromGUID('1baac0').getSnapPoints()
+    -- local characterDeck = getObjectsWithAllTags({'Quest', 'Deck'})[1];
+    -- for index, card in ipairs(characterDeck.getObjects(true)) do
+        -- local obj = characterDeck.takeObject({
+            -- position = {-16.28, (index / 10)+1, 29.68}
+        -- })
+        -- obj.setSnapPoints(points)
+    -- end
+-- end
 
 function shuffleDecks()
     for _, deck in ipairs(getObjectsWithTag('deck')) do
@@ -292,6 +303,8 @@ function setCharacters()
         end
     end
     
+    highlightPawns()
+    
     for _, p in ipairs(pawns) do
         -- Move the pawn to the Monestary
         getObjectsWithAllTags({'Pawn', p['Pawn']})[1].setPositionSmooth(MonestaryPositions[p['Color']])
@@ -324,6 +337,36 @@ function getStarterPawn(color)
     if pawns[1] == nil then return end
     pawns[1].highlightOn(color)
     return pawns[1].getName()
+end
+
+function getActiveCharacters()
+    local sheetStarterZones = getObjectsWithAllTags({'Character Sheet', 'Zone'});
+    local characters = {}
+    for _, zone in ipairs(sheetStarterZones) do
+        local color = ''
+        if zone.hasTag('Red') then color = 'Red' end
+        if zone.hasTag('Green') then color = 'Green' end
+        if zone.hasTag('Orange') then color = 'Orange' end
+        if zone.hasTag('Blue') then color = 'Blue' end
+        if zone.hasTag('Purple') then color = 'Purple' end
+        for _, object in ipairs(zone.getObjects(true)) do
+            if object.type == 'Card' then
+                for _, tag in ipairs(object.getTags()) do
+                    if tag ~= 'Character Sheet' then
+                        table.insert(characters, { name = tag, color = color })
+                    end
+                end
+            end
+        end
+    end
+    return characters;
+end
+
+function highlightPawns()
+    for _, character in ipairs(getActiveCharacters()) do
+        local pawn = getObjectsWithAllTags({ 'PawnSelect', character.name })[1]
+        pawn.highlightOn(character.color)
+    end
 end
 
 function dealCharacterSheet(color, character)
@@ -377,10 +420,13 @@ function setCharacterSheetTokens(object)
 end
 
 function createMapDeck(color)
-    local MapDeck = getObjectsWithAllTags({'Map', 'Deck'})[1];
-    for _, card in ipairs(MapDeck.getObjects(true)) do
+
+    local zone = getObjectsWithAllTags({'Map', 'Zone', 'Deck'})[1];
+    local deck = Global.call('getDeckFromZone', zone)
+    
+    for _, card in ipairs(deck.getObjects(true)) do
         if has_value(card.tags, color) == false then
-            MapDeck.takeObject({
+            deck.takeObject({
                 guid = card.guid,
                 position = {-30.37, 1.13, 32.43}
             })

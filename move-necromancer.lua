@@ -105,7 +105,8 @@ function moveNecromancer(dieValue, location)
             local info = BlightScript.call('getMapCardInfo')
             if info.Quest ~= '' then
                 print(info.Quest)
-                local deck = getObjectsWithAllTags({'Deck', 'Quest'})[1]
+                local zone = getObjectsWithAllTags({'Zone', 'Quest'})[1]
+                local deck = Global.call('getDeckFromZone', zone)
                 deck.takeObject({
                     position = LocationPosition[info.Quest],
                     flip = true

@@ -39,7 +39,7 @@ function moveDarkness(amount)
     
     local darknessIndex = getDarknessCardIndex(nextLevel, darknessCardLevels)
     if darknessIndex ~= false then
-        print('Drawing a Darkness card at darkness for level ' .. nextLevel ..'.')
+        print('Drawing a Darkness card for darkness level ' .. nextLevel ..'.')
         drawDarknessCard(darknessIndex)
     end
     
@@ -116,7 +116,8 @@ function getDarknessCardIndex(number, levels)
 end
 
 function drawDarknessCard(n)
-    local deck = getObjectsWithAllTags({'Darkness', 'Deck'})[1]; 
+    local zone = getObjectsWithAllTags({'Darkness', 'Zone'})[1]; 
+    local deck = Global.call('getDeckFromZone', zone)
     local position = deck.getPosition()
     local xPos = position[1] + 2.5 * n
     deck.takeObject({ position = {xPos, 2, position[3]}, flip = true })

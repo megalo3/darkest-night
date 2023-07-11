@@ -33,6 +33,23 @@ function onLoad()
             font_color     = {95/255,120/255,0/255,1},
         })
     end
+
+    local items3 = {'getMystery', 'getRevelation'}
+    for index, item in ipairs(items3) do
+        self.createButton({
+            click_function = item, 
+            function_owner = self,
+            label          = "+",
+            position       = {.85,.25,-.88 + .45 * (index-1)},
+            rotation       = {0,0,0},
+            width          = 90,
+            height         = 90,
+            font_size      = 90,
+            color          = {0/255,255/255,130/255,0.9},
+            font_color     = {95/255,120/255,0/255,1},
+        })
+    end
+    
 end
 
 -- ItemName, Color
@@ -48,3 +65,6 @@ function getTomeOfRetraining(o,c) AddBlightScript.call('dealItem', {ItemName = '
 function getTreasureChest(o,c) AddBlightScript.call('dealItem', {ItemName = 'Treasure Chest', Color = c}) end
 function getVanishingDust(o,c) AddBlightScript.call('dealItem', {ItemName = 'Vanishing Dust', Color = c}) end
 function getWaystone(o,c) AddBlightScript.call('dealItem', {ItemName = 'Waystone', Color = c}) end
+
+function getMystery(o,c) AddBlightScript.call('dealItem', {ItemName = 'Mystery', Color = c}) end
+function getRevelation(o,c) AddBlightScript.call('dealItem', {ItemName = 'Revelation', Color = c}) end

@@ -4,6 +4,7 @@ Settings = {
     actionsPanelClosedBy = {"Nobody"},
     difficultyPanelClosedBy = {"Nobody"},
     mapPanelClosedBy = {"Nobody"},
+    mapActive = false
 }
 
 ReturnBlight = nil
@@ -12,8 +13,8 @@ AddDarknessScript = nil
 AddBlightScript = nil
 MapDeckScript = nil
 
-function onLoad(saveData)
-     addHotkey("Return Token", function(playerColor, object, pointerPosition, isKeyUp)
+function onLoad(saveData)    
+    addHotkey("Return Token", function(playerColor, object, pointerPosition, isKeyUp)
         if isKeyUp == true then return end
         if object ~= nil then
             returnItem(object)
@@ -27,6 +28,8 @@ function onLoad(saveData)
        Settings = JSON.decode(saveData)
     end
     -- print(JSON.encode(Settings))
+    UI.setAttribute('MapPanel', 'active', Settings.mapActive)
+    UI.setAttribute('MapPanelButton', 'active', Settings.mapActive)
     showHidePanelForAllPlayers()
     
     math.randomseed(os.time())
@@ -245,8 +248,9 @@ function setDifficulty()
     -- Move starting darkness and add cards
     AddDarknessScript.call("moveStartingDarkness")
     
-    UI.setAttribute('MapPanel', 'active', true)
-    UI.setAttribute('MapPanelButton', 'active', true)
+    Settings.mapActive = true
+    UI.setAttribute('MapPanel', 'active', Settings.mapActive)
+    UI.setAttribute('MapPanelButton', 'active', Settings.mapActive)
     for _, color in ipairs(Player.getColors()) do
         closePanel(color, 'difficultyPanelClosedBy', 'DifficultyPanel')
         openPanel(color, 'mapPanelClosedBy', 'MapPanel')

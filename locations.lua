@@ -7,7 +7,7 @@ function onLoad()
 end
 
 function countBlightsInLocation(location)
-    local zone = getObjectsWithAllTags({'Zone', 'Board', 'Quest'})[1]
+    local zone = getObjectsWithAllTags({'Zone', 'Board', 'Blight'})[1]
     local bag = getObjectsWithAllTags({'Bag', 'Time'})[1]
     local blights = zone.getObjects()
     local blightCount = 0
@@ -17,7 +17,10 @@ function countBlightsInLocation(location)
             local position = blight.getPosition()
             local blightArea = getPointWithPolygonArea(location, {position[1], position[3]})
             if LocationAreas[location] == blightArea then
-                blightCount = blightCount + getTileStackCount(blight)
+                local newBlightCount = getTileStackCount(blight)
+                -- Voids count as 2 blights
+                if blight.getName() == 'Void' then newBlightCount = newBlightCount * 2 end
+                blightCount = blightCount + newBlightCount
             end
         end
     end

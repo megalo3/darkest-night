@@ -56,10 +56,26 @@ function rollnecroDie(location)
     startLuaCoroutine(self, "coroutine_monitorDice")
 end
 
+function gateBlightCount()
+    local count = 0
+    local zone = getObjectsWithAllTags({'Zone', 'Board', 'Blight'})[1]
+    for _, blight in ipairs(zone.getObjects()) do
+        if blight.hasTag('Gate') then count = count + 1 end
+    end
+    return count
+end
+
 function moveNecromancer(dieValue, location)
-    print('The Necromancer rolls a ' .. dieValue .. '.')
+    local gateCount = gateBlightCount()
+    local dieRollMessage = 'The Necromancer rolls a ' .. dieValue .. '.'
+    if gateCount > 0 then
+        dieValue = dieValue + gateCount
+        dieRollMessage = dieRollMessage .. ' Roll increased to ' .. dieValue .. ' by the Gate Blight(s).'
+    end
+    print(dieRollMessage)
+    
     local detected = getDetectedCharacters(dieValue)
-    local newLocation = nil
+    local newLocation = ''
     if #detected > 0 then
         local names = ''
         for index, d in ipairs(detected) do
@@ -77,22 +93,35 @@ function moveNecromancer(dieValue, location)
         end
         printToAll(names .. ' detected!', stringColorToRGB('Yellow'))
         
-        -- Find the closest pawns
-        local closeCharacters = findClosestCharacters(location, detected)
-        local chosenIndex = rand(#closeCharacters)
-        local chosenCharacter = closeCharacters[chosenIndex]
-        
-        -- Pathfind the best route randomly breaking ties
-        newLocation = getBestRoute(location, chosenCharacter)
-        if #closeCharacters > 1 then
+        -- The Gate Blight causes the Necromancer to teleport to a random detected hero
+        if gateCount > 0 then
+            local chosenIndex = rand(#detected)
+            local chosenCharacter = detected[chosenIndex]
             printToAll('The Necromancer chooses the ' .. chosenCharacter.getName() .. '.', stringColorToRGB('Yellow'))
+            newLocation = LocationScript.call('findPawnLocation', chosenCharacter)
+        else        
+            -- Find the closest pawns
+            local closeCharacters = findClosestCharacters(location, detected)
+            local chosenIndex = rand(#closeCharacters)
+            local chosenCharacter = closeCharacters[chosenIndex]
+            
+            -- Pathfind the best route randomly breaking ties
+            newLocation = getBestRoute(location, chosenCharacter)
+            if #closeCharacters > 1 then
+                printToAll('The Necromancer chooses the ' .. chosenCharacter.getName() .. '.', stringColorToRGB('Yellow'))
+            end
         end
+        
     else
         -- No characters detected
         newLocation = LocationDirection[location][dieValue]
     end
 
-    printToAll('The Necromancer ' .. movesOrStays(location, newLocation) .. ' the ' .. newLocation, stringColorToRGB('Green'))
+    if gateCount > 0 then
+        printToAll('The Necromancer uses the Gate Blight to teleport to the ' .. newLocation .. '.', stringColorToRGB('Green'))
+    else
+        printToAll('The Necromancer ' .. movesOrStays(location, newLocation) .. ' the ' .. newLocation, stringColorToRGB('Green'))
+    end
     
     MapDeckScript.call('drawMapCard')
     local necromancer = getObjectsWithAllTags({'Necromancer', 'Pawn'})[1]

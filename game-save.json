@@ -1,7 +1,7 @@
 {
   "SaveName": "Darkest Night 2nd Edition",
-  "EpochTime": 1689911480,
-  "Date": "7/20/2023 10:51:20 PM",
+  "EpochTime": 1689912305,
+  "Date": "7/20/2023 11:05:05 PM",
   "VersionNumber": "v13.2.2",
   "GameMode": "Darkest Night 2nd Edition",
   "GameType": "Game",
@@ -2721,9 +2721,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.337781549,
-        "g": 0.3005909,
-        "b": 0.371057332
+        "r": 0.337781459,
+        "g": 0.300590843,
+        "b": 0.371057272
       },
       "Tags": [
         "Uninteractable"
@@ -2769,9 +2769,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.337232083,
-        "g": 0.301937968,
-        "b": 0.3725262
+        "r": 0.337232023,
+        "g": 0.3019379,
+        "b": 0.372526139
       },
       "Tags": [
         "Uninteractable"
@@ -3091,7 +3091,7 @@
         "posX": -13.261241,
         "posY": 1.44424689,
         "posZ": 24.5800056,
-        "rotX": 1.61450174E-07,
+        "rotX": 2.46124159E-07,
         "rotY": 180.021072,
         "rotZ": 180.0,
         "scaleX": 1.0,
@@ -5378,9 +5378,9 @@
         "posX": 8.723684,
         "posY": 1.22854018,
         "posZ": 6.197227,
-        "rotX": 1.06455282E-05,
+        "rotX": 1.06778843E-05,
         "rotY": 179.990952,
-        "rotZ": -2.998964E-05,
+        "rotZ": -2.98829218E-05,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -5467,9 +5467,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.123677514,
-        "g": 0.123677514,
-        "b": 0.123677514
+        "r": 0.12367744,
+        "g": 0.12367744,
+        "b": 0.12367744
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
@@ -5496,7 +5496,7 @@
             "z": 0.317226827
           },
           "Rotation": {
-            "x": -3.69489214E-07,
+            "x": -3.69489328E-07,
             "y": 180.033463,
             "z": 3.59941E-07
           },
@@ -5691,7 +5691,7 @@
             "z": 0.00270925742
           },
           "Rotation": {
-            "x": -4.667007E-07,
+            "x": -4.667008E-07,
             "y": 180.019257,
             "z": 4.77796846E-07
           },
@@ -5723,7 +5723,7 @@
           "Rotation": {
             "x": -4.21951484E-07,
             "y": 180.034317,
-            "z": 2.24693309E-07
+            "z": 2.24693267E-07
           },
           "Tags": [
             "Omen"
@@ -5843,7 +5843,7 @@
           "Rotation": {
             "x": -2.516201E-07,
             "y": 179.979324,
-            "z": 4.002665E-07
+            "z": 4.00266543E-07
           },
           "Tags": [
             "Vampire"
@@ -5918,7 +5918,7 @@
           "Rotation": {
             "x": -3.93898546E-07,
             "y": 179.983734,
-            "z": 3.84900858E-07
+            "z": 3.84900915E-07
           },
           "Tags": [
             "Stigma"
@@ -5946,11 +5946,11 @@
       "Name": "Custom_Tile",
       "Transform": {
         "posX": -13.8000011,
-        "posY": 1.06148314,
-        "posZ": 3.08,
-        "rotX": -6.569151E-05,
-        "rotY": 180.010422,
-        "rotZ": -0.000137361,
+        "posY": 1.06148076,
+        "posZ": 3.07999921,
+        "rotX": 0.000166096084,
+        "rotY": 180.0103,
+        "rotZ": -0.0007609736,
         "scaleX": 0.35,
         "scaleY": 1.0,
         "scaleZ": 0.35
@@ -5964,9 +5964,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.426814348,
-        "g": 0.28853184,
-        "b": 0.06914295
+        "r": 0.4268143,
+        "g": 0.28853178,
+        "b": 0.06914291
       },
       "Tags": [
         "Search",
@@ -6109,11 +6109,11 @@
       "Name": "Custom_PDF",
       "Transform": {
         "posX": 25.7607,
-        "posY": 0.9614988,
+        "posY": 0.961498857,
         "posZ": 30.8557529,
-        "rotX": -1.03043307E-08,
+        "rotX": 7.026934E-08,
         "rotY": 179.984039,
-        "rotZ": -6.87482355E-08,
+        "rotZ": -1.06209654E-07,
         "scaleX": 2.0,
         "scaleY": 1.0,
         "scaleZ": 2.0
@@ -6202,7 +6202,7 @@
         "PDFPage": 0,
         "PDFPageOffset": 1
       },
-      "LuaScript": "AddBlightScript = nil\r\n\r\nfunction onLoad()\r\n    AddBlightScript = getObjectFromGUID('31c6dc')\r\n    local items1 = {'getArtifact', 'getBottledMagic', 'getCharm', 'getCursedAshes', 'getPsionStone', 'getSkullToken'}\r\n    for index, item in ipairs(items1) do\r\n        self.createButton({\r\n            click_function = item, \r\n            function_owner = self,\r\n            label          = \"+\",\r\n            position       = {-2.35,.25,-1.50 + .325 * (index-1)},\r\n            rotation       = {0,0,0},\r\n            width          = 90,\r\n            height         = 90,\r\n            font_size      = 90,\r\n            color          = {0/255,255/255,130/255,0.9},\r\n            font_color     = {95/255,120/255,0/255,1},\r\n        })\r\n    end\r\n    \r\n    local items2 = {'getSoothingLyre', 'getTomeOfRetraining', 'getTreasureChest', 'getVanishingDust', 'getWaystone'}\r\n    for index, item in ipairs(items2) do\r\n        self.createButton({\r\n            click_function = item, \r\n            function_owner = self,\r\n            label          = \"+\",\r\n            position       = {-.75,.25,-1.50 + .325 * (index-1)},\r\n            rotation       = {0,0,0},\r\n            width          = 90,\r\n            height         = 90,\r\n            font_size      = 90,\r\n            color          = {0/255,255/255,130/255,0.9},\r\n            font_color     = {95/255,120/255,0/255,1},\r\n        })\r\n    end\r\n\r\n    local items3 = {'getMystery', 'getRevelation'}\r\n    for index, item in ipairs(items3) do\r\n        self.createButton({\r\n            click_function = item, \r\n            function_owner = self,\r\n            label          = \"+\",\r\n            position       = {.85,.25,-.88 + .45 * (index-1)},\r\n            rotation       = {0,0,0},\r\n            width          = 90,\r\n            height         = 90,\r\n            font_size      = 90,\r\n            color          = {0/255,255/255,130/255,0.9},\r\n            font_color     = {95/255,120/255,0/255,1},\r\n        })\r\n    end\r\n    \r\nend\r\n\r\n-- ItemName, Color\r\nfunction getArtifact(o,c) AddBlightScript.call('dealItem', {ItemName = 'Artifact', Color = c}) end\r\nfunction getBottledMagic(o,c) AddBlightScript.call('dealItem', {ItemName = 'Bottled Magic', Color = c}) end\r\nfunction getCharm(o,c) AddBlightScript.call('dealItem', {ItemName = 'Charm', Color = c}) end\r\nfunction getCursedAshes(o,c) AddBlightScript.call('dealItem', {ItemName = 'Cursed Ashes', Color = c}) end\r\nfunction getPsionStone(o,c) AddBlightScript.call('dealItem', {ItemName = 'Psion Stone', Color = c}) end\r\nfunction getSkullToken(o,c) AddBlightScript.call('dealItem', {ItemName = 'Skull Token', Color = c}) end\r\n\r\nfunction getSoothingLyre(o,c) AddBlightScript.call('dealItem', {ItemName = 'Soothing Lyre', Color = c}) end\r\nfunction getTomeOfRetraining(o,c) AddBlightScript.call('dealItem', {ItemName = 'Tome of Retraining', Color = c}) end\r\nfunction getTreasureChest(o,c) AddBlightScript.call('dealItem', {ItemName = 'Treasure Chest', Color = c}) end\r\nfunction getVanishingDust(o,c) AddBlightScript.call('dealItem', {ItemName = 'Vanishing Dust', Color = c}) end\r\nfunction getWaystone(o,c) AddBlightScript.call('dealItem', {ItemName = 'Waystone', Color = c}) end\r\n\r\nfunction getMystery(o,c) AddBlightScript.call('dealItem', {ItemName = 'Mystery', Color = c}) end\r\nfunction getRevelation(o,c) AddBlightScript.call('dealItem', {ItemName = 'Revelation', Color = c}) end",
+      "LuaScript": "AddBlightScript = nil\r\n\r\nfunction onLoad()\r\n    AddBlightScript = getObjectFromGUID('31c6dc')\r\n    local items1 = {'getArtifact', 'getBottledMagic', 'getCharm', 'getCursedAshes', 'getPsionStone', 'getSkullToken'}\r\n    local names1 = {'Artifact', 'Bottled Magic', 'Charm', 'Cursed Ashes', 'Psion Stone', 'Skull Token'}\r\n    for index, item in ipairs(items1) do\r\n        self.createButton({\r\n            click_function = item,\r\n            function_owner = self,\r\n            label          = \"+\",\r\n            position       = {-2.35,.25,-1.50 + .325 * (index-1)},\r\n            rotation       = {0,0,0},\r\n            width          = 90,\r\n            height         = 90,\r\n            font_size      = 90,\r\n            color          = {0/255,255/255,130/255,0.9},\r\n            font_color     = {95/255,120/255,0/255,1},\r\n            tooltip        = names1[index]\r\n        })\r\n    end\r\n\r\n    local items2 = {'getSoothingLyre', 'getTomeOfRetraining', 'getTreasureChest', 'getVanishingDust', 'getWaystone'}\r\n    local names2 = {'Soothing Lyre', 'Tome of Retraining', 'Treasure Chest', 'Vanishing Dust', 'Waystone'}\r\n    for index, item in ipairs(items2) do\r\n        self.createButton({\r\n            click_function = item,\r\n            function_owner = self,\r\n            label          = \"+\",\r\n            position       = {-.75,.25,-1.50 + .325 * (index-1)},\r\n            rotation       = {0,0,0},\r\n            width          = 90,\r\n            height         = 90,\r\n            font_size      = 90,\r\n            color          = {0/255,255/255,130/255,0.9},\r\n            font_color     = {95/255,120/255,0/255,1},\r\n            tooltip        = names2[index]\r\n        })\r\n    end\r\n\r\n    local items3 = {'getMystery', 'getRevelation'}\r\n    local names3 = {'Mystery', 'Revelation'}\r\n    for index, item in ipairs(items3) do\r\n        self.createButton({\r\n            click_function = item,\r\n            function_owner = self,\r\n            label          = \"+\",\r\n            position       = {.85,.25,-.88 + .45 * (index-1)},\r\n            rotation       = {0,0,0},\r\n            width          = 90,\r\n            height         = 90,\r\n            font_size      = 90,\r\n            color          = {0/255,255/255,130/255,0.9},\r\n            font_color     = {95/255,120/255,0/255,1},\r\n            tooltip        = names3[index]\r\n        })\r\n    end\r\n\r\nend\r\n\r\n-- ItemName, Color\r\nfunction getArtifact(o,c) AddBlightScript.call('dealItem', {ItemName = 'Artifact', Color = c}) end\r\nfunction getBottledMagic(o,c) AddBlightScript.call('dealItem', {ItemName = 'Bottled Magic', Color = c}) end\r\nfunction getCharm(o,c) AddBlightScript.call('dealItem', {ItemName = 'Charm', Color = c}) end\r\nfunction getCursedAshes(o,c) AddBlightScript.call('dealItem', {ItemName = 'Cursed Ashes', Color = c}) end\r\nfunction getPsionStone(o,c) AddBlightScript.call('dealItem', {ItemName = 'Psion Stone', Color = c}) end\r\nfunction getSkullToken(o,c) AddBlightScript.call('dealItem', {ItemName = 'Skull Token', Color = c}) end\r\n\r\nfunction getSoothingLyre(o,c) AddBlightScript.call('dealItem', {ItemName = 'Soothing Lyre', Color = c}) end\r\nfunction getTomeOfRetraining(o,c) AddBlightScript.call('dealItem', {ItemName = 'Tome of Retraining', Color = c}) end\r\nfunction getTreasureChest(o,c) AddBlightScript.call('dealItem', {ItemName = 'Treasure Chest', Color = c}) end\r\nfunction getVanishingDust(o,c) AddBlightScript.call('dealItem', {ItemName = 'Vanishing Dust', Color = c}) end\r\nfunction getWaystone(o,c) AddBlightScript.call('dealItem', {ItemName = 'Waystone', Color = c}) end\r\n\r\nfunction getMystery(o,c) AddBlightScript.call('dealItem', {ItemName = 'Mystery', Color = c}) end\r\nfunction getRevelation(o,c) AddBlightScript.call('dealItem', {ItemName = 'Revelation', Color = c}) end",
       "LuaScriptState": "",
       "XmlUI": ""
     },
@@ -6210,12 +6210,12 @@
       "GUID": "4ff040",
       "Name": "Custom_Tile",
       "Transform": {
-        "posX": -13.8000708,
-        "posY": 1.1614846,
-        "posZ": 3.08001757,
-        "rotX": 0.000213727908,
-        "rotY": 179.975616,
-        "rotZ": 0.0002666114,
+        "posX": -13.8000727,
+        "posY": 1.16146982,
+        "posZ": 3.08001637,
+        "rotX": -3.23526219E-05,
+        "rotY": 179.9756,
+        "rotZ": 0.0003339335,
         "scaleX": 0.35,
         "scaleY": 1.0,
         "scaleZ": 0.35
@@ -6229,9 +6229,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.4268143,
-        "g": 0.28853178,
-        "b": 0.06914291
+        "r": 0.426814228,
+        "g": 0.288531721,
+        "b": 0.0691428557
       },
       "Tags": [
         "Darkness",
@@ -6290,9 +6290,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.125476748,
-        "g": 0.125476748,
-        "b": 0.125476748
+        "r": 0.125476688,
+        "g": 0.125476688,
+        "b": 0.125476688
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
@@ -6361,9 +6361,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.125476718,
-        "g": 0.125476718,
-        "b": 0.125476718
+        "r": 0.125476658,
+        "g": 0.125476658,
+        "b": 0.125476658
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
@@ -6432,9 +6432,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.125476718,
-        "g": 0.125476718,
-        "b": 0.125476718
+        "r": 0.125476658,
+        "g": 0.125476658,
+        "b": 0.125476658
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
@@ -6503,9 +6503,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.125476688,
-        "g": 0.125476688,
-        "b": 0.125476688
+        "r": 0.125476629,
+        "g": 0.125476629,
+        "b": 0.125476629
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
@@ -6574,9 +6574,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.125476688,
-        "g": 0.125476688,
-        "b": 0.125476688
+        "r": 0.125476629,
+        "g": 0.125476629,
+        "b": 0.125476629
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
@@ -6651,7 +6651,7 @@
             "z": -0.017525943
           },
           "Rotation": {
-            "x": 1.2121796E-08,
+            "x": 1.21217978E-08,
             "y": 180.021515,
             "z": 180.0
           }
@@ -6729,9 +6729,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.125476688,
-        "g": 0.125476688,
-        "b": 0.125476688
+        "r": 0.125476629,
+        "g": 0.125476629,
+        "b": 0.125476629
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
@@ -7350,7 +7350,7 @@
       },
       "ColorDiffuse": {
         "r": 0.819607854,
-        "g": 0.429595172,
+        "g": 0.4295951,
         "b": 0.0
       },
       "Tags": [
@@ -7399,9 +7399,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.130344033,
+        "r": 0.130343974,
         "g": 0.597561061,
-        "b": 0.107214428
+        "b": 0.107214369
       },
       "Tags": [
         "Character Sheet",
@@ -7449,8 +7449,8 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.202906638,
-        "g": 0.147120923,
+        "r": 0.202906579,
+        "g": 0.147120863,
         "b": 0.7473868
       },
       "Tags": [
@@ -7500,7 +7500,7 @@
       },
       "ColorDiffuse": {
         "r": 0.47448045,
-        "g": 0.1960657,
+        "g": 0.196065634,
         "b": 0.6392157
       },
       "Tags": [
@@ -7788,9 +7788,9 @@
         "posX": -28.6641865,
         "posY": 1.128544,
         "posZ": 6.35655642,
-        "rotX": 2.07821685E-07,
-        "rotY": 4.57158931E-05,
-        "rotZ": 1.06721949E-07,
+        "rotX": 9.78719257E-08,
+        "rotY": 4.56682828E-05,
+        "rotZ": 2.06247373E-13,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -7860,11 +7860,11 @@
       "Name": "Figurine_Custom",
       "Transform": {
         "posX": -24.6641865,
-        "posY": 1.12854385,
+        "posY": 1.12854409,
         "posZ": 6.35655642,
-        "rotX": 3.64898256E-07,
-        "rotY": 2.05079414E-05,
-        "rotZ": 1.067218E-07,
+        "rotX": 3.846522E-07,
+        "rotY": 2.048555E-05,
+        "rotZ": 8.280404E-14,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -7934,10 +7934,10 @@
       "Name": "Figurine_Custom",
       "Transform": {
         "posX": -26.6641865,
-        "posY": 1.12854409,
+        "posY": 1.12854385,
         "posZ": 6.356556,
-        "rotX": 1.76375281E-07,
-        "rotY": 7.302995E-05,
+        "rotX": 1.86783538E-07,
+        "rotY": 7.302819E-05,
         "rotZ": 1.06722091E-07,
         "scaleX": 1.0,
         "scaleY": 1.0,
@@ -8010,9 +8010,9 @@
         "posX": -22.6641865,
         "posY": 1.128544,
         "posZ": 6.356556,
-        "rotX": 1.72897487E-07,
-        "rotY": 0.000229481811,
-        "rotZ": 1.06790964E-07,
+        "rotX": 2.74766254E-08,
+        "rotY": 0.000229480225,
+        "rotZ": 1.067907E-07,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -8084,9 +8084,9 @@
         "posX": -20.6641865,
         "posY": 1.12854409,
         "posZ": 6.35655642,
-        "rotX": -3.882892E-08,
-        "rotY": -6.23324E-05,
-        "rotZ": 1.06721487E-07,
+        "rotX": -1.95573335E-08,
+        "rotY": -6.23692758E-05,
+        "rotZ": -2.38178455E-13,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -8156,11 +8156,11 @@
       "Name": "Figurine_Custom",
       "Transform": {
         "posX": -28.6641865,
-        "posY": 1.12854409,
+        "posY": 1.128544,
         "posZ": 8.956558,
-        "rotX": 2.10977632E-07,
-        "rotY": 0.00022861574,
-        "rotZ": 1.06723014E-07,
+        "rotX": 4.8107978E-08,
+        "rotY": 0.000228622885,
+        "rotZ": 1.01229485E-12,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -8232,9 +8232,9 @@
         "posX": -26.6641865,
         "posY": 1.128544,
         "posZ": 8.956558,
-        "rotX": 2.59793779E-07,
-        "rotY": 0.000253045931,
-        "rotZ": 1.06873365E-07,
+        "rotX": 1.66227224E-07,
+        "rotY": 0.000253043836,
+        "rotZ": 1.06873188E-07,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -8304,11 +8304,11 @@
       "Name": "Figurine_Custom",
       "Transform": {
         "posX": -24.6641865,
-        "posY": 1.12854385,
+        "posY": 1.12854409,
         "posZ": 8.956558,
-        "rotX": 5.16958778E-08,
-        "rotY": 0.000213100313,
-        "rotZ": 1.06722659E-07,
+        "rotX": 3.12755162E-07,
+        "rotY": 0.0002130946,
+        "rotZ": 1.387731E-12,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -8380,9 +8380,9 @@
         "posX": -22.6641865,
         "posY": 1.128544,
         "posZ": 8.956558,
-        "rotX": 2.30004645E-07,
-        "rotY": 0.0002227981,
-        "rotZ": 1.30739321E-12,
+        "rotX": 1.87830992E-07,
+        "rotY": 0.000222773335,
+        "rotZ": 1.23280238E-12,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -8452,11 +8452,11 @@
       "Name": "Figurine_Custom",
       "Transform": {
         "posX": -20.6641865,
-        "posY": 1.12854409,
+        "posY": 1.128544,
         "posZ": 8.95656,
-        "rotX": 2.54724483E-07,
-        "rotY": 0.000305182824,
-        "rotZ": 1.06904615E-07,
+        "rotX": 8.06841243E-08,
+        "rotY": 0.000305178575,
+        "rotZ": 1.06904196E-07,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -8528,9 +8528,9 @@
         "posX": -18.6641865,
         "posY": 1.12854409,
         "posZ": 8.956558,
-        "rotX": 2.49691624E-07,
-        "rotY": 0.000144499922,
-        "rotZ": 8.547696E-13,
+        "rotX": 2.8009498E-07,
+        "rotY": 0.0001444943,
+        "rotZ": 1.06722595E-07,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -8602,9 +8602,9 @@
         "posX": -28.6641865,
         "posY": 1.128544,
         "posZ": 11.5565577,
-        "rotX": 2.11381163E-07,
-        "rotY": 3.825524E-05,
-        "rotZ": 1.875057E-13,
+        "rotX": 4.29243073E-07,
+        "rotY": 3.82529179E-05,
+        "rotZ": 2.21229746E-13,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -8676,9 +8676,9 @@
         "posX": -26.6641865,
         "posY": 1.12854409,
         "posZ": 11.5565577,
-        "rotX": 6.12459559E-08,
-        "rotY": -2.22209073E-05,
-        "rotZ": -1.12734576E-13,
+        "rotX": 8.79154953E-08,
+        "rotY": -2.22324761E-05,
+        "rotZ": -1.22734613E-13,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -8748,11 +8748,11 @@
       "Name": "Figurine_Custom",
       "Transform": {
         "posX": -24.6641865,
-        "posY": 1.12854421,
+        "posY": 1.128544,
         "posZ": 11.5565577,
-        "rotX": 4.87698237E-08,
-        "rotY": 4.22239827E-05,
-        "rotZ": 1.06721885E-07,
+        "rotX": 1.87052223E-07,
+        "rotY": 4.22361663E-05,
+        "rotZ": 1.06721913E-07,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -8822,11 +8822,11 @@
       "Name": "Figurine_Custom",
       "Transform": {
         "posX": -22.6641865,
-        "posY": 1.12854409,
+        "posY": 1.12854421,
         "posZ": 11.5565577,
-        "rotX": 1.96877679E-07,
-        "rotY": 8.46980038E-05,
-        "rotZ": 1.06722155E-07,
+        "rotX": 1.60805669E-07,
+        "rotY": 8.465529E-05,
+        "rotZ": 4.325025E-13,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -8898,9 +8898,9 @@
         "posX": -20.6641865,
         "posY": 1.12854409,
         "posZ": 11.5565577,
-        "rotX": 2.68454343E-08,
-        "rotY": 7.487889E-05,
-        "rotZ": 3.15669962E-13,
+        "rotX": -1.08217968E-07,
+        "rotY": 7.479496E-05,
+        "rotZ": 2.51324542E-13,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -8972,9 +8972,9 @@
         "posX": -18.6641865,
         "posY": 1.12854409,
         "posZ": 11.5565224,
-        "rotX": -2.83083E-09,
+        "rotX": 8.332304E-08,
         "rotY": 359.8333,
-        "rotZ": 1.14649836E-07,
+        "rotZ": 1.06600595E-07,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -9046,9 +9046,9 @@
         "posX": -28.6641865,
         "posY": 1.12854409,
         "posZ": 14.1565647,
-        "rotX": 4.37291021E-08,
-        "rotY": 0.000123516133,
-        "rotZ": 1.06722254E-07,
+        "rotX": 8.5460016E-08,
+        "rotY": 0.000123509526,
+        "rotZ": 1.06722283E-07,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -9118,11 +9118,11 @@
       "Name": "Figurine_Custom",
       "Transform": {
         "posX": -26.6641865,
-        "posY": 1.128544,
+        "posY": 1.12854409,
         "posZ": 14.1565151,
-        "rotX": 2.43423955E-07,
-        "rotY": -0.001971836,
-        "rotZ": -1.22096309E-11,
+        "rotX": 1.524379E-07,
+        "rotY": -0.00197187439,
+        "rotZ": -1.06279117E-11,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -9192,11 +9192,11 @@
       "Name": "Figurine_Custom",
       "Transform": {
         "posX": -24.6641865,
-        "posY": 1.12854385,
+        "posY": 1.12854373,
         "posZ": 14.1562824,
-        "rotX": -4.82024376E-08,
+        "rotX": 8.874305E-08,
         "rotY": 359.832733,
-        "rotZ": 1.06792186E-07,
+        "rotZ": 1.06592275E-07,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -9266,11 +9266,11 @@
       "Name": "Figurine_Custom",
       "Transform": {
         "posX": -22.6641865,
-        "posY": 1.12854409,
+        "posY": 1.128544,
         "posZ": 14.1566563,
-        "rotX": 4.226904E-07,
-        "rotY": 0.0009015067,
-        "rotZ": 1.067286E-07,
+        "rotX": 7.958458E-08,
+        "rotY": 0.000901508145,
+        "rotZ": 4.25904234E-12,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -9340,11 +9340,11 @@
       "Name": "Figurine_Custom",
       "Transform": {
         "posX": -20.6641865,
-        "posY": 1.12854409,
+        "posY": 1.128544,
         "posZ": 14.1607246,
-        "rotX": 1.524574E-07,
+        "rotX": 1.19732235E-07,
         "rotY": 359.8333,
-        "rotZ": 1.14423955E-07,
+        "rotZ": 1.14471561E-07,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -9681,9 +9681,9 @@
         "posX": -26.59745,
         "posY": 0.950448632,
         "posZ": 29.3874969,
-        "rotX": -2.40675263E-07,
-        "rotY": -0.000386491127,
-        "rotZ": -2.590013E-06,
+        "rotX": 8.201172E-08,
+        "rotY": -0.000386446365,
+        "rotZ": 1.42037266E-07,
         "scaleX": 0.65,
         "scaleY": 0.65,
         "scaleZ": 0.65
@@ -9794,11 +9794,11 @@
       "Name": "Infinite_Bag",
       "Transform": {
         "posX": -28.448082,
-        "posY": 0.9504486,
+        "posY": 0.9504485,
         "posZ": 29.3628922,
-        "rotX": 8.868586E-07,
-        "rotY": -8.088531E-05,
-        "rotZ": 7.806307E-07,
+        "rotX": -5.779373E-07,
+        "rotY": -8.07616161E-05,
+        "rotZ": 6.99269947E-07,
         "scaleX": 0.65,
         "scaleY": 0.65,
         "scaleZ": 0.65
@@ -9911,9 +9911,9 @@
         "posX": 14.373662,
         "posY": 1.06149864,
         "posZ": 10.0673428,
-        "rotX": 1.05446034E-05,
+        "rotX": 1.062576E-05,
         "rotY": 179.983887,
-        "rotZ": -3.001167E-05,
+        "rotZ": -3.00822139E-05,
         "scaleX": 0.7,
         "scaleY": 1.0,
         "scaleZ": 0.7
@@ -9927,8 +9927,8 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.423329443,
-        "g": 0.316313654,
+        "r": 0.423329383,
+        "g": 0.3163136,
         "b": 0.0
       },
       "Tags": [
@@ -9971,9 +9971,9 @@
         "posX": 4.81781244,
         "posY": 1.0614928,
         "posZ": 5.32008743,
-        "rotX": 1.06929874E-05,
+        "rotX": 1.04958381E-05,
         "rotY": 179.989365,
-        "rotZ": -3.014895E-05,
+        "rotZ": -3.020477E-05,
         "scaleX": 0.7,
         "scaleY": 1.0,
         "scaleZ": 0.7
@@ -9987,8 +9987,8 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.423329443,
-        "g": 0.316313654,
+        "r": 0.423329383,
+        "g": 0.3163136,
         "b": 0.0
       },
       "Tags": [
@@ -10031,9 +10031,9 @@
         "posX": -6.48604965,
         "posY": 1.061489,
         "posZ": 17.25087,
-        "rotX": 1.0663367E-05,
+        "rotX": 1.07266078E-05,
         "rotY": 179.989334,
-        "rotZ": -3.00600732E-05,
+        "rotZ": -3.00893989E-05,
         "scaleX": 0.7,
         "scaleY": 1.0,
         "scaleZ": 0.7
@@ -10047,8 +10047,8 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.423329443,
-        "g": 0.316313654,
+        "r": 0.423329383,
+        "g": 0.3163136,
         "b": 0.0
       },
       "Tags": [
@@ -10091,9 +10091,9 @@
         "posX": -6.301949,
         "posY": 1.06148732,
         "posZ": 7.449423,
-        "rotX": 1.0688138E-05,
+        "rotX": 1.06259067E-05,
         "rotY": 179.989334,
-        "rotZ": -3.011405E-05,
+        "rotZ": -3.00499378E-05,
         "scaleX": 0.7,
         "scaleY": 1.0,
         "scaleZ": 0.7
@@ -10107,8 +10107,8 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.423329443,
-        "g": 0.316313654,
+        "r": 0.423329383,
+        "g": 0.3163136,
         "b": 0.0
       },
       "Tags": [
@@ -10151,9 +10151,9 @@
         "posX": -21.5350361,
         "posY": 0.961498439,
         "posZ": -9.28,
-        "rotX": 4.95771064E-06,
+        "rotX": -4.31978242E-06,
         "rotY": 0.000233933984,
-        "rotZ": 4.00554228E-07,
+        "rotZ": 1.53491749E-06,
         "scaleX": 0.5,
         "scaleY": 1.0,
         "scaleZ": 0.5
@@ -10167,9 +10167,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.426814526,
-        "g": 0.288532019,
-        "b": 0.0691430941
+        "r": 0.426814467,
+        "g": 0.288531959,
+        "b": 0.06914305
       },
       "Tags": [
         "Activity"
@@ -10227,11 +10227,11 @@
       "Name": "Custom_Tile",
       "Transform": {
         "posX": -8.135929,
-        "posY": 0.961498439,
+        "posY": 0.961498559,
         "posZ": -9.279994,
-        "rotX": -3.14042765E-08,
+        "rotX": 2.42304714E-06,
         "rotY": 0.000233933984,
-        "rotZ": 1.48965546E-06,
+        "rotZ": -2.22630933E-06,
         "scaleX": 0.5,
         "scaleY": 1.0,
         "scaleZ": 0.5
@@ -10245,9 +10245,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.426814526,
-        "g": 0.288532019,
-        "b": 0.0691430941
+        "r": 0.426814467,
+        "g": 0.288531959,
+        "b": 0.06914305
       },
       "Tags": [
         "Activity"
@@ -10307,9 +10307,9 @@
         "posX": 5.194182,
         "posY": 0.961498439,
         "posZ": -9.280002,
-        "rotX": -8.1657015E-07,
+        "rotX": 2.161259E-06,
         "rotY": 7.000944E-05,
-        "rotZ": 5.75048261E-06,
+        "rotZ": 1.957068E-06,
         "scaleX": 0.5,
         "scaleY": 1.0,
         "scaleZ": 0.5
@@ -10323,9 +10323,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.426814526,
-        "g": 0.288532019,
-        "b": 0.0691430941
+        "r": 0.426814467,
+        "g": 0.288531959,
+        "b": 0.06914305
       },
       "Tags": [
         "Activity"
@@ -10383,11 +10383,11 @@
       "Name": "Custom_Tile",
       "Transform": {
         "posX": 18.1600056,
-        "posY": 0.961498559,
+        "posY": 0.961498439,
         "posZ": -9.279992,
-        "rotX": 1.73457863E-06,
+        "rotX": 2.5633708E-06,
         "rotY": 0.0005412925,
-        "rotZ": 4.71090118E-07,
+        "rotZ": -6.519987E-07,
         "scaleX": 0.5,
         "scaleY": 1.0,
         "scaleZ": 0.5
@@ -10401,9 +10401,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.426814526,
-        "g": 0.288532019,
-        "b": 0.0691430941
+        "r": 0.426814467,
+        "g": 0.288531959,
+        "b": 0.06914305
       },
       "Tags": [
         "Activity"
@@ -10463,9 +10463,9 @@
         "posX": 30.9214725,
         "posY": 0.961498559,
         "posZ": -9.279984,
-        "rotX": 3.33814728E-06,
+        "rotX": -2.501278E-06,
         "rotY": 0.000449084939,
-        "rotZ": -2.22129461E-06,
+        "rotZ": -2.864163E-07,
         "scaleX": 0.5,
         "scaleY": 1.0,
         "scaleZ": 0.5
@@ -10479,9 +10479,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.426814526,
-        "g": 0.288532019,
-        "b": 0.0691430941
+        "r": 0.426814467,
+        "g": 0.288531959,
+        "b": 0.06914305
       },
       "Tags": [
         "Activity"
@@ -10584,9 +10584,9 @@
       "GUID": "d95ba1",
       "Name": "3DText",
       "Transform": {
-        "posX": -19.4402256,
-        "posY": 0.9620104,
-        "posZ": 1.38790715,
+        "posX": -19.4402714,
+        "posY": 0.96200645,
+        "posZ": 1.3879118,
         "rotX": 90.0,
         "rotY": 2.71197422E-07,
         "rotZ": 0.0,
@@ -10638,9 +10638,9 @@
       "GUID": "05d3d7",
       "Name": "3DText",
       "Transform": {
-        "posX": -27.0360413,
-        "posY": 0.9620057,
-        "posZ": 1.38797677,
+        "posX": -27.03608,
+        "posY": 0.9620019,
+        "posZ": 1.38798249,
         "rotX": 90.0,
         "rotY": 2.35823849E-09,
         "rotZ": 0.0,
@@ -10758,8 +10758,8 @@
       },
       "ColorDiffuse": {
         "r": 0.853658557,
-        "g": 0.14424935,
-        "b": 0.14424935
+        "g": 0.14424929,
+        "b": 0.14424929
       },
       "Tags": [
         "Bag",
@@ -10839,9 +10839,9 @@
       "GUID": "ee5b97",
       "Name": "3DText",
       "Transform": {
-        "posX": -11.0207634,
-        "posY": 1.06127667,
-        "posZ": 19.48845,
+        "posX": -11.0208092,
+        "posY": 1.06126893,
+        "posZ": 19.4884663,
         "rotX": 90.0,
         "rotY": 358.334,
         "rotZ": 0.0,
@@ -10893,9 +10893,9 @@
       "GUID": "c744bc",
       "Name": "3DText",
       "Transform": {
-        "posX": 1.29708111,
-        "posY": 1.06142163,
-        "posZ": 15.0597248,
+        "posX": 1.29705822,
+        "posY": 1.06141412,
+        "posZ": 15.05974,
         "rotX": 90.0,
         "rotY": 2.71197422E-07,
         "rotZ": 0.0,
@@ -10947,9 +10947,9 @@
       "GUID": "f40771",
       "Name": "3DText",
       "Transform": {
-        "posX": 13.9758263,
-        "posY": 1.06125987,
-        "posZ": 19.4620819,
+        "posX": 13.9758024,
+        "posY": 1.06125212,
+        "posZ": 19.4620953,
         "rotX": 90.0,
         "rotY": 2.71197422E-07,
         "rotZ": 0.0,
@@ -11001,9 +11001,9 @@
       "GUID": "a9fad6",
       "Name": "3DText",
       "Transform": {
-        "posX": 14.038991,
-        "posY": 1.06174588,
-        "posZ": 4.941676,
+        "posX": 14.0389681,
+        "posY": 1.06173813,
+        "posZ": 4.94168758,
         "rotX": 90.0,
         "rotY": 2.71197422E-07,
         "rotZ": 0.0,
@@ -11055,9 +11055,9 @@
       "GUID": "8c1632",
       "Name": "3DText",
       "Transform": {
-        "posX": -11.0961075,
-        "posY": 1.06172931,
-        "posZ": 5.100494,
+        "posX": -11.0961533,
+        "posY": 1.06172156,
+        "posZ": 5.10050535,
         "rotX": 90.0,
         "rotY": 2.71197422E-07,
         "rotZ": 0.0,
@@ -11109,9 +11109,9 @@
       "GUID": "858b90",
       "Name": "3DText",
       "Transform": {
-        "posX": 14.9392977,
-        "posY": 1.06146932,
-        "posZ": 14.7317657,
+        "posX": 14.9392729,
+        "posY": 1.06146169,
+        "posZ": 14.731781,
         "rotX": 90.0,
         "rotY": 2.71197422E-07,
         "rotZ": 0.0,
@@ -11163,9 +11163,9 @@
       "GUID": "aebede",
       "Name": "3DText",
       "Transform": {
-        "posX": -12.2923355,
-        "posY": 1.06141782,
-        "posZ": 15.00284,
+        "posX": -12.2923813,
+        "posY": 1.06141019,
+        "posZ": 15.0028629,
         "rotX": 90.0,
         "rotY": 2.71197422E-07,
         "rotZ": 0.0,
@@ -11217,12 +11217,12 @@
       "GUID": "ca797c",
       "Name": "Custom_Tile",
       "Transform": {
-        "posX": 6.694479,
-        "posY": 1.15978348,
-        "posZ": -9.280683,
-        "rotX": 0.0393171348,
-        "rotY": 180.014389,
-        "rotZ": 180.203033,
+        "posX": 6.694423,
+        "posY": 1.159777,
+        "posZ": -9.280424,
+        "rotX": 359.9225,
+        "rotY": 180.01329,
+        "rotZ": 180.148087,
         "scaleX": 0.4,
         "scaleY": 1.0,
         "scaleZ": 0.4
@@ -11274,12 +11274,12 @@
       "GUID": "91e584",
       "Name": "Custom_Tile",
       "Transform": {
-        "posX": 6.69492865,
-        "posY": 1.2595222,
-        "posZ": -9.282867,
-        "rotX": 0.09312046,
-        "rotY": 180.0909,
-        "rotZ": 180.119232,
+        "posX": 6.694793,
+        "posY": 1.25910258,
+        "posZ": -9.282408,
+        "rotX": 359.9738,
+        "rotY": 180.089508,
+        "rotZ": 180.08017,
         "scaleX": 0.4,
         "scaleY": 1.0,
         "scaleZ": 0.4
@@ -11331,12 +11331,12 @@
       "GUID": "dd07b9",
       "Name": "Custom_Tile",
       "Transform": {
-        "posX": 6.696655,
-        "posY": 1.45820928,
-        "posZ": -9.281905,
-        "rotX": 0.05393382,
-        "rotY": 180.033768,
-        "rotZ": 180.230576,
+        "posX": 6.69628668,
+        "posY": 1.45842445,
+        "posZ": -9.280989,
+        "rotX": 359.923553,
+        "rotY": 180.0323,
+        "rotZ": 180.14389,
         "scaleX": 0.4,
         "scaleY": 1.0,
         "scaleZ": 0.4
@@ -11388,12 +11388,12 @@
       "GUID": "b5e66f",
       "Name": "Custom_Tile",
       "Transform": {
-        "posX": 6.696352,
-        "posY": 1.35877168,
-        "posZ": -9.281563,
-        "rotX": 0.0878912657,
-        "rotY": 179.98172,
-        "rotZ": 180.2069,
+        "posX": 6.696127,
+        "posY": 1.35893428,
+        "posZ": -9.280874,
+        "rotX": 359.9621,
+        "rotY": 179.980255,
+        "rotZ": 180.140091,
         "scaleX": 0.4,
         "scaleY": 1.0,
         "scaleZ": 0.4
@@ -11445,12 +11445,12 @@
       "GUID": "c66deb",
       "Name": "Custom_Tile",
       "Transform": {
-        "posX": 19.62208,
-        "posY": 1.35870957,
-        "posZ": -9.294632,
-        "rotX": 0.156036139,
-        "rotY": 180.2295,
-        "rotZ": 180.354248,
+        "posX": 19.6220856,
+        "posY": 1.35872948,
+        "posZ": -9.295549,
+        "rotX": 0.2935525,
+        "rotY": 180.231125,
+        "rotZ": 180.3328,
         "scaleX": 0.4,
         "scaleY": 1.0,
         "scaleZ": 0.4
@@ -11502,12 +11502,12 @@
       "GUID": "aaae82",
       "Name": "Custom_Tile",
       "Transform": {
-        "posX": 19.61703,
-        "posY": 1.25893664,
-        "posZ": -9.288537,
-        "rotX": 0.1705785,
-        "rotY": 180.1587,
-        "rotZ": 180.292953,
+        "posX": 19.61702,
+        "posY": 1.25899768,
+        "posZ": -9.289151,
+        "rotX": 0.311241567,
+        "rotY": 180.159042,
+        "rotZ": 180.267288,
         "scaleX": 0.4,
         "scaleY": 1.0,
         "scaleZ": 0.4
@@ -11559,12 +11559,12 @@
       "GUID": "eef468",
       "Name": "Custom_Tile",
       "Transform": {
-        "posX": 19.6097488,
-        "posY": 1.0613935,
-        "posZ": -9.280638,
-        "rotX": 0.0278257616,
-        "rotY": 180.252563,
-        "rotZ": 180.037354,
+        "posX": 19.6097546,
+        "posY": 1.06137621,
+        "posZ": -9.280641,
+        "rotX": 0.0270119384,
+        "rotY": 180.252472,
+        "rotZ": 180.039368,
         "scaleX": 0.4,
         "scaleY": 1.0,
         "scaleZ": 0.4
@@ -11616,12 +11616,12 @@
       "GUID": "90b8a7",
       "Name": "Custom_Tile",
       "Transform": {
-        "posX": 19.6236477,
-        "posY": 1.16033852,
-        "posZ": -9.285012,
-        "rotX": 0.0367489643,
-        "rotY": 180.162918,
-        "rotZ": 180.199142,
+        "posX": 19.6236458,
+        "posY": 1.16037261,
+        "posZ": -9.285317,
+        "rotX": 0.160233691,
+        "rotY": 180.163025,
+        "rotZ": 180.149628,
         "scaleX": 0.4,
         "scaleY": 1.0,
         "scaleZ": 0.4
@@ -11673,12 +11673,12 @@
       "GUID": "c225d3",
       "Name": "Custom_Tile",
       "Transform": {
-        "posX": 32.298912,
-        "posY": 1.45764089,
-        "posZ": -9.2397,
-        "rotX": 359.585266,
-        "rotY": 179.782623,
-        "rotZ": 180.3873,
+        "posX": 32.2998047,
+        "posY": 1.457953,
+        "posZ": -9.240632,
+        "rotX": 359.767426,
+        "rotY": 179.780167,
+        "rotZ": 180.507217,
         "scaleX": 0.4,
         "scaleY": 1.0,
         "scaleZ": 0.4
@@ -11730,12 +11730,12 @@
       "GUID": "b985b9",
       "Name": "Custom_Tile",
       "Transform": {
-        "posX": 32.2728462,
-        "posY": 1.15957344,
-        "posZ": -9.268146,
-        "rotX": 359.715332,
-        "rotY": 180.144257,
-        "rotZ": 180.174,
+        "posX": 32.2730255,
+        "posY": 1.15970707,
+        "posZ": -9.268436,
+        "rotX": 359.90274,
+        "rotY": 180.144958,
+        "rotZ": 180.272354,
         "scaleX": 0.4,
         "scaleY": 1.0,
         "scaleZ": 0.4
@@ -11787,12 +11787,12 @@
       "GUID": "82ec71",
       "Name": "Custom_Tile",
       "Transform": {
-        "posX": 32.26814,
-        "posY": 1.061255,
-        "posZ": -9.27956,
-        "rotX": 359.951752,
-        "rotY": 180.285431,
-        "rotZ": 180.061218,
+        "posX": 32.268116,
+        "posY": 1.06134164,
+        "posZ": -9.279643,
+        "rotX": 0.00758740539,
+        "rotY": 180.284256,
+        "rotZ": 180.049622,
         "scaleX": 0.4,
         "scaleY": 1.0,
         "scaleZ": 0.4
@@ -11844,12 +11844,12 @@
       "GUID": "079722",
       "Name": "Custom_Tile",
       "Transform": {
-        "posX": 32.2687531,
-        "posY": 1.2593286,
-        "posZ": -9.257611,
-        "rotX": 359.672516,
-        "rotY": 179.970123,
-        "rotZ": 180.238937,
+        "posX": 32.2690926,
+        "posY": 1.259544,
+        "posZ": -9.258186,
+        "rotX": 359.858765,
+        "rotY": 179.968842,
+        "rotZ": 180.330582,
         "scaleX": 0.4,
         "scaleY": 1.0,
         "scaleZ": 0.4
@@ -11901,12 +11901,12 @@
       "GUID": "ec341e",
       "Name": "Custom_Tile",
       "Transform": {
-        "posX": -6.62188053,
-        "posY": 1.061385,
+        "posX": -6.621883,
+        "posY": 1.06138146,
         "posZ": -9.279512,
-        "rotX": 359.95224,
-        "rotY": 180.40303,
-        "rotZ": 180.011917,
+        "rotX": 359.9527,
+        "rotY": 180.402817,
+        "rotZ": 180.011,
         "scaleX": 0.4,
         "scaleY": 1.0,
         "scaleZ": 0.4
@@ -11958,12 +11958,12 @@
       "GUID": "4c2fa2",
       "Name": "Custom_Tile",
       "Transform": {
-        "posX": -20.1215382,
-        "posY": 1.06133449,
-        "posZ": -9.279126,
-        "rotX": 0.055397626,
-        "rotY": 180.270233,
-        "rotZ": 180.0183,
+        "posX": -20.1215343,
+        "posY": 1.06134832,
+        "posZ": -9.279119,
+        "rotX": 0.0514462031,
+        "rotY": 180.269653,
+        "rotZ": 180.0179,
         "scaleX": 0.4,
         "scaleY": 1.0,
         "scaleZ": 0.4
@@ -12015,12 +12015,12 @@
       "GUID": "c6dc44",
       "Name": "Custom_Tile",
       "Transform": {
-        "posX": -6.61767,
-        "posY": 1.16035724,
-        "posZ": -9.275174,
-        "rotX": 359.7838,
-        "rotY": 180.274521,
-        "rotZ": 180.001511,
+        "posX": -6.61764145,
+        "posY": 1.160366,
+        "posZ": -9.275099,
+        "rotX": 359.7904,
+        "rotY": 180.273911,
+        "rotZ": 180.005646,
         "scaleX": 0.4,
         "scaleY": 1.0,
         "scaleZ": 0.4
@@ -12072,12 +12072,12 @@
       "GUID": "553fbb",
       "Name": "Custom_Tile",
       "Transform": {
-        "posX": -6.61589432,
-        "posY": 1.25893664,
-        "posZ": -9.273827,
-        "rotX": 359.596161,
-        "rotY": 180.2719,
-        "rotZ": 180.0239,
+        "posX": -6.615728,
+        "posY": 1.2589246,
+        "posZ": -9.273786,
+        "rotX": 359.6515,
+        "rotY": 180.27092,
+        "rotZ": 180.10173,
         "scaleX": 0.4,
         "scaleY": 1.0,
         "scaleZ": 0.4
@@ -12129,12 +12129,12 @@
       "GUID": "3bee4b",
       "Name": "Custom_Tile",
       "Transform": {
-        "posX": -6.61347342,
-        "posY": 1.35873938,
-        "posZ": -9.269528,
-        "rotX": 359.5351,
-        "rotY": 180.2517,
-        "rotZ": 180.012314,
+        "posX": -6.613176,
+        "posY": 1.35870075,
+        "posZ": -9.26954651,
+        "rotX": 359.5989,
+        "rotY": 180.2516,
+        "rotZ": 180.06337,
         "scaleX": 0.4,
         "scaleY": 1.0,
         "scaleZ": 0.4
@@ -12186,12 +12186,12 @@
       "GUID": "bdfa16",
       "Name": "Custom_Tile",
       "Transform": {
-        "posX": -20.123621,
-        "posY": 1.15978992,
-        "posZ": -9.274836,
-        "rotX": 359.880585,
-        "rotY": 180.211426,
-        "rotZ": 180.050369,
+        "posX": -20.12344,
+        "posY": 1.15981185,
+        "posZ": -9.274869,
+        "rotX": 359.9523,
+        "rotY": 180.210526,
+        "rotZ": 180.141525,
         "scaleX": 0.4,
         "scaleY": 1.0,
         "scaleZ": 0.4
@@ -12243,12 +12243,12 @@
       "GUID": "b2560e",
       "Name": "Custom_Tile",
       "Transform": {
-        "posX": -20.1248856,
-        "posY": 1.25955141,
-        "posZ": -9.272083,
-        "rotX": 359.798126,
-        "rotY": 180.1596,
-        "rotZ": 180.033051,
+        "posX": -20.1246281,
+        "posY": 1.25911844,
+        "posZ": -9.272268,
+        "rotX": 359.888184,
+        "rotY": 180.160263,
+        "rotZ": 180.07196,
         "scaleX": 0.4,
         "scaleY": 1.0,
         "scaleZ": 0.4
@@ -12300,12 +12300,12 @@
       "GUID": "9ce441",
       "Name": "Custom_Tile",
       "Transform": {
-        "posX": -20.1252689,
-        "posY": 1.35855711,
-        "posZ": -9.26882648,
-        "rotX": 359.691254,
-        "rotY": 180.114044,
-        "rotZ": 180.029037,
+        "posX": -20.12487,
+        "posY": 1.35895932,
+        "posZ": -9.269254,
+        "rotX": 359.8389,
+        "rotY": 180.115265,
+        "rotZ": 180.103821,
         "scaleX": 0.4,
         "scaleY": 1.0,
         "scaleZ": 0.4
@@ -12360,9 +12360,9 @@
         "posX": 32.363636,
         "posY": 0.9504486,
         "posZ": -0.7290392,
-        "rotX": -2.501931E-07,
-        "rotY": -0.000140793869,
-        "rotZ": 8.965673E-08,
+        "rotX": -1.41338248E-07,
+        "rotY": -0.000140788572,
+        "rotZ": -1.23144866E-06,
         "scaleX": 0.65,
         "scaleY": 0.65,
         "scaleZ": 0.65
@@ -12620,11 +12620,11 @@
       "GUID": "1bfb5c",
       "Name": "Custom_Dice",
       "Transform": {
-        "posX": 25.0147266,
-        "posY": 1.29169881,
-        "posZ": 6.012973,
-        "rotX": -2.220367E-05,
-        "rotY": 299.203522,
+        "posX": 25.01473,
+        "posY": 1.29169893,
+        "posZ": 6.01297331,
+        "rotX": -2.03643049E-05,
+        "rotY": 299.2037,
         "rotZ": 180.0,
         "scaleX": 1.0,
         "scaleY": 1.0,
@@ -12876,12 +12876,12 @@
       "GUID": "a6060f",
       "Name": "Custom_Tile",
       "Transform": {
-        "posX": 32.2739334,
-        "posY": 1.35843432,
-        "posZ": -9.250794,
-        "rotX": 359.644623,
-        "rotY": 179.906174,
-        "rotZ": 180.348557,
+        "posX": 32.27453,
+        "posY": 1.3587333,
+        "posZ": -9.251494,
+        "rotX": 359.801849,
+        "rotY": 179.90239,
+        "rotZ": 180.439667,
         "scaleX": 0.4,
         "scaleY": 1.0,
         "scaleZ": 0.4
@@ -12933,12 +12933,12 @@
       "GUID": "7b5fa9",
       "Name": "Custom_Tile",
       "Transform": {
-        "posX": 19.6278744,
-        "posY": 1.4581182,
-        "posZ": -9.30092049,
-        "rotX": 0.197608873,
-        "rotY": 180.229,
-        "rotZ": 180.4004,
+        "posX": 19.6278915,
+        "posY": 1.45813143,
+        "posZ": -9.302134,
+        "rotX": 0.3345178,
+        "rotY": 180.2314,
+        "rotZ": 180.38649,
         "scaleX": 0.4,
         "scaleY": 1.0,
         "scaleZ": 0.4
@@ -12990,12 +12990,12 @@
       "GUID": "4de2c5",
       "Name": "Custom_Tile",
       "Transform": {
-        "posX": 6.69304848,
-        "posY": 1.06134629,
-        "posZ": -9.280021,
-        "rotX": 0.0404681377,
-        "rotY": 180.015167,
-        "rotZ": 180.033432,
+        "posX": 6.69307947,
+        "posY": 1.06137323,
+        "posZ": -9.279985,
+        "rotX": 0.0221781358,
+        "rotY": 180.0149,
+        "rotZ": 180.050583,
         "scaleX": 0.4,
         "scaleY": 1.0,
         "scaleZ": 0.4
@@ -13047,12 +13047,12 @@
       "GUID": "fe1dee",
       "Name": "Custom_Tile",
       "Transform": {
-        "posX": -6.610444,
-        "posY": 1.45816016,
-        "posZ": -9.269024,
-        "rotX": 359.498,
-        "rotY": 179.925323,
-        "rotZ": 180.055984,
+        "posX": -6.610068,
+        "posY": 1.45814884,
+        "posZ": -9.269069,
+        "rotX": 359.552032,
+        "rotY": 179.923645,
+        "rotZ": 180.101425,
         "scaleX": 0.4,
         "scaleY": 1.0,
         "scaleZ": 0.4
@@ -13104,12 +13104,12 @@
       "GUID": "3a40fc",
       "Name": "Custom_Tile",
       "Transform": {
-        "posX": -20.12506,
-        "posY": 1.45844841,
-        "posZ": -9.265268,
-        "rotX": 359.664185,
-        "rotY": 180.151642,
-        "rotZ": 180.0472,
+        "posX": -20.12453,
+        "posY": 1.458448,
+        "posZ": -9.265866,
+        "rotX": 359.7941,
+        "rotY": 180.152679,
+        "rotZ": 180.105988,
         "scaleX": 0.4,
         "scaleY": 1.0,
         "scaleZ": 0.4
@@ -13253,9 +13253,9 @@
       "GUID": "3bd1c0",
       "Name": "3DText",
       "Transform": {
-        "posX": 19.6392555,
-        "posY": 0.9615416,
-        "posZ": 9.780219,
+        "posX": 19.6392441,
+        "posY": 0.961533964,
+        "posZ": 9.78023,
         "rotX": 90.0,
         "rotY": 2.71197422E-07,
         "rotZ": 0.0,
@@ -13356,9 +13356,9 @@
         "posX": 19.1799278,
         "posY": 1.29169834,
         "posZ": 10.3820095,
-        "rotX": 2.162825E-07,
+        "rotX": -3.438338E-07,
         "rotY": 60.6974678,
-        "rotZ": -4.264449E-07,
+        "rotZ": 4.12914261E-07,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -13562,9 +13562,9 @@
         "posX": -28.66415,
         "posY": 1.128544,
         "posZ": 4.001172,
-        "rotX": -3.49228173E-07,
+        "rotX": -4.58193881E-07,
         "rotY": 358.8333,
-        "rotZ": -5.13768555E-07,
+        "rotZ": -4.05931473E-07,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -13636,9 +13636,9 @@
         "posX": -24.6641865,
         "posY": 1.12854409,
         "posZ": 4.00388861,
-        "rotX": 4.527152E-09,
-        "rotY": -8.342188E-05,
-        "rotZ": 1.067217E-07,
+        "rotX": 4.22109743E-08,
+        "rotY": -8.342999E-05,
+        "rotZ": 1.06721679E-07,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -13710,9 +13710,9 @@
         "posX": -26.6641865,
         "posY": 1.128544,
         "posZ": 4.003884,
-        "rotX": 2.548264E-07,
+        "rotX": 3.828221E-07,
         "rotY": 359.994141,
-        "rotZ": -3.680923E-11,
+        "rotZ": -4.3381982E-11,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -13784,9 +13784,9 @@
         "posX": -22.6641865,
         "posY": 1.128544,
         "posZ": 4.00388861,
-        "rotX": 1.10284269E-07,
-        "rotY": -0.000144336154,
-        "rotZ": 1.06720961E-07,
+        "rotX": 2.974299E-07,
+        "rotY": -0.000144354824,
+        "rotZ": 1.067207E-07,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -13852,66 +13852,12 @@
       ]
     },
     {
-      "GUID": "71fc66",
-      "Name": "3DText",
-      "Transform": {
-        "posX": -9.433235,
-        "posY": 0.9617675,
-        "posZ": -3.88346148,
-        "rotX": 90.0,
-        "rotY": 1.00295892E-05,
-        "rotZ": 0.0,
-        "scaleX": 1.0,
-        "scaleY": 1.0,
-        "scaleZ": 1.0
-      },
-      "Nickname": "",
-      "Description": "",
-      "GMNotes": "",
-      "AltLookAngle": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
-      },
-      "ColorDiffuse": {
-        "r": 1.0,
-        "g": 1.0,
-        "b": 1.0
-      },
-      "LayoutGroupSortIndex": 0,
-      "Value": 0,
-      "Locked": true,
-      "Grid": true,
-      "Snap": true,
-      "IgnoreFoW": false,
-      "MeasureMovement": false,
-      "DragSelectable": true,
-      "Autoraise": true,
-      "Sticky": true,
-      "Tooltip": true,
-      "GridProjection": false,
-      "HideWhenFaceDown": false,
-      "Hands": false,
-      "Text": {
-        "Text": "Press the number key to draw that many cards. ",
-        "colorstate": {
-          "r": 0.853658557,
-          "g": 0.853658557,
-          "b": 0.853658557
-        },
-        "fontSize": 36
-      },
-      "LuaScript": "",
-      "LuaScriptState": "",
-      "XmlUI": ""
-    },
-    {
       "GUID": "e52522",
       "Name": "3DText",
       "Transform": {
-        "posX": 1.28584683,
-        "posY": 1.21672428,
-        "posZ": 38.29939,
+        "posX": 1.28581619,
+        "posY": 1.2167089,
+        "posZ": 38.29942,
         "rotX": 90.0,
         "rotY": 359.833435,
         "rotZ": 0.0,
@@ -14012,9 +13958,9 @@
         "posX": 2.470006,
         "posY": 1.21110559,
         "posZ": 31.5333347,
-        "rotX": -0.00241999328,
+        "rotX": -0.00241991086,
         "rotY": 180.0,
-        "rotZ": 0.004622696,
+        "rotZ": 0.00462271925,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -14028,9 +13974,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.186395973,
-        "g": 0.186395973,
-        "b": 0.186395973
+        "r": 0.186395913,
+        "g": 0.186395913,
+        "b": 0.186395913
       },
       "Tags": [
         "Blight",
@@ -14073,9 +14019,9 @@
         "posX": 13.5699873,
         "posY": 1.21021008,
         "posZ": 31.5329075,
-        "rotX": -0.00242103077,
+        "rotX": -0.00242115185,
         "rotY": 179.999619,
-        "rotZ": 0.0046264166,
+        "rotZ": 0.004626449,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -14089,9 +14035,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.186395973,
-        "g": 0.186395973,
-        "b": 0.186395973
+        "r": 0.186395913,
+        "g": 0.186395913,
+        "b": 0.186395913
       },
       "Tags": [
         "Blight",
@@ -14137,9 +14083,9 @@
         "posX": -1.23058987,
         "posY": 1.21129942,
         "posZ": 34.01342,
-        "rotX": -0.00242049457,
+        "rotX": -0.00242042728,
         "rotY": 180.0,
-        "rotZ": 0.004624926,
+        "rotZ": 0.004624168,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -14153,9 +14099,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.186395943,
-        "g": 0.186395943,
-        "b": 0.186395943
+        "r": 0.186395884,
+        "g": 0.186395884,
+        "b": 0.186395884
       },
       "Tags": [
         "Blight",
@@ -14201,9 +14147,9 @@
         "posX": 6.169991,
         "posY": 1.2108072,
         "posZ": 31.5328045,
-        "rotX": -0.00242074067,
+        "rotX": -0.00242036162,
         "rotY": 180.0,
-        "rotZ": 0.004625229,
+        "rotZ": 0.00462389272,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -14217,9 +14163,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.186395943,
-        "g": 0.186395943,
-        "b": 0.186395943
+        "r": 0.186395884,
+        "g": 0.186395884,
+        "b": 0.186395884
       },
       "Tags": [
         "Blight",
@@ -14265,9 +14211,9 @@
         "posX": 9.869908,
         "posY": 1.21061337,
         "posZ": 29.0530376,
-        "rotX": -0.00241996255,
+        "rotX": -0.00242119748,
         "rotY": 180.0,
-        "rotZ": 0.004624109,
+        "rotZ": 0.00462527433,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -14281,9 +14227,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.186395973,
-        "g": 0.186395973,
-        "b": 0.186395973
+        "r": 0.186395913,
+        "g": 0.186395913,
+        "b": 0.186395913
       },
       "Tags": [
         "Blight",
@@ -14329,9 +14275,9 @@
         "posX": 15.4199076,
         "posY": 1.21016562,
         "posZ": 29.052845,
-        "rotX": -0.00242072344,
+        "rotX": -0.0024212664,
         "rotY": 180.0,
-        "rotZ": 0.00462354347,
+        "rotZ": 0.004624947,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -14345,9 +14291,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.186395973,
-        "g": 0.186395973,
-        "b": 0.186395973
+        "r": 0.186395913,
+        "g": 0.186395913,
+        "b": 0.186395913
       },
       "Tags": [
         "Blight",
@@ -14393,9 +14339,9 @@
         "posX": 13.5682678,
         "posY": 1.21031511,
         "posZ": 29.0511627,
-        "rotX": -0.00242049666,
+        "rotX": -0.00242037419,
         "rotY": 180.0,
-        "rotZ": 0.00462349132,
+        "rotZ": 0.00462463871,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -14409,9 +14355,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.186395973,
-        "g": 0.186395973,
-        "b": 0.186395973
+        "r": 0.186395913,
+        "g": 0.186395913,
+        "b": 0.186395913
       },
       "Tags": [
         "Blight",
@@ -14457,9 +14403,9 @@
         "posX": 11.7199078,
         "posY": 1.21046424,
         "posZ": 29.0529728,
-        "rotX": -0.00242035487,
+        "rotX": -0.00242052763,
         "rotY": 180.0,
-        "rotZ": 0.004625835,
+        "rotZ": 0.00462556863,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -14473,9 +14419,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.186395973,
-        "g": 0.186395973,
-        "b": 0.186395973
+        "r": 0.186395913,
+        "g": 0.186395913,
+        "b": 0.186395913
       },
       "Tags": [
         "Blight",
@@ -14521,9 +14467,9 @@
         "posX": 9.869993,
         "posY": 1.2105087,
         "posZ": 31.5330372,
-        "rotX": -0.00242,
+        "rotX": -0.002421187,
         "rotY": 180.0,
-        "rotZ": 0.00462471228,
+        "rotZ": 0.00462469645,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -14537,9 +14483,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.186395973,
-        "g": 0.186395973,
-        "b": 0.186395973
+        "r": 0.186395913,
+        "g": 0.186395913,
+        "b": 0.186395913
       },
       "Tags": [
         "Blight",
@@ -14585,9 +14531,9 @@
         "posX": 8.019993,
         "posY": 1.21065784,
         "posZ": 31.5334721,
-        "rotX": -0.002420596,
+        "rotX": -0.002420845,
         "rotY": 180.0,
-        "rotZ": 0.004624066,
+        "rotZ": 0.004623699,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -14601,9 +14547,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.186395943,
-        "g": 0.186395943,
-        "b": 0.186395943
+        "r": 0.186395884,
+        "g": 0.186395884,
+        "b": 0.186395884
       },
       "Tags": [
         "Blight",
@@ -14649,9 +14595,9 @@
         "posX": 6.169906,
         "posY": 1.21091187,
         "posZ": 29.0531635,
-        "rotX": -0.002420438,
+        "rotX": -0.00242037745,
         "rotY": 180.0,
-        "rotZ": 0.00462464429,
+        "rotZ": 0.00462458,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -14665,9 +14611,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.186395973,
-        "g": 0.186395973,
-        "b": 0.186395973
+        "r": 0.186395913,
+        "g": 0.186395913,
+        "b": 0.186395913
       },
       "Tags": [
         "Blight",
@@ -14713,9 +14659,9 @@
         "posX": 4.319921,
         "posY": 1.21106112,
         "posZ": 29.0532341,
-        "rotX": -0.002419869,
+        "rotX": -0.002419468,
         "rotY": 180.0,
-        "rotZ": 0.004622871,
+        "rotZ": 0.004622828,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -14729,9 +14675,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.186395884,
-        "g": 0.186395884,
-        "b": 0.186395884
+        "r": 0.186395824,
+        "g": 0.186395824,
+        "b": 0.186395824
       },
       "Tags": [
         "Blight",
@@ -14777,9 +14723,9 @@
         "posX": 2.47007656,
         "posY": 1.2110008,
         "posZ": 34.0132942,
-        "rotX": -0.0024205877,
+        "rotX": -0.00242063054,
         "rotY": 180.0,
-        "rotZ": 0.004623942,
+        "rotZ": 0.00462398538,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -14793,9 +14739,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.186395943,
-        "g": 0.186395943,
-        "b": 0.186395943
+        "r": 0.186395884,
+        "g": 0.186395884,
+        "b": 0.186395884
       },
       "Tags": [
         "Blight",
@@ -14841,9 +14787,9 @@
         "posX": 2.469905,
         "posY": 1.21121037,
         "posZ": 29.05329,
-        "rotX": -0.00242049247,
+        "rotX": -0.00242108642,
         "rotY": 180.000031,
-        "rotZ": 0.00462530274,
+        "rotZ": 0.004625581,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -14857,9 +14803,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.186395943,
-        "g": 0.186395943,
-        "b": 0.186395943
+        "r": 0.186395884,
+        "g": 0.186395884,
+        "b": 0.186395884
       },
       "Tags": [
         "Blight",
@@ -14905,9 +14851,9 @@
         "posX": 0.6199174,
         "posY": 1.2113595,
         "posZ": 29.0533619,
-        "rotX": -0.002419855,
+        "rotX": -0.00241980236,
         "rotY": 180.0,
-        "rotZ": 0.004622564,
+        "rotZ": 0.0046225,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -14921,9 +14867,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.186395884,
-        "g": 0.186395884,
-        "b": 0.186395884
+        "r": 0.186395824,
+        "g": 0.186395824,
+        "b": 0.186395824
       },
       "Tags": [
         "Blight",
@@ -14966,12 +14912,12 @@
       "GUID": "99d3a0",
       "Name": "Custom_Tile_Stack",
       "Transform": {
-        "posX": 0.620055,
-        "posY": 1.21115,
+        "posX": 0.6200544,
+        "posY": 1.21115017,
         "posZ": 34.0133553,
-        "rotX": -0.00242109224,
+        "rotX": -0.002420306,
         "rotY": 180.000381,
-        "rotZ": 0.00462513044,
+        "rotZ": 0.004625221,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -14985,9 +14931,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.186395973,
-        "g": 0.186395973,
-        "b": 0.186395973
+        "r": 0.186395913,
+        "g": 0.186395913,
+        "b": 0.186395913
       },
       "Tags": [
         "Blight",
@@ -15033,9 +14979,9 @@
         "posX": 15.4199915,
         "posY": 1.210061,
         "posZ": 31.5328465,
-        "rotX": -0.0024201225,
+        "rotX": -0.00242014765,
         "rotY": 180.0,
-        "rotZ": 0.0046236245,
+        "rotZ": 0.00462367944,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -15049,9 +14995,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.186395973,
-        "g": 0.186395973,
-        "b": 0.186395973
+        "r": 0.186395913,
+        "g": 0.186395913,
+        "b": 0.186395913
       },
       "Tags": [
         "Blight",
@@ -15095,11 +15041,11 @@
       "Name": "Custom_Tile_Stack",
       "Transform": {
         "posX": 4.319843,
-        "posY": 1.21095634,
+        "posY": 1.21095645,
         "posZ": 31.5330734,
-        "rotX": -0.002420858,
+        "rotX": -0.00241993018,
         "rotY": 180.000031,
-        "rotZ": 0.004624591,
+        "rotZ": 0.00462373253,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -15113,9 +15059,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.186395973,
-        "g": 0.186395973,
-        "b": 0.186395973
+        "r": 0.186395913,
+        "g": 0.186395913,
+        "b": 0.186395913
       },
       "Tags": [
         "Blight",
@@ -15178,7 +15124,7 @@
       },
       "ColorDiffuse": {
         "r": 0.909407556,
-        "g": 0.274084955,
+        "g": 0.2740849,
         "b": 0.84082216
       },
       "Tags": [
@@ -17169,9 +17115,9 @@
         "posX": 15.42008,
         "posY": 1.20995617,
         "posZ": 34.0128479,
-        "rotX": -0.00242112251,
+        "rotX": -0.00242003449,
         "rotY": 180.0,
-        "rotZ": 0.004625123,
+        "rotZ": 0.00462414,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -17185,9 +17131,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.186395973,
-        "g": 0.186395973,
-        "b": 0.186395973
+        "r": 0.186395913,
+        "g": 0.186395913,
+        "b": 0.186395913
       },
       "Tags": [
         "Blight",
@@ -17233,9 +17179,9 @@
         "posX": 13.5700779,
         "posY": 1.21010542,
         "posZ": 34.0129128,
-        "rotX": -0.0024199246,
+        "rotX": -0.00242001517,
         "rotY": 180.0,
-        "rotZ": 0.00462607341,
+        "rotZ": 0.004624221,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -17249,9 +17195,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.186395943,
-        "g": 0.186395943,
-        "b": 0.186395943
+        "r": 0.186395884,
+        "g": 0.186395884,
+        "b": 0.186395884
       },
       "Tags": [
         "Blight",
@@ -17297,9 +17243,9 @@
         "posX": 11.71999,
         "posY": 1.21035945,
         "posZ": 31.53297,
-        "rotX": -0.00242010271,
+        "rotX": -0.00242004823,
         "rotY": 180.0,
-        "rotZ": 0.00462366035,
+        "rotZ": 0.004623727,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -17313,9 +17259,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.186396,
-        "g": 0.186396,
-        "b": 0.186396
+        "r": 0.186395943,
+        "g": 0.186395943,
+        "b": 0.186395943
       },
       "Tags": [
         "Blight",
@@ -17361,9 +17307,9 @@
         "posX": 8.020091,
         "posY": 1.21055317,
         "posZ": 34.0131035,
-        "rotX": -0.002419828,
+        "rotX": -0.002419929,
         "rotY": 180.000046,
-        "rotZ": 0.004622794,
+        "rotZ": 0.00462259166,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -17377,9 +17323,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.186395854,
-        "g": 0.186395854,
-        "b": 0.186395854
+        "r": 0.1863958,
+        "g": 0.1863958,
+        "b": 0.1863958
       },
       "Tags": [
         "Blight",
@@ -17425,9 +17371,9 @@
         "posX": 11.7200909,
         "posY": 1.21025467,
         "posZ": 34.0129776,
-        "rotX": -0.002420268,
+        "rotX": -0.00242037163,
         "rotY": 180.000061,
-        "rotZ": 0.00462265266,
+        "rotZ": 0.00462273043,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -17441,9 +17387,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.186395824,
-        "g": 0.186395824,
-        "b": 0.186395824
+        "r": 0.186395764,
+        "g": 0.186395764,
+        "b": 0.186395764
       },
       "Tags": [
         "Blight",
@@ -17487,11 +17433,11 @@
       "Name": "Custom_Tile_Stack",
       "Transform": {
         "posX": 6.17009068,
-        "posY": 1.2107023,
+        "posY": 1.21070242,
         "posZ": 34.01317,
-        "rotX": -0.00241977349,
+        "rotX": -0.00241983915,
         "rotY": 180.000031,
-        "rotZ": 0.004622659,
+        "rotZ": 0.00462264661,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -17505,9 +17451,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.186395854,
-        "g": 0.186395854,
-        "b": 0.186395854
+        "r": 0.1863958,
+        "g": 0.1863958,
+        "b": 0.1863958
       },
       "Tags": [
         "Blight",
@@ -17597,11 +17543,11 @@
       "GUID": "e6461c",
       "Name": "3DText",
       "Transform": {
-        "posX": 14.7188244,
-        "posY": 0.9616642,
-        "posZ": 0.46774295,
+        "posX": 14.7188015,
+        "posY": 0.961660266,
+        "posZ": 0.467746764,
         "rotX": 90.0,
-        "rotY": 0.166615963,
+        "rotY": 0.166616142,
         "rotZ": 0.0,
         "scaleX": 1.0,
         "scaleY": 1.0,
@@ -17651,11 +17597,11 @@
       "GUID": "379a42",
       "Name": "3DText",
       "Transform": {
-        "posX": 14.7188292,
-        "posY": 0.961667061,
-        "posZ": 0.00223445916,
+        "posX": 14.7188082,
+        "posY": 0.9616631,
+        "posZ": 0.0022401812,
         "rotX": 90.0,
-        "rotY": 0.166615963,
+        "rotY": 0.166616142,
         "rotZ": 0.0,
         "scaleX": 1.0,
         "scaleY": 1.0,
@@ -17705,11 +17651,11 @@
       "GUID": "fce69b",
       "Name": "3DText",
       "Transform": {
-        "posX": 14.7188292,
-        "posY": 0.9616642,
-        "posZ": -0.475576431,
+        "posX": 14.7188082,
+        "posY": 0.961660266,
+        "posZ": -0.475572616,
         "rotX": 90.0,
-        "rotY": 0.166615963,
+        "rotY": 0.166616142,
         "rotZ": 0.0,
         "scaleX": 1.0,
         "scaleY": 1.0,
@@ -17759,11 +17705,11 @@
       "GUID": "2238b3",
       "Name": "3DText",
       "Transform": {
-        "posX": 14.7176294,
-        "posY": 0.961667061,
-        "posZ": -0.949487746,
+        "posX": 14.7176065,
+        "posY": 0.9616631,
+        "posZ": -0.949482,
         "rotX": 90.0,
-        "rotY": 0.166615963,
+        "rotY": 0.166616142,
         "rotZ": 0.0,
         "scaleX": 1.0,
         "scaleY": 1.0,
@@ -17813,11 +17759,11 @@
       "GUID": "4e81f5",
       "Name": "3DText",
       "Transform": {
-        "posX": 14.7188349,
-        "posY": 0.961667061,
-        "posZ": -1.874571,
+        "posX": 14.718812,
+        "posY": 0.9616631,
+        "posZ": -1.87456524,
         "rotX": 90.0,
-        "rotY": 0.166615963,
+        "rotY": 0.166616142,
         "rotZ": 0.0,
         "scaleX": 1.0,
         "scaleY": 1.0,
@@ -17867,11 +17813,11 @@
       "GUID": "469802",
       "Name": "3DText",
       "Transform": {
-        "posX": 14.7188015,
-        "posY": 0.961667061,
-        "posZ": -1.43772709,
+        "posX": 14.7187786,
+        "posY": 0.9616631,
+        "posZ": -1.43772137,
         "rotX": 90.0,
-        "rotY": 0.166615963,
+        "rotY": 0.166616142,
         "rotZ": 0.0,
         "scaleX": 1.0,
         "scaleY": 1.0,
@@ -17921,11 +17867,11 @@
       "GUID": "892a71",
       "Name": "3DText",
       "Transform": {
-        "posX": 14.7188349,
-        "posY": 0.961660266,
-        "posZ": -2.3349545,
+        "posX": 14.718812,
+        "posY": 0.961656034,
+        "posZ": -2.33494759,
         "rotX": 90.0,
-        "rotY": 0.166615963,
+        "rotY": 0.166616142,
         "rotZ": 0.0,
         "scaleX": 1.0,
         "scaleY": 1.0,
@@ -18085,9 +18031,9 @@
         "posX": 27.9293461,
         "posY": 1.29169834,
         "posZ": 3.62602544,
-        "rotX": -3.12254457E-07,
+        "rotX": -1.11782363E-07,
         "rotY": 180.512985,
-        "rotZ": -1.085826E-06,
+        "rotZ": -6.114468E-07,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -18192,7 +18138,7 @@
         "posX": 24.3851,
         "posY": 1.29169881,
         "posZ": 2.497517,
-        "rotX": 3.59734116E-07,
+        "rotX": 3.78579074E-07,
         "rotY": 156.792267,
         "rotZ": 180.0,
         "scaleX": 1.0,
@@ -18457,9 +18403,9 @@
         "posX": 8.01992,
         "posY": 1.21076262,
         "posZ": 29.0531082,
-        "rotX": -0.00241970667,
+        "rotX": -0.00241978443,
         "rotY": 179.999985,
-        "rotZ": 0.00462263869,
+        "rotZ": 0.004622024,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -18473,9 +18419,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.186395764,
-        "g": 0.186395764,
-        "b": 0.186395764
+        "r": 0.1863957,
+        "g": 0.1863957,
+        "b": 0.1863957
       },
       "Tags": [
         "Blight",
@@ -18521,9 +18467,9 @@
         "posX": 9.870091,
         "posY": 1.21040392,
         "posZ": 34.0130424,
-        "rotX": -0.002420071,
+        "rotX": -0.00241994881,
         "rotY": 180.000076,
-        "rotZ": 0.004622308,
+        "rotZ": 0.004622421,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -18537,9 +18483,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.1863958,
-        "g": 0.1863958,
-        "b": 0.1863958
+        "r": 0.186395735,
+        "g": 0.186395735,
+        "b": 0.186395735
       },
       "Tags": [
         "Blight",
@@ -18636,9 +18582,9 @@
         "posX": -21.5168667,
         "posY": 1.12203646,
         "posZ": 31.2302971,
-        "rotX": 2.503254E-08,
+        "rotX": 2.47708982E-08,
         "rotY": 179.9997,
-        "rotZ": 1.49953774E-08,
+        "rotZ": 6.104077E-09,
         "scaleX": 1.75,
         "scaleY": 1.0,
         "scaleZ": 1.75
@@ -24960,7 +24906,7 @@
         "posX": -27.3729858,
         "posY": 2.00802875,
         "posZ": 32.3256073,
-        "rotX": 2.03256523E-08,
+        "rotX": -2.231447E-08,
         "rotY": 179.999741,
         "rotZ": 180.0,
         "scaleX": 1.0,
@@ -54148,11 +54094,11 @@
       "Name": "Custom_Tile_Stack",
       "Transform": {
         "posX": 4.32007837,
-        "posY": 1.21085155,
+        "posY": 1.21085167,
         "posZ": 34.01323,
-        "rotX": -0.002421003,
+        "rotX": -0.00241994648,
         "rotY": 180.0,
-        "rotZ": 0.00462361472,
+        "rotZ": 0.004624637,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -54166,9 +54112,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.186395943,
-        "g": 0.186395943,
-        "b": 0.186395943
+        "r": 0.186395884,
+        "g": 0.186395884,
+        "b": 0.186395884
       },
       "Tags": [
         "Blight",
@@ -54211,12 +54157,12 @@
       "GUID": "9fbad3",
       "Name": "Custom_Tile_Stack",
       "Transform": {
-        "posX": 0.619881,
+        "posX": 0.619881034,
         "posY": 1.21125484,
         "posZ": 31.53334,
-        "rotX": -0.00242016115,
+        "rotX": -0.00242001424,
         "rotY": 180.000092,
-        "rotZ": 0.00462266663,
+        "rotZ": 0.0046224664,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -54230,9 +54176,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.186395764,
-        "g": 0.186395764,
-        "b": 0.186395764
+        "r": 0.1863957,
+        "g": 0.1863957,
+        "b": 0.1863957
       },
       "Tags": [
         "Blight",
@@ -54275,9 +54221,9 @@
       "GUID": "a3d5c7",
       "Name": "3DText",
       "Transform": {
-        "posX": -23.5931263,
-        "posY": 0.9616247,
-        "posZ": 2.49262166,
+        "posX": -23.5931721,
+        "posY": 0.9616208,
+        "posZ": 2.49262738,
         "rotX": 90.0,
         "rotY": -2.8556793E-10,
         "rotZ": 0.0,
@@ -54332,9 +54278,9 @@
         "posX": -1.23068023,
         "posY": 1.21150887,
         "posZ": 29.0534229,
-        "rotX": -0.00242133345,
+        "rotX": -0.00242062472,
         "rotY": 180.0,
-        "rotZ": 0.00462633325,
+        "rotZ": 0.00462648924,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -54348,9 +54294,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.186395913,
-        "g": 0.186395913,
-        "b": 0.186395913
+        "r": 0.186395854,
+        "g": 0.186395854,
+        "b": 0.186395854
       },
       "Tags": [
         "Blight",
@@ -54393,12 +54339,12 @@
       "GUID": "417584",
       "Name": "Custom_Tile_Stack",
       "Transform": {
-        "posX": -1.23178279,
+        "posX": -1.23178267,
         "posY": 1.2114042,
         "posZ": 31.5334225,
-        "rotX": -0.002419987,
+        "rotX": -0.0024199218,
         "rotY": 180.0,
-        "rotZ": 0.00462234626,
+        "rotZ": 0.00462277932,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -54412,9 +54358,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.1863958,
-        "g": 0.1863958,
-        "b": 0.1863958
+        "r": 0.186395735,
+        "g": 0.186395735,
+        "b": 0.186395735
       },
       "Tags": [
         "Blight",
@@ -54457,9 +54403,9 @@
       "GUID": "9a475b",
       "Name": "3DText",
       "Transform": {
-        "posX": 7.296845,
-        "posY": 0.961702764,
-        "posZ": -3.9192462,
+        "posX": 1.23801053,
+        "posY": 0.96169883,
+        "posZ": -3.91923833,
         "rotX": 90.0,
         "rotY": -2.8556793E-10,
         "rotZ": 0.0,
@@ -54581,9 +54527,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.154986233,
+        "r": 0.154986173,
         "g": 0.7090594,
-        "b": 0.100056626
+        "b": 0.100056566
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
@@ -54638,9 +54584,9 @@
         "z": 0.0
       },
       "ColorDiffuse": {
-        "r": 0.0984723642,
+        "r": 0.0984723046,
         "g": 0.5383275,
-        "b": 0.253714472
+        "b": 0.253714383
       },
       "LayoutGroupSortIndex": 0,
       "Value": 0,
@@ -54679,7 +54625,7 @@
         "posX": -7.93464327,
         "posY": 1.50683427,
         "posZ": -1.31421447,
-        "rotX": -3.20816544E-05,
+        "rotX": -3.211026E-05,
         "rotY": 179.999939,
         "rotZ": 180.000122,
         "scaleX": 1.25,
@@ -58335,8 +58281,8 @@
         "posX": -2.64000535,
         "posY": 1.4490658,
         "posZ": -1.314232,
-        "rotX": -3.23946733E-05,
-        "rotY": 179.973251,
+        "rotX": -3.227761E-05,
+        "rotY": 179.973267,
         "rotZ": 180.000122,
         "scaleX": 1.0,
         "scaleY": 1.0,
@@ -62405,7 +62351,7 @@
         "posX": 3.63566065,
         "posY": 1.449064,
         "posZ": -1.30999529,
-        "rotX": 0.000120127421,
+        "rotX": 0.000120243916,
         "rotY": 89.9997,
         "rotZ": 180.000031,
         "scaleX": 1.0,
@@ -65351,7 +65297,7 @@
         "posX": 10.7498951,
         "posY": 1.473139,
         "posZ": -1.30999625,
-        "rotX": -3.22365668E-05,
+        "rotX": -3.227971E-05,
         "rotY": 179.9993,
         "rotZ": 180.000122,
         "scaleX": 1.25,
@@ -68935,9 +68881,9 @@
         "posX": -18.6642551,
         "posY": 1.128544,
         "posZ": 4.003809,
-        "rotX": 1.76967376E-07,
-        "rotY": 0.007657295,
-        "rotZ": 1.06764489E-07,
+        "rotX": 3.935497E-07,
+        "rotY": 0.00765730767,
+        "rotZ": 1.0677892E-07,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -69007,11 +68953,11 @@
       "Name": "Figurine_Custom",
       "Transform": {
         "posX": -18.6157017,
-        "posY": 1.128544,
+        "posY": 1.12854409,
         "posZ": 6.356556,
-        "rotX": 1.15404319E-07,
+        "rotX": 5.80851172E-08,
         "rotY": 179.9994,
-        "rotZ": 1.0672111E-07,
+        "rotZ": 1.06721409E-07,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -69083,9 +69029,9 @@
         "posX": -20.66431,
         "posY": 1.128544,
         "posZ": 4.003677,
-        "rotX": 2.29556232E-08,
+        "rotX": 9.359752E-08,
         "rotY": 179.991852,
-        "rotZ": 1.06720073E-07,
+        "rotZ": 1.06715056E-07,
         "scaleX": 1.0,
         "scaleY": 1.0,
         "scaleZ": 1.0
@@ -69245,7 +69191,7 @@
       "GridProjection": false,
       "HideWhenFaceDown": false,
       "Hands": false,
-      "LuaScript": "DeckUtility = nil\r\n\r\nfunction onLoad()\r\n    DeckUtility = getObjectFromGUID('17f823')\r\n    self.createButton({\r\n        click_function = 'drawEvent',\r\n        function_owner = self,\r\n        label          = 'Draw Event',\r\n        position       = {0,0,0},\r\n        rotation       = {0,180,0},\r\n        width          = 600,\r\n        height         = 200,\r\n        font_size      = 100,\r\n        color          = {0,0,0},\r\n        font_color     = {1, 1, 1},\r\n    })\r\n    self.createButton({\r\n        click_function = 'omenDraw',\r\n        function_owner = self,\r\n        label          = 'Omen Draw',\r\n        position       = {0,0,-2.5},\r\n        rotation       = {0,180,0},\r\n        width          = 600,\r\n        height         = 200,\r\n        font_size      = 100,\r\n        color          = {.2,0,0},\r\n        font_color     = {1, 1, 1},\r\n    })\r\nend\r\n\r\nfunction drawEvent(o, color, a)\r\n    local card = DeckUtility.call('drawCard', { Target = 'Discard', Type = 'Event', Color = color })\r\n    fate = Events[card.getName()].FateValue\r\n    if fate == -1 then\r\n        printToAll('The Renewal event was drawn. Reshuffling deck.', stringColorToRGB('Yellow'))\r\n        Wait.time(function()\r\n            DeckUtility.call('resupplyDeck', 'Event')\r\n            Wait.time(function() drawEvent(o, color) end, 1.3)\r\n        end, 1.3)\r\n        return false\r\n    end\r\n\r\n    printToColor('Drew event (' .. card.getName() .. ').', color)\r\n    card.deal(1, color)\r\nend\r\n\r\nfunction omenDraw(o, color, a, firstDrawnCardGuid)\r\n    -- FirstDrawnCard will only exist if the second drawn card caused a reshuffle\r\n    local card1\r\n    if firstDrawnCardGuid == nil then\r\n        card1 = DeckUtility.call('drawCard', { Target = 'Discard', Type = 'Event', Color = color })\r\n    else\r\n        card1 = getObjectFromGUID(firstDrawnCardGuid)\r\n        card1.setLock(false)\r\n    end\r\n\r\n    fate1 = Events[card1.getName()].FateValue\r\n    if fate1 == -1 then\r\n        printToAll('The Renewal event was drawn. Reshuffling deck.', stringColorToRGB('Yellow'))\r\n        Wait.time(function()\r\n            DeckUtility.call('resupplyDeck', 'Event')\r\n            Wait.time(function() omenDraw(o, color) end, 1.3)\r\n        end, 1.3)\r\n        return false\r\n    end\r\n\r\n    local card2 = DeckUtility.call('drawCard', { Target = 'Discard', Type = 'Event', Color = color })\r\n    local fate2 = Events[card2.getName()].FateValue\r\n    if fate2 == -1 then\r\n        card1.setLock(true)\r\n        local pos = card1.getPosition()\r\n        card1.setPosition({-10.91, 3, pos[3]})\r\n        printToAll('The Renewal event was drawn. Reshuffling deck.', stringColorToRGB('Yellow'))\r\n        Wait.time(function()\r\n            DeckUtility.call('resupplyDeck', 'Event')\r\n            Wait.time(function() omenDraw(o, color, a, card1.guid) end, 1.5)\r\n        end, 1.3)\r\n        return false\r\n    end\r\n\r\n    local keep = card2\r\n    local discard = card1\r\n    if fate1 >= fate2 then\r\n        keep = card1\r\n        discard = card2\r\n    end\r\n    printToColor('Drawing two events and keeping the one with the higher fate value (' .. keep.getName() .. ').', color)\r\n    keep.deal(1, color)\r\nend\r\n\r\nEvents = {}\r\nEvents['A Time for Heroes'] = { FateValue = 1 }\r\nEvents['Altar']             = { FateValue = 3 }\r\nEvents['Anathema']          = { FateValue = 6 }\r\nEvents['Aurora']            = { FateValue = 4 }\r\nEvents['Barghest']          = { FateValue = 3 }\r\nEvents['Betrayal']          = { FateValue = 5 }\r\nEvents['Black Banner']      = { FateValue = 4 }\r\nEvents['Blink']             = { FateValue = 6 }\r\nEvents['Call to Action']    = { FateValue = 3 }\r\nEvents['Close Call']        = { FateValue = 4 }\r\nEvents['Cultist']           = { FateValue = 1 }\r\nEvents['Dark Champion']     = { FateValue = 3 }\r\nEvents['Dark Discharge']    = { FateValue = 3 }\r\nEvents['Dark Tempest']      = { FateValue = 6 }\r\nEvents['Dark Scrying']      = { FateValue = 6 }\r\nEvents['Dead Servant']      = { FateValue = 3 }\r\nEvents['Deterioration']     = { FateValue = 4 }\r\nEvents['Demon']             = { FateValue = 3 }\r\nEvents['Demon Eater']       = { FateValue = 5 }\r\nEvents['Desperate Bargain'] = { FateValue = 1 }\r\nEvents['Dilemma']           = { FateValue = 5 }\r\nEvents['Dust Storm']        = { FateValue = 4 }\r\nEvents['Electrical Storm']  = { FateValue = 4 }\r\nEvents['Evil Day']          = { FateValue = 5 }\r\nEvents['Fissure']           = { FateValue = 2 }\r\nEvents['Forbidden Treasure'] = { FateValue = 1 }\r\nEvents['Grim Tidings']      = { FateValue = 2 }\r\nEvents['Guarded Trove']     = { FateValue = 1 }\r\nEvents['Haunt']             = { FateValue = 3 }\r\nEvents['Horde']             = { FateValue = 3 }\r\nEvents['Host of Haunts']    = { FateValue = 5 }\r\nEvents['Jinx']              = { FateValue = 6 }\r\nEvents['Latent Spell']      = { FateValue = 2 }\r\nEvents['Lich']              = { FateValue = 4 }\r\nEvents['Looters']           = { FateValue = 2 }\r\nEvents['Metamorphosis']     = { FateValue = 3 }\r\nEvents['Midnight']          = { FateValue = 7 }\r\nEvents['Mind Blast']        = { FateValue = 6 }\r\nEvents['Mind Leech']        = { FateValue = 3 }\r\nEvents['Panic']             = { FateValue = 4 }\r\nEvents['Patrols']           = { FateValue = 4 }\r\nEvents['Raid']              = { FateValue = 6 }\r\nEvents['Renewal']           = { FateValue = -1 }\r\nEvents['Rescue']            = { FateValue = 3 }\r\nEvents['Respite']           = { FateValue = 1 }\r\nEvents['Ritual']            = { FateValue = 6 }\r\nEvents['Runed Golem']       = { FateValue = 4 }\r\nEvents['Setback']           = { FateValue = 5 }\r\nEvents['Shadow Sight']      = { FateValue = 1 }\r\nEvents['Shambling Horror']  = { FateValue = 4 }\r\nEvents['Sleeping Pollen']   = { FateValue = 3 }\r\nEvents['Sloppy Search']     = { FateValue = 2 }\r\nEvents['Startling News']    = { FateValue = 3 }\r\nEvents['Temptation']        = { FateValue = 6 }\r\nEvents['Test of Faith']     = { FateValue = 3 }\r\nEvents['Tracker']           = { FateValue = 5 }\r\nEvents['Twilight']          = { FateValue = 5 }\r\nEvents['Twist of Fate']     = { FateValue = 1 }\r\nEvents['Unfriendly Eyes']   = { FateValue = 5 }\r\nEvents['Vengeful Spirit']   = { FateValue = 4 }\r\nEvents['Vile Beast']        = { FateValue = 2 }\r\nEvents['Vile Messenger']    = { FateValue = 4 }\r\nEvents['Upheaval']          = { FateValue = 2 }\r\nEvents['Urgent Plea']       = { FateValue = 5 }\r\nEvents['Unsubtle Messenger'] = { FateValue = 6 }\r\nEvents['Watchers']          = { FateValue = 4 }",
+      "LuaScript": "DeckUtility = nil\r\n\r\nfunction onLoad()\r\n    DeckUtility = getObjectFromGUID('17f823')\r\n    self.createButton({\r\n        click_function = 'drawEvent',\r\n        function_owner = self,\r\n        label          = 'Draw Event',\r\n        position       = {0,0,0},\r\n        rotation       = {0,180,0},\r\n        width          = 600,\r\n        height         = 200,\r\n        font_size      = 100,\r\n        color          = {0,0,0},\r\n        font_color     = {1, 1, 1},\r\n    })\r\n    self.createButton({\r\n        click_function = 'omenDraw',\r\n        function_owner = self,\r\n        label          = 'Omen Draw',\r\n        position       = {0,0,-2.5},\r\n        rotation       = {0,180,0},\r\n        width          = 600,\r\n        height         = 200,\r\n        font_size      = 100,\r\n        color          = {.2,0,0},\r\n        font_color     = {1, 1, 1},\r\n        tooltip        = 'The Omen blight requires the hero to draw two events and keep the highest fate value.'\r\n    })\r\nend\r\n\r\nfunction drawEvent(o, color, a)\r\n    local card = DeckUtility.call('drawCard', { Target = 'Discard', Type = 'Event', Color = color })\r\n    fate = Events[card.getName()].FateValue\r\n    if fate == -1 then\r\n        printToAll('The Renewal event was drawn. Reshuffling deck.', stringColorToRGB('Yellow'))\r\n        Wait.time(function()\r\n            DeckUtility.call('resupplyDeck', 'Event')\r\n            Wait.time(function() drawEvent(o, color) end, 1.3)\r\n        end, 1.3)\r\n        return false\r\n    end\r\n\r\n    printToColor('Drew event (' .. card.getName() .. ').', color)\r\n    card.deal(1, color)\r\nend\r\n\r\nfunction omenDraw(o, color, a, firstDrawnCardGuid)\r\n    -- FirstDrawnCard will only exist if the second drawn card caused a reshuffle\r\n    local card1\r\n    if firstDrawnCardGuid == nil then\r\n        card1 = DeckUtility.call('drawCard', { Target = 'Discard', Type = 'Event', Color = color })\r\n    else\r\n        card1 = getObjectFromGUID(firstDrawnCardGuid)\r\n        card1.setLock(false)\r\n    end\r\n\r\n    fate1 = Events[card1.getName()].FateValue\r\n    if fate1 == -1 then\r\n        printToAll('The Renewal event was drawn. Reshuffling deck.', stringColorToRGB('Yellow'))\r\n        Wait.time(function()\r\n            DeckUtility.call('resupplyDeck', 'Event')\r\n            Wait.time(function() omenDraw(o, color) end, 1.3)\r\n        end, 1.3)\r\n        return false\r\n    end\r\n\r\n    local card2 = DeckUtility.call('drawCard', { Target = 'Discard', Type = 'Event', Color = color })\r\n    local fate2 = Events[card2.getName()].FateValue\r\n    if fate2 == -1 then\r\n        card1.setLock(true)\r\n        local pos = card1.getPosition()\r\n        card1.setPosition({-10.91, 3, pos[3]})\r\n        printToAll('The Renewal event was drawn. Reshuffling deck.', stringColorToRGB('Yellow'))\r\n        Wait.time(function()\r\n            DeckUtility.call('resupplyDeck', 'Event')\r\n            Wait.time(function() omenDraw(o, color, a, card1.guid) end, 1.5)\r\n        end, 1.3)\r\n        return false\r\n    end\r\n\r\n    local keep = card2\r\n    local discard = card1\r\n    if fate1 >= fate2 then\r\n        keep = card1\r\n        discard = card2\r\n    end\r\n    printToColor('Drawing two events and keeping the one with the higher fate value (' .. keep.getName() .. ').', color)\r\n    keep.deal(1, color)\r\nend\r\n\r\nEvents = {}\r\nEvents['A Time for Heroes'] = { FateValue = 1 }\r\nEvents['Altar']             = { FateValue = 3 }\r\nEvents['Anathema']          = { FateValue = 6 }\r\nEvents['Aurora']            = { FateValue = 4 }\r\nEvents['Barghest']          = { FateValue = 3 }\r\nEvents['Betrayal']          = { FateValue = 5 }\r\nEvents['Black Banner']      = { FateValue = 4 }\r\nEvents['Blink']             = { FateValue = 6 }\r\nEvents['Call to Action']    = { FateValue = 3 }\r\nEvents['Close Call']        = { FateValue = 4 }\r\nEvents['Cultist']           = { FateValue = 1 }\r\nEvents['Dark Champion']     = { FateValue = 3 }\r\nEvents['Dark Discharge']    = { FateValue = 3 }\r\nEvents['Dark Tempest']      = { FateValue = 6 }\r\nEvents['Dark Scrying']      = { FateValue = 6 }\r\nEvents['Dead Servant']      = { FateValue = 3 }\r\nEvents['Deterioration']     = { FateValue = 4 }\r\nEvents['Demon']             = { FateValue = 3 }\r\nEvents['Demon Eater']       = { FateValue = 5 }\r\nEvents['Desperate Bargain'] = { FateValue = 1 }\r\nEvents['Dilemma']           = { FateValue = 5 }\r\nEvents['Dust Storm']        = { FateValue = 4 }\r\nEvents['Electrical Storm']  = { FateValue = 4 }\r\nEvents['Evil Day']          = { FateValue = 5 }\r\nEvents['Fissure']           = { FateValue = 2 }\r\nEvents['Forbidden Treasure'] = { FateValue = 1 }\r\nEvents['Grim Tidings']      = { FateValue = 2 }\r\nEvents['Guarded Trove']     = { FateValue = 1 }\r\nEvents['Haunt']             = { FateValue = 3 }\r\nEvents['Horde']             = { FateValue = 3 }\r\nEvents['Host of Haunts']    = { FateValue = 5 }\r\nEvents['Jinx']              = { FateValue = 6 }\r\nEvents['Latent Spell']      = { FateValue = 2 }\r\nEvents['Lich']              = { FateValue = 4 }\r\nEvents['Looters']           = { FateValue = 2 }\r\nEvents['Metamorphosis']     = { FateValue = 3 }\r\nEvents['Midnight']          = { FateValue = 7 }\r\nEvents['Mind Blast']        = { FateValue = 6 }\r\nEvents['Mind Leech']        = { FateValue = 3 }\r\nEvents['Panic']             = { FateValue = 4 }\r\nEvents['Patrols']           = { FateValue = 4 }\r\nEvents['Raid']              = { FateValue = 6 }\r\nEvents['Renewal']           = { FateValue = -1 }\r\nEvents['Rescue']            = { FateValue = 3 }\r\nEvents['Respite']           = { FateValue = 1 }\r\nEvents['Ritual']            = { FateValue = 6 }\r\nEvents['Runed Golem']       = { FateValue = 4 }\r\nEvents['Setback']           = { FateValue = 5 }\r\nEvents['Shadow Sight']      = { FateValue = 1 }\r\nEvents['Shambling Horror']  = { FateValue = 4 }\r\nEvents['Sleeping Pollen']   = { FateValue = 3 }\r\nEvents['Sloppy Search']     = { FateValue = 2 }\r\nEvents['Startling News']    = { FateValue = 3 }\r\nEvents['Temptation']        = { FateValue = 6 }\r\nEvents['Test of Faith']     = { FateValue = 3 }\r\nEvents['Tracker']           = { FateValue = 5 }\r\nEvents['Twilight']          = { FateValue = 5 }\r\nEvents['Twist of Fate']     = { FateValue = 1 }\r\nEvents['Unfriendly Eyes']   = { FateValue = 5 }\r\nEvents['Vengeful Spirit']   = { FateValue = 4 }\r\nEvents['Vile Beast']        = { FateValue = 2 }\r\nEvents['Vile Messenger']    = { FateValue = 4 }\r\nEvents['Upheaval']          = { FateValue = 2 }\r\nEvents['Urgent Plea']       = { FateValue = 5 }\r\nEvents['Unsubtle Messenger'] = { FateValue = 6 }\r\nEvents['Watchers']          = { FateValue = 4 }",
       "LuaScriptState": "",
       "XmlUI": ""
     },
@@ -69510,7 +69456,7 @@
         "posX": -13.3326416,
         "posY": 1.59348047,
         "posZ": -1.31287622,
-        "rotX": -3.241622E-05,
+        "rotX": -3.21424632E-05,
         "rotY": 180.002472,
         "rotZ": 180.000122,
         "scaleX": 1.25,
